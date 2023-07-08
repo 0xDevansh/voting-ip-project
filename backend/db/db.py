@@ -25,3 +25,10 @@ class Database(metaclass=Singleton):
         cursor.close()
         self.conn.commit()
         print('Connected to database')
+
+    def get_polls(self):
+        raise Exception('not implemented')
+
+    def create_poll(self, name, type, description=None):
+        cursor = self.conn.cursor()
+        cursor.execute('INSERT INTO polls (id, name, type, description) FROM polls WHERE')

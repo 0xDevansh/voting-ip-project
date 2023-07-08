@@ -2,8 +2,9 @@ CREATE TABLE IF NOT EXISTS polls (
     id INTEGER PRIMARY KEY,
     name TEXT UNIQUE,
     type TEXT,
-    date_created TIMESTAMP,
-    last_poll TIMESTAMP
+    description TEXT,
+    date_created DATETIME DEFAULT current_timestamp,
+    last_poll DATETIME
 );
 
 CREATE TABLE IF NOT EXISTS candidates (
