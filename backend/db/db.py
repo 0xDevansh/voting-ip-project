@@ -58,3 +58,5 @@ class Database(metaclass=Singleton):
         cursor.execute('INSERT INTO polls (name, type, description) VALUES (?, ?, ?)', (name, type, description))
         cursor.close()
         self.conn.commit()
+
+#    def register_voter(self):

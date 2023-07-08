@@ -7,35 +7,26 @@ CREATE TABLE IF NOT EXISTS polls (
     last_poll DATETIME
 );
 
-CREATE TABLE IF NOT EXISTS candidates (
-    id TEXT PRIMARY KEY,
-    name TEXT,
-    faction TEXT
-);
-
-CREATE TABLE IF NOT EXISTS proposals (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT,
-    description TEXT
-);
-
 CREATE TABLE IF NOT EXISTS poll_candidate (
     poll_id INTEGER,
-    candidate_id TEXT
+    candidate_id TEXT,
+    name TEXT,
+    faction TEXT,
+    PRIMARY KEY (poll_id, candidate_id)
 );
 
 CREATE TABLE IF NOT EXISTS poll_proposal (
     poll_id INTEGER,
-    proposal_id INTEGER
-);
-
-CREATE TABLE IF NOT EXISTS voters (
-    id TEXT PRIMARY KEY,
-    name TEXT
+    proposal_id INTEGER,
+    name TEXT,
+    description TEXT,
+    PRIMARY KEY (poll_id, proposal_id)
 );
 
 CREATE TABLE IF NOT EXISTS poll_voter (
     poll_id INTEGER,
     voter_id TEXT,
-    vote TEXT
+    name TEXT,
+    vote TEXT,
+    PRIMARY KEY (poll_id, voter_id)
 );
