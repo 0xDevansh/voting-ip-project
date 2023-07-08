@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS polls (
-    id INTEGER PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT UNIQUE,
     type TEXT,
     description TEXT,
@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS candidates (
 );
 
 CREATE TABLE IF NOT EXISTS proposals (
-    id INTEGER PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT,
     description TEXT
 );
