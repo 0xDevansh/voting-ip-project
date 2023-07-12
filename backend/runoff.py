@@ -1,13 +1,21 @@
+from utils import get_keys_with_value
+
 def calculate_runoff(votes, candidates):
     candidate_votes = {}
+    # used to break ties
+    candidate_points = {}
     for cand in candidates:
         # list stores all votes where this candidate is the first preference
         candidate_votes[cand] = []
+        candidate_points[cand] = 0
     
     for vote in votes:
+        for (i, choice) in enumerate(vote):
+            position = len(vote) - i
+            candidate_points[candidates[choice]] += position ** 2
         candidate = candidates[vote[0]]
         candidate_votes[candidate].append(vote)
-
+    print(candidate_points)
     while True:
         # calculate number of votes for each candidate
         num_votes = {}
@@ -16,7 +24,7 @@ def calculate_runoff(votes, candidates):
         # instant runoff if candidate has > 50%
         max_votes = max(num_votes.values())
         if max_votes >= len(votes) / 2:
-            return get_key_with_value(num_votes, max_votes)
+            return get_keys_with_value(num_votes, max_votes)[0]
 
         # eliminate last candidate
         min_votes = min(num_votes.values())
@@ -35,13 +43,6 @@ def calculate_runoff(votes, candidates):
             del candidate_votes[c]
             # ensure only 1 candidate is eliminated in 1 round
             break
-
-def get_key_with_value(dictionary, value):
-    try:
-        index = list(dictionary.values()).index(value)
-        return list(dictionary.keys())[index]
-    except ValueError:
-        return None
 
 if __name__ == '__main__':
     candidates = ['Modi', 'Laxman Singh', 'Donald Trump', 'Boris Johnson']
