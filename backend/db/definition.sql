@@ -23,10 +23,9 @@ CREATE TABLE IF NOT EXISTS poll_proposal (
     PRIMARY KEY (poll_id, proposal_id)
 );
 
-CREATE TABLE IF NOT EXISTS poll_voter (
+CREATE TABLE IF NOT EXISTS votes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     poll_id INTEGER,
-    voter_id TEXT,
-    name TEXT,
     vote TEXT,
-    PRIMARY KEY (poll_id, voter_id)
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

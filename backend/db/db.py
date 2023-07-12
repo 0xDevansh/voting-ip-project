@@ -61,27 +61,7 @@ class Database(metaclass=Singleton):
         cursor.close()
         self.conn.commit()
 
-    def register_voters(self, poll_id, voters):
-        cursor = self.conn.cursor()
-        # validate voters
-        voter_ids = []
-        cursor.execute('SELECT voter_id FROM poll_voter WHERE poll_id = ?', (poll_id,))
-        existing_voters = cursor.fetchall()
-        existing_voters = [v[0] for v in existing_voters]
-        records = []
-        for voter in voters:
-            if 'voter_id' not in voter or 'name' not in voter:
-                raise Exception('voter should have voter_id and name fields')
-            if voter['voter_id'] in voter_ids or voter['voter_id'] in existing_voters:
-                raise Exception(f"Duplicate voter id: {voter['voter_id']}")
-            voter_ids.append(voter['voter_id'])
-            records.append((poll_id, voter['voter_id'], voter['name']))
-        # save voters
-        cursor.executemany('INSERT INTO poll_voter (poll_id, voter_id, name) VALUES (?, ?, ?)', records)
-        cursor.close()
-        self.conn.commit()
-
-    def register_candidates(self, poll_id, candidates):
+    def register_candidates(self, poll_id: str, candidates: list[dict]):
         cursor = self.conn.cursor()
         # validate candidates
         candidate_ids = []
@@ -102,3 +82,35 @@ class Database(metaclass=Singleton):
         cursor.executemany('INSERT INTO poll_candidate (poll_id, candidate_id, name, faction) VALUES (?, ?, ?, ?)', records)
         cursor.close()
         self.conn.commit()
+
+    # returns votes for a given poll: (vote, timestamp)
+    def get_poll_votes(self, poll_id: str, candidate_id: str = None):
+        cursor = self.conn.cursor()
+        if not has_rows(cursor, 'SELECT id FROM polls WHERE id = ?', (poll_id,)):
+            raise Exception(f'No poll found with id: {poll_id}')
+        if candidate_id:
+            cursor.execute('SELECT vote, created_at FROM votes WHERE poll_id = ? AND candidate_id = ?', (poll_id, candidate_id))
+        else:
+            cursor.execute('SELECT vote, created_at FROM votes WHERE poll_id = ?', (poll_id,))
+        res = cursor.fetchall()
+        cursor.close()
+        return res
+
+    def save_vote(self, poll_id, vote):
+        cursor = self.conn.cursor()
+        cursor.execute('INSERT INTO votes (poll_id, vote) VALUES (?, ?)', (poll_id, vote))
+        cursor.close()
+        self.conn.commit()
+
+
+# checks if the given query returns any rows
+def has_rows(cursor, query: str, params: tuple) -> bool:
+    if len(params):
+        cursor.execute(query, params)
+    else:
+        cursor.execute(query)
+    return cursor.fetchone() != None
+
+
+
+
