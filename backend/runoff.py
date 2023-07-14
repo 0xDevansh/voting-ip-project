@@ -8,7 +8,7 @@ def calculate_runoff(votes, candidates):
         # list stores all votes where this candidate is the first preference
         candidate_votes[cand] = []
         candidate_points[cand] = 0
-    
+
     for vote in votes:
         for (i, choice) in enumerate(vote):
             position = len(vote) - i
