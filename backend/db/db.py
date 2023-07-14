@@ -74,6 +74,8 @@ class Database(metaclass=Singleton):
                 raise Exception('candidate should have candidate_id and name fields')
             if 'faction' not in cand:
                 cand['faction'] = None
+            if cand['name'] == 'abs':
+                raise Exception('abs is a reserved id')
             if cand['candidate_id'] in candidate_ids or cand['candidate_id'] in existing_candidates:
                 raise Exception(f"Duplicate candidate id: {cand['candidate_id']}")
             candidate_ids.append(cand['candidate_id'])

@@ -2,27 +2,32 @@ from utils import get_keys_with_value
 
 # calculate approval voting result
 # returns list of winners (multiple winners if tie)
-def calculate_approval(votes, cands, max_approved=None, minimum_threshold=None):
+def calculate_approval(votes, cands, max_approved=None, min_threshold=None):
+    # votes should be list of candidate_ids in preference order
     candidates = cands.copy()
-    candidates.append('abs')
+    if min_threshold:
+        candidates.append('abs')
     candidate_votes = {}
     for cand in candidates:
         candidate_votes[cand] = 0
 
+    total_votes = 0
     for vote in votes:
-        if vote == ():
-            candidate_votes[candidates[-1]] +=1
+        if vote == () and min_threshold:
+            candidate_votes['abs'] +=1
+            total_votes += 1
         else:
             for v in vote:
-                candidate_votes[candidates[v]] += 1
+                candidate_votes[v] += 1
+                total_votes += 1
 
-    if not max_approved and not minimum_threshold:
+    if not max_approved and not min_threshold:
         max_votes = max(candidate_votes.values())
         return get_keys_with_value(candidate_votes, max_votes), candidate_votes
-    elif minimum_threshold:
+    elif min_threshold:
         winners = []
-        for (cand, votes) in candidate_votes.items():
-            if votes > len(candidates)*minimum_threshold:
+        for (cand, v) in candidate_votes.items():
+            if v > total_votes * min_threshold:
                 winners.append(cand)
         winners.sort()
 
@@ -40,7 +45,8 @@ def calculate_approval(votes, cands, max_approved=None, minimum_threshold=None):
 
 if __name__ == '__main__':
     candidates = ['Modi', 'Laxman Singh', 'Donald Trump', 'Arvind Kejriwal']
+    candidate_ids = ['md', 'ls', 'dt', 'ak']
     # preferences, first number is index of highest preferred candidate
-    test_votes = [( 2, 1, 3), (1,), (1, 2), (0, 1), (2, 0), (), (2, 1, 0, 3), (0, 1, 2, 3), (2, 3, 0, 1), (2, 3, 1, 0), (3, 1, 0, 2), (3, 1, 2, 0), (3, 2, 0, 1), (3, 2, 1, 0)]
-    winner = calculate_approval(test_votes, candidates, minimum_threshold=.9)
+    test_votes = [( 'dt', 'ls', 'ak'), ('ls',), ('ls', 'dt'), ('md', 'ls'), ('dt', 'md'), (), ('dt', 'ls', 'md', 'ak'), ('md', 'ls', 'dt', 'ak'), ('dt', 'ak', 'md', 'ls'), ('dt', 'ak', 'ls', 'md'), ('ak', 'ls', 'md', 'dt'), ('ak', 'ls', 'dt', 'md'), ('ak', 'dt', 'md', 'ls'), ('ak', 'dt', 'ls', 'md')]
+    winner = calculate_approval(test_votes, candidate_ids, min_threshold=.7)
     print(winner)
