@@ -27,7 +27,7 @@ def calculate_approval(votes, cands, max_approved=None, min_threshold=None):
     elif min_threshold:
         winners = []
         for (cand, v) in candidate_votes.items():
-            if v > total_votes * min_threshold:
+            if v > total_votes * min_threshold / 100:
                 winners.append(cand)
         winners.sort()
 
