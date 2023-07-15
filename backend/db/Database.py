@@ -1,3 +1,4 @@
+import json
 import sqlite3
 from pathlib import Path
 
@@ -30,25 +31,25 @@ class Database(metaclass=Singleton):
     def get_poll(self, id=None, name=None):
         cursor = self.conn.cursor()
         if id:
-            cursor.execute('SELECT id, name, type, description, secure_mode, num_voters, date_created FROM polls WHERE id = ?', (id,))
+            cursor.execute('SELECT id, name, type, description, secure_mode, num_voters, max_approved, min_threshold, date_created FROM polls WHERE id = ?', (id,))
             values = cursor.fetchone()
         elif name:
-            cursor.execute('SELECT id, name, type, description, secure_mode, num_voters, date_created FROM polls WHERE name = ?', (name,))
+            cursor.execute('SELECT id, name, type, description, secure_mode, num_voters, max_approved, min_threshold, date_created FROM polls WHERE name = ?', (name,))
             values = cursor.fetchone()
         else:
-            cursor.execute('SELECT id, name, type, description, secure_mode, num_voters, date_created FROM polls')
+            cursor.execute('SELECT id, name, type, description, secure_mode, num_voters, max_approved, min_threshold, date_created FROM polls')
             rows = cursor.fetchall()
             res = []
             for row in rows:
-                res.append({'id': row[0], 'name': row[1], 'type': row[2], 'description': row[3], 'secure_mode': row[4], 'num_voters': row[5], 'date_created': row[6]})
+                res.append({'id': row[0], 'name': row[1], 'type': row[2], 'description': row[3], 'secure_mode': row[4], 'num_voters': row[5], 'max_approved': row[6], 'min_threshold': row[7], 'date_created': row[8]})
             return res
         cursor.close()
         if values:
-            return {'id': values[0], 'name': values[1], 'type': values[2], 'description': values[3], 'secure_mode': values[4], 'num_voters': values[5], 'date_created': values[6]}
+            return {'id': values[0], 'name': values[1], 'type': values[2], 'description': values[3], 'secure_mode': values[4], 'num_voters': values[5], 'max_approved': values[6], 'min_threshold': values[7], 'date_created': values[8]}
         else:
             return None
 
-    def create_poll(self, name, type, description=None, security_key=None, secure_mode=False, num_voters=None):
+    def create_poll(self, name, type, description=None, security_key=None, secure_mode=False, num_voters=None, max_approved=None, min_threshold=None):
         cursor = self.conn.cursor()
         # input validation
         if secure_mode and not security_key:
@@ -60,11 +61,12 @@ class Database(metaclass=Singleton):
             raise Exception('Poll with the same name already exists')
 
         secure_mode = 1 if secure_mode else 0
-        cursor.execute('INSERT INTO polls (name, type, description, security_key, secure_mode, num_voters) VALUES (?, ?, ?, ?, ?, ?)', (name, type, description, security_key, secure_mode, num_voters))
+        cursor.execute('INSERT INTO polls (name, type, description, security_key, secure_mode, num_voters, max_approved, min_threshold) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', (name, type, description, security_key, secure_mode, num_voters, max_approved, min_threshold))
         cursor.close()
         self.conn.commit()
+        return self.get_poll(name=name)
 
-    def register_candidates(self, poll_id: str, candidates: list[dict]):
+    def register_candidates(self, poll_id: int, candidates: list[dict]):
         cursor = self.conn.cursor()
         # validate candidates
         candidate_ids = []
@@ -99,11 +101,20 @@ class Database(metaclass=Singleton):
             cursor.execute('SELECT vote, created_at FROM votes WHERE poll_id = ?', (poll_id,))
         res = cursor.fetchall()
         cursor.close()
-        return res
+        return [(json.loads(v[0]), v[1]) for v in res]
 
     def save_vote(self, poll_id, vote):
         cursor = self.conn.cursor()
-        cursor.execute('INSERT INTO votes (poll_id, vote) VALUES (?, ?)', (poll_id, vote))
+        cursor.execute('SELECT num_voters FROM polls WHERE id = ?', (poll_id,))
+        data = cursor.fetchone()
+        if not data:
+            raise Exception('poll not found')
+        num_voters = data[0]
+        cursor.execute('SELECT COUNT(*) FROM votes WHERE poll_id = ?', (poll_id,))
+        votes_cast = cursor.fetchone()[0]
+        if votes_cast == num_voters:
+            raise Exception('exceeded num_voters')
+        cursor.execute('INSERT INTO votes (poll_id, vote) VALUES (?, ?)', (poll_id, json.dumps(vote)))
         cursor.close()
         self.conn.commit()
 

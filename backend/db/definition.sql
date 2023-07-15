@@ -6,6 +6,8 @@ CREATE TABLE IF NOT EXISTS polls (
     security_key TEXT,
     secure_mode INTEGER,
     num_voters INTEGER,
+    max_approved INTEGER,
+    min_threshold REAL,
     date_created DATETIME DEFAULT current_timestamp
 );
 
