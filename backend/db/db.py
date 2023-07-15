@@ -30,34 +30,37 @@ class Database(metaclass=Singleton):
     def get_poll(self, id=None, name=None):
         cursor = self.conn.cursor()
         if id:
-            cursor.execute('SELECT * FROM polls WHERE id = ?', (id,))
+            cursor.execute('SELECT id, name, type, description, secure_mode, num_voters, date_created FROM polls WHERE id = ?', (id,))
             values = cursor.fetchone()
         elif name:
-            cursor.execute('SELECT * FROM polls WHERE name = ?', (name,))
+            cursor.execute('SELECT id, name, type, description, secure_mode, num_voters, date_created FROM polls WHERE name = ?', (name,))
             values = cursor.fetchone()
         else:
-            cursor.execute('SELECT * FROM polls')
+            cursor.execute('SELECT id, name, type, description, secure_mode, num_voters, date_created FROM polls')
             rows = cursor.fetchall()
             res = []
             for row in rows:
-                res.append({'id': row[0], 'name': row[1], 'type': row[2], 'description': row[3], 'date_created': row[4], 'last_poll': row[5]})
+                res.append({'id': row[0], 'name': row[1], 'type': row[2], 'description': row[3], 'secure_mode': row[4], 'num_voters': row[5], 'date_created': row[6]})
             return res
         cursor.close()
         if values:
-            return {'id': values[0], 'name': values[1], 'type': values[2], 'description': values[3], 'date_created': values[4], 'last_poll': values[5]}
+            return {'id': values[0], 'name': values[1], 'type': values[2], 'description': values[3], 'secure_mode': values[4], 'num_voters': values[5], 'date_created': values[6]}
         else:
             return None
 
-    def create_poll(self, name, type, description=None):
+    def create_poll(self, name, type, description=None, security_key=None, secure_mode=False, num_voters=None):
         cursor = self.conn.cursor()
         # input validation
+        if secure_mode and not security_key:
+            raise Exception('security_key required for secure mode')
         if type not in ['runoff', 'fptp', 'approval', 'referendum']:
             raise Exception(f'Invalid type: {type}')
         cursor.execute('SELECT id FROM polls WHERE name = ?', (name,))
         if cursor.fetchone():
             raise Exception('Poll with the same name already exists')
 
-        cursor.execute('INSERT INTO polls (name, type, description) VALUES (?, ?, ?)', (name, type, description))
+        secure_mode = 1 if secure_mode else 0
+        cursor.execute('INSERT INTO polls (name, type, description, security_key, secure_mode, num_voters) VALUES (?, ?, ?, ?, ?, ?)', (name, type, description, security_key, secure_mode, num_voters))
         cursor.close()
         self.conn.commit()
 
@@ -104,7 +107,14 @@ class Database(metaclass=Singleton):
         cursor.close()
         self.conn.commit()
 
-
+    def check_security_key(self, poll_id, key):
+        cursor = self.conn.cursor()
+        cursor.execute('SELECT security_key FROM polls WHERE poll_id = ?', (poll_id,))
+        data = cursor.fetchone()
+        cursor.close()
+        if not data:
+            raise Exception("poll doesn't exist")
+        return data[0] == key
 # checks if the given query returns any rows
 def has_rows(cursor, query: str, params: tuple) -> bool:
     if len(params):
