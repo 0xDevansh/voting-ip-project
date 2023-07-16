@@ -4,16 +4,9 @@ from pathlib import Path
 
 SQLITE_FILE = 'database.sqlite'
 
-# Singleton pattern, only one instance of Database
-# can exist and can be called from anywhere
-class Singleton(type):
-    _instances = {}
-    def __call__(cls, *args, **kwargs):
-        if cls not in cls._instances:
-            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
-        return cls._instances[cls]
+class Database():
+    _instance = None
 
-class Database(metaclass=Singleton):
     def __init__(self):
         self.conn = None
 
@@ -26,6 +19,14 @@ class Database(metaclass=Singleton):
         cursor.close()
         self.conn.commit()
         print('Connected to database')
+        self.instance = self
+
+    @staticmethod
+    def get_instance():
+        if not Database._instance:
+            Database._instance = Database()
+            Database._instance.connect()
+        return Database._instance
 
     # gets all polls, or the one with the id or name specified
     def get_poll(self, id=None, name=None):
@@ -66,7 +67,7 @@ class Database(metaclass=Singleton):
         self.conn.commit()
         return self.get_poll(name=name)
 
-    def register_candidates(self, poll_id: int, candidates: list[dict]):
+    def register_candidates(self, poll_id, candidates):
         cursor = self.conn.cursor()
         # validate candidates
         candidate_ids = []
@@ -91,7 +92,7 @@ class Database(metaclass=Singleton):
         self.conn.commit()
 
     # returns votes for a given poll: (vote, timestamp)
-    def get_poll_votes(self, poll_id: str, candidate_id: str = None):
+    def get_poll_votes(self, poll_id, candidate_id=None, only_values=False):
         cursor = self.conn.cursor()
         if not has_rows(cursor, 'SELECT id FROM polls WHERE id = ?', (poll_id,)):
             raise Exception(f'No poll found with id: {poll_id}')
@@ -101,7 +102,17 @@ class Database(metaclass=Singleton):
             cursor.execute('SELECT vote, created_at FROM votes WHERE poll_id = ?', (poll_id,))
         res = cursor.fetchall()
         cursor.close()
-        return [(json.loads(v[0]), v[1]) for v in res]
+        if only_values:
+            return [json.loads(v[0]) for v in res]
+        else:
+            return [(json.loads(v[0]), v[1]) for v in res]
+
+    def get_poll_candidates(self, poll_id):
+        cursor = self.conn.cursor()
+        cursor.execute('SELECT candidate_id, name, faction FROM poll_candidate WHERE poll_id = ?', (poll_id,))
+        res = cursor.fetchall()
+        cursor.close()
+        return [{'candidate_id': c[0], 'name': c[1], 'faction': c[2]} for c in res]
 
     def save_vote(self, poll_id, vote):
         cursor = self.conn.cursor()
