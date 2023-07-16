@@ -1,6 +1,8 @@
-# Voting IP Project
+# Poll Pilot
 
-Requirements:
+This project aims at creating a program that can be used to conduct polls/elections.
+
+### Requirements:
 ```
 tkinter
 pycrypto
