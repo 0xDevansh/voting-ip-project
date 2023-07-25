@@ -8,45 +8,54 @@ def calculate_runoff(votes, candidates):
         # list stores all votes where this candidate is the first preference
         candidate_votes[cand] = []
         candidate_points[cand] = 0
-    
+
     for vote in votes:
         for (i, choice) in enumerate(vote):
             position = len(vote) - i
-            candidate_points[candidates[choice]] += position ** 2
-        candidate = candidates[vote[0]]
-        candidate_votes[candidate].append(vote)
-    print(candidate_points)
+            candidate_points[choice] += position ** 2
+        candidate_votes[vote[0]].append(vote)
+
+    sorted_cand_points = sorted(candidate_points.items(), key=lambda x: x[1]) # lowest points first
+    eliminated = []
+    order = None
     while True:
         # calculate number of votes for each candidate
         num_votes = {}
         for (c, v) in candidate_votes.items():
             num_votes[c] = len(v)
+
+        if not order:
+            order = sorted(num_votes.items(), key=lambda x:x[1], reverse=True)
         # instant runoff if candidate has > 50%
         max_votes = max(num_votes.values())
         if max_votes >= len(votes) / 2:
-            return get_keys_with_value(num_votes, max_votes)[0]
+            remaining = sorted(num_votes.items(), key=lambda x:x[1], reverse=True)
+            winner = get_keys_with_value(num_votes, max_votes)[0]
+            return {'winner': winner, 'order':order, 'eliminated':eliminated, 'remaining': remaining}
 
         # eliminate last candidate
         min_votes = min(num_votes.values())
-        for (c, v) in num_votes.items():
-            if v != min_votes:
+        if list(num_votes.values()).count(min_votes) > 1:
+            # eliminate based on points
+            c_points = [c for (c, p) in sorted_cand_points if num_votes[c] == min_votes]
+            elim_cand = c_points[0]
+        else:
+            elim_cand = get_keys_with_value(num_votes, min_votes)[0]
+        eliminated.append(elim_cand)
+        # distribute votes to other candidates
+        for vote in candidate_votes[elim_cand]:
+            if len(vote) == 0:
                 continue
-            # distribute votes to other candidates
-            for vote in candidate_votes[c]:
-                if len(vote) == 0:
-                    continue
-                new_vote = vote[1:]
-                next_cand = candidates[new_vote[0]]
-                # ensure next candidate is not eliminated already
-                if next_cand in candidate_votes:
-                    candidate_votes[next_cand].append(new_vote)
-            del candidate_votes[c]
-            # ensure only 1 candidate is eliminated in 1 round
-            break
+            new_vote = vote[1:]
+            next_cand = new_vote[0]
+            # ensure next candidate is not eliminated already
+            if next_cand in candidate_votes:
+                candidate_votes[next_cand].append(new_vote)
+        del candidate_votes[elim_cand]
 
 if __name__ == '__main__':
-    candidates = ['Modi', 'Laxman Singh', 'Donald Trump', 'Boris Johnson']
+    candidates = ['md', 'ls', 'dt', 'bj']
     # preferences, first number is index of highest preferred candidate
-    test_votes = [(0, 2, 1, 3), (0, 1, 2, 3), (1, 0, 3, 2), (1, 2, 0, 3), (1, 2, 3, 0), (0, 3, 2, 1), (2, 0, 1, 3), (2, 0, 3, 1), (2, 1, 0, 3), (0, 1, 2, 3), (2, 3, 0, 1), (2, 3, 1, 0), (3, 1, 0, 2), (3, 1, 2, 0), (3, 2, 0, 1), (3, 2, 1, 0)]
+    test_votes = [('md', 'dt', 'ls', 'bj'), ('md', 'ls', 'dt', 'bj'), ('ls', 'md', 'bj', 'dt'), ('ls', 'dt', 'md', 'bj'), ('ls', 'dt', 'bj', 'md'), ('md', 'bj', 'dt', 'ls'), ('dt', 'md', 'ls', 'bj'), ('dt', 'md', 'bj', 'ls'), ('dt', 'ls', 'md', 'bj'), ('md', 'ls', 'dt', 'bj'), ('dt', 'bj', 'md', 'ls'), ('dt', 'bj', 'ls', 'md'), ('bj', 'ls', 'md', 'dt'), ('bj', 'ls', 'dt', 'md'), ('bj', 'dt', 'md', 'ls'), ('bj', 'dt', 'ls', 'md')]
     winner = calculate_runoff(test_votes, candidates)
     print(winner)

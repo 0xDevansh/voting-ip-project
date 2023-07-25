@@ -3,8 +3,12 @@ CREATE TABLE IF NOT EXISTS polls (
     name TEXT UNIQUE,
     type TEXT,
     description TEXT,
-    date_created DATETIME DEFAULT current_timestamp,
-    last_poll DATETIME
+    security_key TEXT,
+    secure_mode INTEGER,
+    num_voters INTEGER,
+    max_approved INTEGER,
+    min_threshold REAL,
+    date_created DATETIME DEFAULT current_timestamp
 );
 
 CREATE TABLE IF NOT EXISTS poll_candidate (
