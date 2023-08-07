@@ -1,4 +1,4 @@
-from frontend.test import MainWindow
+from frontend.opening import create_main_window
 
-mainWindow = MainWindow()
-mainWindow.mainloop()
+window = create_main_window()
+window.mainloop()
