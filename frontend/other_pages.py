@@ -4,6 +4,11 @@ import tkinter.ttk as ttk
 class CreditsFrame(ttk.Frame):
     def __init__(self, app):
         super().__init__(app)
+        self.grid_columnconfigure(0, weight=1)
+        # 6 = no of elements to be centered
+        for i in range(4):
+            self.grid_rowconfigure(i, weight=1)
+
         # Text to be added to info label from the Documentation
         self.info1 = ttk.Label(self, text="By:")
         self.info1.grid(row=0, column=0)
