@@ -19,6 +19,7 @@ class App(tk.Tk):
         # instantiate all frames
         for (name, frame) in App.frames_data.items():
             self.loaded_frames[name] = frame['frame'](self)
+            self.loaded_frames[name].grid(row=0, column=0, sticky='news')
 
         # show main page
         self.show_frame('opening')
@@ -32,7 +33,6 @@ class App(tk.Tk):
         def show():
             print(f'Showing {frame_name}...')
             frame = self.loaded_frames[frame_name]
-            frame.reset()
             frame.tkraise()
         return show
 
