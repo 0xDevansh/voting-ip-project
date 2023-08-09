@@ -5,14 +5,13 @@ class OpeningPageFrame(ttk.Frame):
     def __init__(self, app):
         super().__init__(app)
         print('Opening frame created')
-        self.grid_rowconfigure(0, weight=1)
-        self.grid_rowconfigure(1, weight=1)
-        self.grid_rowconfigure(2, weight=1)
-        self.grid_rowconfigure(3, weight=1)
         self.grid_columnconfigure(0, weight=1)
+        # 6 = no of elements to be centered
+        for i in range(6):
+            self.grid_rowconfigure(i, weight=1)
 
         self.head1 = ttk.Label(self, text="POLL PILOT", font=('Times', 12))
-        self.head1.grid(row=0, column=0, sticky='news')
+        self.head1.grid(row=0, column=0)
         self.head2 = ttk.Label(self, text=" A simple tool to conduct election", font=('Helvetica', 10))
         self.head2.grid(row=1, column=0)
 

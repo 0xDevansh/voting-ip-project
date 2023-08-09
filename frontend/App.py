@@ -14,6 +14,8 @@ class App(tk.Tk):
         print('App created')
         self.title('Poll Pilot')
         self.geometry('500x450')
+        self.rowconfigure(0, weight=1)
+        self.columnconfigure(0, weight=1)
         self.loaded_frames = {}
 
         # instantiate all frames
