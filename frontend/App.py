@@ -28,12 +28,14 @@ class App(tk.Tk):
 
     def show_frame(self, frame_name):
         print(f'Showing {frame_name}...')
+        self.title('Poll Pilot - ' + App.frames_data[frame_name]['title'])
         frame = self.loaded_frames[frame_name]
         frame.tkraise()
 
     def show_frame_factory(self, frame_name):
         def show():
             print(f'Showing {frame_name}...')
+            self.title('Poll Pilot - ' + App.frames_data[frame_name]['title'])
             frame = self.loaded_frames[frame_name]
             frame.tkraise()
         return show
