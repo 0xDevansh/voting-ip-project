@@ -1,4 +1,3 @@
-from frontend.test import MainWindow
+from frontend.App import start_application
 
-mainWindow = MainWindow()
-mainWindow.mainloop()
+start_application()
