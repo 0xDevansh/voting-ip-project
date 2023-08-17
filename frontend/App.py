@@ -1,12 +1,14 @@
 import tkinter as tk
 import tkinter.ttk as ttk
 from .opening_page import OpeningPageFrame
-from .other_pages import CreditsFrame
+from .credits import CreditsFrame
+from .help import Helpframe
 
 class App(tk.Tk):
     frames_data = {
         'opening': {'title': 'Main Page', 'frame': OpeningPageFrame},
-        'credits': {'title': 'Credits', 'frame': CreditsFrame}
+        'credits': {'title': 'Credits', 'frame': CreditsFrame},
+        'help' : {'title' : 'Help??', 'frame' : Helpframe}
     }
 
     def __init__(self):
