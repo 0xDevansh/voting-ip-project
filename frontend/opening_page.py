@@ -15,7 +15,7 @@ class OpeningPageFrame(ttk.Frame):
         self.head2 = ttk.Label(self, text=" A simple tool to conduct election", font=('Helvetica', 10))
         self.head2.grid(row=1, column=0)
 
-        self.btn1 = ttk.Button(self, text="Create An Election", command=app.show_frame_factory('createelec'))
+        self.btn1 = ttk.Button(self, text="Create An Election", command=app.show_frame_factory('cre_elec'))
         self.btn1.grid(row=2, column=0)
         self.btn2 = ttk.Button(self, text="Create A Refrendum", command=app.show_frame_factory('createref'))
         self.btn2.grid(row=3, column=0)

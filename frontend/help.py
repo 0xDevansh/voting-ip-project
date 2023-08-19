@@ -22,3 +22,4 @@ class Helpframe(ttk.Frame):
         info3.grid(row=0, column=1)
         self.btn4 = ttk.Button(self, text="    Back   ", command=app.show_frame_factory('opening'))
         self.btn4.grid(row=2, column=0)
+
