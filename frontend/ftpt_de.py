@@ -3,49 +3,49 @@ import tkinter.ttk as ttk
 import tkinter.messagebox
 
 #Rename file to data_entry
-class ele_de_frame(ttk.Frame):
+class election_data_entry_frame(ttk.Frame):
     def __init__(self, app):
         super().__init__(app)
 
 
         def enter_data():
-            name_inst = Name_Inst_Entry.get()
-            type_inst_ = type_Inst_Entry.get()
-            Type = Type_of_election_Entry.get()
-            title_elc = Title_elc_Entry.get()
+            name_institution = name_institution_Entry.get()
+            type_institution = type_institution_Entry.get()
+            type = Type_of_election_Entry.get()
+            title_election = title_election_Entry.get()
             description = Description_Entry.get()
-            Num_candi = No_Cand_Entry.get()
-            Date_elec = Date_Entry.get()
-            Num_voter = No_Voter_Entry.get()
-            Security_Key = Sec_Key_Entry.get()
-            Tac = Tac_var.get()
+            num_candidates = No_Cand_Entry.get() 
+            date_election = Date_Entry.get()
+            number_voter = No_Voter_Entry.get()
+            security_key = Sec_Key_Entry.get()
+            tnc = tnc_var.get()
             min_threshold  = Min_thr_Key_Entry.get()
             max_approved = Max_app_Key_Entry.get()
             Alpha = 0
             l = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0]
             try:
-                int(Num_candi)
+                int(num_candidates)
                 Alpha += 1
             except ValueError:
                 l[0] = 1
             try:
-                int(Num_voter)
+                int(number_voter)
                 Alpha += 1
             except ValueError:
                 l[1] = 1
-            if len(Security_Key) >= 8:
+            if len(security_key) >= 8:
                 Alpha += 1
             else:
                 l[2] = 1
-            if title_elc and description and Date_elec:
+            if title_election and description and date_election:
                 Alpha += 1
             else:
                 l[3] = 1
-            if Tac == 'Checked':
+            if tnc == 'Checked':
                 Alpha += 1
             else:
                 l[4] = 1
-            if Type:
+            if type:
                 Alpha +=1
             else:
                 l[5] = 1
@@ -58,7 +58,7 @@ class ele_de_frame(ttk.Frame):
             if max_approved:
                 try:
                     int(max_approved)
-                    if max_approved <= Num_candi:
+                    if max_approved <= num_candidates:
                         Alpha +=1
                     else:
                         l[6] = 1
@@ -68,10 +68,10 @@ class ele_de_frame(ttk.Frame):
             else:
                 max_approved = 1
                 Alpha +=1
-            Data_Entry = {"Name": name_inst, "Type of inst": type_inst_, "Type_elec": Type,
-                          "title elec": title_elc, "desc": description, "Num voter": Num_voter,
-                          "Num_can": Num_candi, "Date": Date_elec, "Sec_key": Security_Key,
-                          "Tac": Tac, "min_thr": min_threshold, "max_app": max_approved}
+            Data_Entry = {"Name": name_institution, "Type of inst": type_institution, "Type_elec": type,
+                          "title elec": title_election, "desc": description, "Num voter": number_voter,
+                          "Num_can": num_candidates, "Date": date_election, "Sec_key": security_key,
+                          "tnc": tnc, "min_thr": min_threshold, "max_app": max_approved}
             if Alpha == 8:
                 print("succsess")
                 app.show_frame('opening')
@@ -81,7 +81,7 @@ class ele_de_frame(ttk.Frame):
             elif l[1] == 1:
                 tkinter.messagebox.showerror(title="Error102", message='Number of Voters Must be integer')
             elif l[2] == 1:
-                tkinter.messagebox.showerror(title="Error103", message='Password must be atleast 8 digit long')
+                tkinter.messagebox.showerror(title="Error103", message='Security Key must be atleast 8 digit long')
             elif l[3] == 1:
                 tkinter.messagebox.showerror(title="Error104",
                                              message='Title , Description and Date of Election Required')
@@ -90,10 +90,10 @@ class ele_de_frame(ttk.Frame):
             elif l[4] == 1:
                 tkinter.messagebox.showerror(title="Error106", message="You have not accepted the Terms and Condition")
             elif l[7] == 1:
-                tkinter.messagebox.showerror(title="Error106", message="max approved must be integer")
+                tkinter.messagebox.showerror(title="Error107", message="max approved must be integer")
             elif l[6] == 1:
-                tkinter.messagebox.showerror(title="Error107", message="max approved cant be more than total canditates")
-
+                tkinter.messagebox.showerror(title="Error108", message="max approved cant be more than total canditates")
+            return Data_Entry
         def do():
             che = Type_of_election_Entry.get()
             if che == "Approval voting":
@@ -117,20 +117,21 @@ class ele_de_frame(ttk.Frame):
         User_info_frame = tk.LabelFrame(self.frame, text="User Informaton")
         User_info_frame.grid(row=0, column=0, sticky="news")
 
-        Name_Inst = tk.Label(User_info_frame, text="Name of the institution")
-        Name_Inst.grid(row=0, column=0)
-        Name_Inst_Entry = tk.Entry(User_info_frame)
-        Name_Inst_Entry.grid(row=0, column=1, padx=50, pady=10)
+        name_institution = tk.Label(User_info_frame, text="Name of the institution")
+        name_institution.grid(row=0, column=0)
+        name_institution_Entry = tk.Entry(User_info_frame)
+        name_institution_Entry.grid(row=0, column=1, padx=50, pady=10)
 
-        type_Inst = tk.Label(User_info_frame, text="Type of the institution")
-        type_Inst.grid(row=1, column=0)
-        type_Inst_Entry = tk.Entry(User_info_frame)
-        type_Inst_Entry.grid(row=1, column=1, padx=50, pady=10)
+        type_institution = tk.Label(User_info_frame, text="Type of the institution")
+        type_institution.grid(row=1, column=0)
+        type_institution_Entry = tk.Entry(User_info_frame)
+        type_institution_Entry.grid(row=1, column=1, padx=50, pady=10)
 
         Type_of_election = tk.Label(User_info_frame, text="Type of election")
         Type_of_election.grid(row=2, column=0)
         Type_of_election_Entry = ttk.Combobox(User_info_frame, values= ["first past the post", "Instant Runoff" , "Approval voting"])
         Type_of_election_Entry.grid(row=2, column=1, padx=50, pady=10)
+
         toe_button = tk.Button(User_info_frame , text="o" , command = do)
         toe_button.grid(row=2 , column=2)
 
@@ -139,10 +140,10 @@ class ele_de_frame(ttk.Frame):
         Election_info_frame = tk.LabelFrame(self.frame, text="Election Information")
         Election_info_frame.grid(row=1, column=0, sticky="news")
 
-        Title_elc = tk.Label(Election_info_frame, text="Title of Election")
-        Title_elc_Entry = tk.Entry(Election_info_frame)
-        Title_elc.grid(row=0, column=0)
-        Title_elc_Entry.grid(row=0, column=1, padx=50, pady=10)
+        title_election = tk.Label(Election_info_frame, text="Title of Election")
+        title_election_Entry = tk.Entry(Election_info_frame)
+        title_election.grid(row=0, column=0)
+        title_election_Entry.grid(row=0, column=1, padx=50, pady=10)
 
 
         Description = tk.Label(Election_info_frame, text="Desccription of Election")
@@ -183,14 +184,15 @@ class ele_de_frame(ttk.Frame):
         Dec_frame = tk.LabelFrame(self.frame, text="Declaration")
         Dec_frame.grid(row=2, column=0, sticky="news")
 
-        Dec_TaC = tk.Label(Dec_frame, text="Terms and Condition Declaration")
-        Tac_var = tk.StringVar(value="Uncheked")
-        Dec_TaC.grid(row=1, column=0)
-        Dec_TaC_CB = tk.Checkbutton(Dec_frame, text="I accept all the T&C", variable=Tac_var,
+        Dec_tnc = tk.Label(Dec_frame, text="Terms and Condition Declaration")
+        tnc_var = tk.StringVar(value="Uncheked")
+        Dec_tnc.grid(row=1, column=0)
+        Dec_tnc_CB = tk.Checkbutton(Dec_frame, text="I accept all the T&C", variable=tnc_var,
                                     onvalue="Checked", offvalue="Uncheked")
-        Dec_TaC_CB.grid(row=1, column=1, padx=50, pady=10)
+        Dec_tnc_CB.grid(row=1, column=1, padx=50, pady=10)
 
         button1 = tk.Button(self.frame, text="SUBMIT", command=enter_data)
         button1.grid(row=3, column=0, sticky='news', padx=10
                      , pady=10)
+
 

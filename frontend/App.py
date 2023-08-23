@@ -3,14 +3,16 @@ import tkinter.ttk as ttk
 from .opening_page import OpeningPageFrame
 from .credits import CreditsFrame
 from .help import Helpframe
-from .ftpt_de import ele_de_frame
+from .ftpt_de import election_data_entry_frame
+from .cand_entry import Cand_entry_frame
 
 class App(tk.Tk):
     frames_data = {
         'opening': {'title': 'Main Page', 'frame': OpeningPageFrame},
         'credits': {'title': 'Credits', 'frame': CreditsFrame},
         'help' : {'title' : 'Help??', 'frame' : Helpframe},
-        'cre_elec': {'title' : 'Create election' , 'frame' : ele_de_frame}
+        'cre_elec': {'title' : 'Create election' , 'frame' : election_data_entry_frame},
+        'cand_entry' : {'title' : 'Enter Candidates' , 'frame' : Cand_entry_frame}
     }
 
     def __init__(self):
