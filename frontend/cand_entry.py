@@ -1,11 +1,15 @@
 import tkinter as tk
 import tkinter.messagebox
 import tkinter.ttk as ttk
+
+
+# for easy access cand_entry is in referendum
+
 class Cand_entry_frame(ttk.Frame):
     def __init__(self, app):
         super().__init__(app)
 
-        a = 5
+        a = 5 #number of candidates data to brought here
 
         l1 = []
 
@@ -13,7 +17,6 @@ class Cand_entry_frame(ttk.Frame):
 
         l3 = []
         def get_data():
-            a=5
             l4 = []
             l5 = []
             Data = {}
