@@ -3,7 +3,7 @@ import tkinter.ttk as ttk
 import tkinter.messagebox
 
 #Rename file to data_entry
-class election_data_entry_frame(ttk.Frame):
+class RefremdumDataEntryFrame(ttk.Frame):
     def __init__(self, app):
         super().__init__(app)
 
@@ -11,16 +11,14 @@ class election_data_entry_frame(ttk.Frame):
         def enter_data():
             name_institution = name_institution_Entry.get()
             type_institution = type_institution_Entry.get()
-            type = Type_of_election_Entry.get()
-            title_election = title_election_Entry.get()
+            title_refremdum = title_refremdum_Entry.get()
             description = Description_Entry.get()
             num_candidates = No_Cand_Entry.get() 
-            date_election = Date_Entry.get()
+            date_refremdum = Date_Entry.get()
             number_voter = No_Voter_Entry.get()
             security_key = Sec_Key_Entry.get()
             tnc = tnc_var.get()
             min_threshold  = Min_thr_Key_Entry.get()
-            max_approved = Max_app_Key_Entry.get()
             Alpha = 0
             l = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0]
             try:
@@ -37,7 +35,7 @@ class election_data_entry_frame(ttk.Frame):
                 Alpha += 1
             else:
                 l[2] = 1
-            if title_election and description and date_election:
+            if title_refremdum and description and date_refremdum:
                 Alpha += 1
             else:
                 l[3] = 1
@@ -52,27 +50,13 @@ class election_data_entry_frame(ttk.Frame):
             if int(min_threshold) == 0:
                 min_threshold = 50
             elif min_threshold:
-                Alpha +=1
                 pass
             else:
                 min_threshold = 50
-            if max_approved:
-                try:
-                    int(max_approved)
-                    if max_approved <= num_candidates:
-                        Alpha +=1
-                    else:
-                        l[6] = 1
-                    Alpha += 1
-                except ValueError:
-                    l[7] = 1
-            else:
-                max_approved = 1
-                Alpha +=1
-            Data_Entry = {"Name": name_institution, "Type of inst": type_institution, "Type_elec": type,
-                          "title elec": title_election, "desc": description, "Num voter": number_voter,
-                          "Num_can": num_candidates, "Date": date_election, "Sec_key": security_key,
-                          "tnc": tnc, "min_thr": min_threshold, "max_app": max_approved}
+            Data_Entry = {"Name": name_institution, "Type_of_inst": type_institution,
+                          "title_elec": title_refremdum, "desc": description, "Num_voter": number_voter,
+                          "Num_can": num_candidates, "Date": date_refremdum, "Sec_key": security_key,
+                          "tnc": tnc}
 
             if l[0] == 1:
                 tkinter.messagebox.showerror(title="Erroe101", message='Number of Candidataes must be integer')
@@ -82,23 +66,18 @@ class election_data_entry_frame(ttk.Frame):
                 tkinter.messagebox.showerror(title="Error103", message='Security Key must be atleast 8 digit long')
             elif l[3] == 1:
                 tkinter.messagebox.showerror(title="Error104",
-                                             message='Title , Description and Date of Election Required')
+                                             message='Title , Description and Date of refremdum Required')
             elif l[5] == 1:
-                tkinter.messagebox.showerror(title="Error105", message="You have not selected the type of election")
+                tkinter.messagebox.showerror(title="Error105", message="You have not selected the type of refremdum")
             elif l[4] == 1:
                 tkinter.messagebox.showerror(title="Error106", message="You have not accepted the Terms and Condition")
-            elif l[7] == 1:
-                tkinter.messagebox.showerror(title="Error107", message="max approved must be integer")
-            elif l[6] == 1:
-                tkinter.messagebox.showerror(title="Error108", message="max approved cant be more than total canditates")
-            else:
-                print("succsess")
-                app.show_frame('cand_entry')
-                print(Data_Entry)
+            else :
+                 print("succsess")
+                 app.show_frame('refrendum_entry')
+                 print(Data_Entry)
             return Data_Entry
-
         def do():
-            che = Type_of_election_Entry.get()
+            che = Type_of_refremdum_Entry.get()
             if che == "Approval voting":
                 Min_thr_Key.grid(row=6, column=0)
                 Min_thr_Key_Entry.grid(row=6, column=1, padx=50, pady=10)
@@ -130,58 +109,47 @@ class election_data_entry_frame(ttk.Frame):
         type_institution_Entry = tk.Entry(User_info_frame)
         type_institution_Entry.grid(row=1, column=1, padx=50, pady=10)
 
-        Type_of_election = tk.Label(User_info_frame, text="Type of election")
-        Type_of_election.grid(row=2, column=0)
-        Type_of_election_Entry = ttk.Combobox(User_info_frame, values= ["first past the post", "Instant Runoff" , "Approval voting"])
-        Type_of_election_Entry.grid(row=2, column=1, padx=50, pady=10)
-
-        update_button = tk.Button(User_info_frame , text="update" , command = do)
-        update_button.grid(row=2 , column=2)
 
 
 
-        Election_info_frame = tk.LabelFrame(self.frame, text="Election Information")
-        Election_info_frame.grid(row=1, column=0, sticky="news")
+        refremdum_info_frame = tk.LabelFrame(self.frame, text="refremdum Information")
+        refremdum_info_frame.grid(row=1, column=0, sticky="news")
 
-        title_election = tk.Label(Election_info_frame, text="Title of Election")
-        title_election_Entry = tk.Entry(Election_info_frame)
-        title_election.grid(row=0, column=0)
-        title_election_Entry.grid(row=0, column=1, padx=50, pady=10)
+        title_refremdum = tk.Label(refremdum_info_frame, text="Title of refremdum")
+        title_refremdum_Entry = tk.Entry(refremdum_info_frame)
+        title_refremdum.grid(row=0, column=0)
+        title_refremdum_Entry.grid(row=0, column=1, padx=50, pady=10)
 
 
-        Description = tk.Label(Election_info_frame, text="Desccription of Election")
+        Description = tk.Label(refremdum_info_frame, text="Desccription of refremdum")
         Description.grid(row=1, column=0)
-        Description_Entry = tk.Entry(Election_info_frame)
+        Description_Entry = tk.Entry(refremdum_info_frame)
         Description_Entry.grid(row=1, column=1, padx=50, pady=10)
 
-        No_Cand = tk.Label(Election_info_frame, text="Number of Candidates")
+        No_Cand = tk.Label(refremdum_info_frame, text="Number of Candidates")
         No_Cand.grid(row=2, column=0)
-        No_Cand_Entry = tk.Entry(Election_info_frame)
+        No_Cand_Entry = tk.Entry(refremdum_info_frame)
         No_Cand_Entry.grid(row=2, column=1, padx=50, pady=10)
 
-        Date = tk.Label(Election_info_frame, text="Date")
+        Date = tk.Label(refremdum_info_frame, text="Date")
         Date.grid(row=3, column=0)
-        Date_Entry = tk.Entry(Election_info_frame)
+        Date_Entry = tk.Entry(refremdum_info_frame)
         Date_Entry.grid(row=3, column=1, padx=50, pady=10)
 
-        No_Voter = tk.Label(Election_info_frame, text="Number of  Voters")
+        No_Voter = tk.Label(refremdum_info_frame, text="Number of  Voters")
         No_Voter.grid(row=4, column=0)
-        No_Voter_Entry = tk.Entry(Election_info_frame)
+        No_Voter_Entry = tk.Entry(refremdum_info_frame)
         No_Voter_Entry.grid(row=4, column=1, padx=50, pady=10)
 
-        Sec_Key = tk.Label(Election_info_frame, text="Security Key")
+        Sec_Key = tk.Label(refremdum_info_frame, text="Security Key")
         Sec_Key.grid(row=5, column=0)
-        Sec_Key_Entry = tk.Entry(Election_info_frame)
+        Sec_Key_Entry = tk.Entry(refremdum_info_frame)
         Sec_Key_Entry.grid(row=5, column=1, padx=50, pady=10)
 
-        Min_thr_Key = tk.Label(Election_info_frame, text="minimum approval threshold")
+        Min_thr_Key = tk.Label(refremdum_info_frame, text="minimum approval threshold")
 
-        Min_thr_Key_Entry = tk.Spinbox(Election_info_frame , from_= 0 , to= 100)
+        Min_thr_Key_Entry = tk.Spinbox(refremdum_info_frame , from_= 0 , to= 100)
 
-
-        Max_app_Key = tk.Label(Election_info_frame, text="maximum approved")
-
-        Max_app_Key_Entry = tk.Entry(Election_info_frame)
 
 
         Dec_frame = tk.LabelFrame(self.frame, text="Declaration")
@@ -197,5 +165,3 @@ class election_data_entry_frame(ttk.Frame):
         button1 = tk.Button(self.frame, text="SUBMIT", command=enter_data)
         button1.grid(row=3, column=0, sticky='news', padx=10
                      , pady=10)
-
-

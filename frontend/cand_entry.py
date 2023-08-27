@@ -1,16 +1,15 @@
 import tkinter as tk
 import tkinter.messagebox
 import tkinter.ttk as ttk
+from backend.db.Database import Database
 
 
 # for easy access cand_entry is in referendum
 
-class Cand_entry_frame(ttk.Frame):
+class CandidateEntryFrame(ttk.Frame):
     def __init__(self, app):
         super().__init__(app)
-
-        a = 5 #number of candidates data to brought here
-
+        num_candidates = 5
         l1 = []
 
         l2 = []
@@ -20,7 +19,7 @@ class Cand_entry_frame(ttk.Frame):
             l4 = []
             l5 = []
             Data = {}
-            for i in range(a):
+            for i in range(num_candidates):
                 if l2[i].get() and l3[i].get():
                    l4.append(l2[i].get())
                    l5.append(l3[i].get())
@@ -41,13 +40,8 @@ class Cand_entry_frame(ttk.Frame):
         Cand_entry_frame = tk.LabelFrame(self.frame, text="Candidate Entry")
         Cand_entry_frame.grid(row=0, column=0, sticky="news")
 
-  #      Num_cand = tk.Label(Cand_entry_frame, text="Number of candidates")
-   #    Num_cand.grid(row=0, column=0)
-   #     Num_cand_Entry = tk.Entry(Cand_entry_frame)
-    #    Num_cand_Entry.grid(row=0, column=1, padx=50, pady=10)
 
-
-        for i in range(a):
+        for i in range(num_candidates):
            l1.append(tk.Label(Cand_entry_frame, text="Candidate" + str(i + 1)))
            l2.append(tk.Entry(Cand_entry_frame))
            l3.append(tk.Entry(Cand_entry_frame))
@@ -59,7 +53,7 @@ class Cand_entry_frame(ttk.Frame):
 
         button = tk.Button(Cand_entry_frame, text="Submit" , command= get_data)
 
-        button.grid(row=a, column=1)
+        button.grid(row=num_candidates, column=1)
 
 
 
