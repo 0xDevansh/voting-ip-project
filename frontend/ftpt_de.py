@@ -117,6 +117,7 @@ class election_data_entry_frame(ttk.Frame):
         self.frame = tk.Frame(self)
         self.frame.pack()
 
+
         User_info_frame = tk.LabelFrame(self.frame, text="User Informaton")
         User_info_frame.grid(row=0, column=0, sticky="news")
 

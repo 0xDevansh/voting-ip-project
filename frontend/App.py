@@ -4,19 +4,19 @@ from .opening_page import OpeningPageFrame
 from .credits import CreditsFrame
 from .help import Helpframe
 from .ftpt_de import election_data_entry_frame
-from .cand_entry import CandidateEntryFrame
-from .refremdum_data_entry import RefremdumDataEntryFrame
-from .refrendum_entry_frame import RefremdumEntryFrame
-
+from .cand_entry import Cand_entry_frame
+from .start_election_frame import StartElection
+from .ftpt_election_window import VotingWindow
 class App(tk.Tk):
     frames_data = {
         'opening': {'title': 'Main Page', 'frame': OpeningPageFrame},
         'credits': {'title': 'Credits', 'frame': CreditsFrame},
         'help' : {'title' : 'Help??', 'frame' : Helpframe},
         'cre_elec': {'title' : 'Create election' , 'frame' : election_data_entry_frame},
-        'cand_entry' : {'title' : 'Enter Candidates' , 'frame' : CandidateEntryFrame},
-        'refrendum_data_entry': {'title': 'Create Refrendum', 'frame': RefremdumDataEntryFrame},
-        'refrendum_entry' : {'title': 'Enter Refrendum', 'frame': RefremdumEntryFrame}
+        'cand_entry' : {'title' : 'Enter Candidates' , 'frame' : Cand_entry_frame},
+        'start_election': {'title': 'Start Election', 'frame': StartElection},
+        'voting_window' : {'title': 'Voting Window', 'frame': VotingWindow}
+
     }
 
     def __init__(self):
