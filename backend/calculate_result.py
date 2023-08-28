@@ -7,11 +7,13 @@ from backend.runoff import calculate_runoff
 
 def calculate_result(poll_id):
     db = Database.get_instance()
-    print('DB called')
     poll = db.get_poll(id=poll_id)
     if not poll:
         raise Exception('poll not found')
     votes = db.get_poll_votes(poll_id, only_values=True)
+    if len(votes) == 0:
+        raise Exception('No votes recorded')
+
     candidates = db.get_poll_candidates(poll_id)
     candidate_ids = [c['candidate_id'] for c in candidates]
     if poll['type'] == 'fptp':
