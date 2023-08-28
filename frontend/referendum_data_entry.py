@@ -3,7 +3,7 @@ import tkinter.ttk as ttk
 import tkinter.messagebox
 
 #Rename file to data_entry
-class RefremdumDataEntryFrame(ttk.Frame):
+class ReferendumDataEntryFrame(ttk.Frame):
     def __init__(self, app):
         super().__init__(app)
 

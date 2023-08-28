@@ -6,7 +6,7 @@ from backend.db.Database import Database
 
 # for easy access ref_entry is in referendum
 
-class RefremdumEntryFrame(ttk.Frame):
+class ReferendumEntryFrame(ttk.Frame):
     def __init__(self, app):
         super().__init__(app)
         num_refremdums = 5
