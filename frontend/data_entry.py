@@ -1,6 +1,7 @@
 import tkinter as tk
 import tkinter.ttk as ttk
 import tkinter.messagebox
+from backend.db.Database import Database
 
 #Rename file to data_entry
 class ElectionDataEntryFrame(ttk.Frame):
@@ -12,6 +13,12 @@ class ElectionDataEntryFrame(ttk.Frame):
             name_institution = name_institution_Entry.get()
             type_institution = type_institution_Entry.get()
             type = Type_of_election_Entry.get()
+            type_codes = {
+                'Approval voting': 'approval',
+                'first past the post': 'fptp',
+                'Instant Runoff': 'runoff'
+            }
+            type_code = type_codes[type]
             title_election = title_election_Entry.get()
             description = Description_Entry.get()
             num_candidates = No_Cand_Entry.get() 
@@ -92,9 +99,18 @@ class ElectionDataEntryFrame(ttk.Frame):
             elif l[6] == 1:
                 tkinter.messagebox.showerror(title="Error108", message="max approved cant be more than total canditates")
             else:
-                print("succsess")
-                app.show_frame('cand_entry')
-                print(Data_Entry)
+                # save to db
+                try:
+                    db = Database.get_instance()
+                    poll = db.create_poll(name=title_election, type=type_code, description=description, security_key=security_key, secure_mode=True, inst_name=name_institution, num_candidates=num_candidates, num_voters=number_voter, max_approved=max_approved, min_threshold=min_threshold)
+                    print(poll)
+
+                    print('success')
+                    app.show_frame('cand_entry')
+                except Exception as exc:
+                    print(exc)
+                    tkinter.messagebox.showerror(title='Error109', message=str(exc))
+
             return Data_Entry
 
         def do():
