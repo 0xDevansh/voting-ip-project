@@ -7,6 +7,8 @@ from .data_entry import ElectionDataEntryFrame
 from .cand_entry import CandidateEntryFrame
 from .start_election_frame import StartElection
 from .ftpt_election_window import VotingWindow
+from .Voting_security_check import VotingSecurityCheck
+from .result_page import Result
 class App(tk.Tk):
     frames_data = {
         'opening': {'title': 'Main Page', 'frame': OpeningPageFrame},
@@ -15,7 +17,9 @@ class App(tk.Tk):
         'cre_elec': {'title' : 'Create election' , 'frame' : ElectionDataEntryFrame},
         'cand_entry' : {'title' : 'Enter Candidates' , 'frame' : CandidateEntryFrame},
         'start_election': {'title': 'Start Election', 'frame': StartElection},
-        'voting_window' : {'title': 'Voting Window', 'frame': VotingWindow}
+        'voting_window' : {'title': 'Voting Window', 'frame': VotingWindow},
+        'voting_security_check' : {'title': 'Voting Window', 'frame': VotingSecurityCheck},
+        'result_page': {'title': 'Voting Window', 'frame': Result}
 
     }
 

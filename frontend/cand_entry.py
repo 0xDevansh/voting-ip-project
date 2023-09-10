@@ -31,6 +31,7 @@ class CandidateEntryFrame(ttk.Frame):
 
             print(l4)
             print(Data)
+            app.show_frame('start_election')
 
 
 

@@ -7,7 +7,7 @@ class OpeningPageFrame(ttk.Frame):
         print('Opening frame created')
         self.grid_columnconfigure(0, weight=1)
         # 6 = no of elements to be centered
-        for i in range(6):
+        for i in range(7):
             self.grid_rowconfigure(i, weight=1)
 
         self.head1 = ttk.Label(self, text="POLL PILOT", font=('Times', 12))
@@ -24,3 +24,5 @@ class OpeningPageFrame(ttk.Frame):
         self.btn3.grid(row=4, column=0)
         self.btn4 = ttk.Button(self, text="Credits", command=app.show_frame_factory('credits'))
         self.btn4.grid(row=5, column=0)
+        self.btn5 = ttk.Button(self, text="TESTS", command=app.show_frame_factory('result_page'))
+        self.btn5.grid(row=6, column=0)
