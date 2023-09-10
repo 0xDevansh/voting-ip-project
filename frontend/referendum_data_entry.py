@@ -11,10 +11,10 @@ class ReferendumDataEntryFrame(ttk.Frame):
         def enter_data():
             name_institution = name_institution_Entry.get()
             type_institution = type_institution_Entry.get()
-            title_refremdum = title_refremdum_Entry.get()
+            title_referendum = title_referendum_Entry.get()
             description = Description_Entry.get()
             num_candidates = No_Cand_Entry.get() 
-            date_refremdum = Date_Entry.get()
+            date_referendum = Date_Entry.get()
             number_voter = No_Voter_Entry.get()
             security_key = Sec_Key_Entry.get()
             tnc = tnc_var.get()
@@ -35,7 +35,7 @@ class ReferendumDataEntryFrame(ttk.Frame):
                 Alpha += 1
             else:
                 l[2] = 1
-            if title_refremdum and description and date_refremdum:
+            if title_referendum and description and date_referendum:
                 Alpha += 1
             else:
                 l[3] = 1
@@ -54,8 +54,8 @@ class ReferendumDataEntryFrame(ttk.Frame):
             else:
                 min_threshold = 50
             Data_Entry = {"Name": name_institution, "Type_of_inst": type_institution,
-                          "title_elec": title_refremdum, "desc": description, "Num_voter": number_voter,
-                          "Num_can": num_candidates, "Date": date_refremdum, "Sec_key": security_key,
+                          "title_elec": title_referendum, "desc": description, "Num_voter": number_voter,
+                          "Num_can": num_candidates, "Date": date_referendum, "Sec_key": security_key,
                           "tnc": tnc}
 
             if l[0] == 1:
@@ -66,9 +66,9 @@ class ReferendumDataEntryFrame(ttk.Frame):
                 tkinter.messagebox.showerror(title="Error103", message='Security Key must be atleast 8 digit long')
             elif l[3] == 1:
                 tkinter.messagebox.showerror(title="Error104",
-                                             message='Title , Description and Date of refremdum Required')
+                                             message='Title , Description and Date of referendum Required')
             elif l[5] == 1:
-                tkinter.messagebox.showerror(title="Error105", message="You have not selected the type of refremdum")
+                tkinter.messagebox.showerror(title="Error105", message="You have not selected the type of referendum")
             elif l[4] == 1:
                 tkinter.messagebox.showerror(title="Error106", message="You have not accepted the Terms and Condition")
             else :
@@ -77,7 +77,7 @@ class ReferendumDataEntryFrame(ttk.Frame):
                  print(Data_Entry)
             return Data_Entry
         def do():
-            che = Type_of_refremdum_Entry.get()
+            che = Type_of_referendum_Entry.get()
             if che == "Approval voting":
                 Min_thr_Key.grid(row=6, column=0)
                 Min_thr_Key_Entry.grid(row=6, column=1, padx=50, pady=10)
@@ -112,43 +112,43 @@ class ReferendumDataEntryFrame(ttk.Frame):
 
 
 
-        refremdum_info_frame = tk.LabelFrame(self.frame, text="refremdum Information")
-        refremdum_info_frame.grid(row=1, column=0, sticky="news")
+        referendum_info_frame = tk.LabelFrame(self.frame, text="referendum Information")
+        referendum_info_frame.grid(row=1, column=0, sticky="news")
 
-        title_refremdum = tk.Label(refremdum_info_frame, text="Title of refremdum")
-        title_refremdum_Entry = tk.Entry(refremdum_info_frame)
-        title_refremdum.grid(row=0, column=0)
-        title_refremdum_Entry.grid(row=0, column=1, padx=50, pady=10)
+        title_referendum = tk.Label(referendum_info_frame, text="Title of referendum")
+        title_referendum_Entry = tk.Entry(referendum_info_frame)
+        title_referendum.grid(row=0, column=0)
+        title_referendum_Entry.grid(row=0, column=1, padx=50, pady=10)
 
 
-        Description = tk.Label(refremdum_info_frame, text="Desccription of refremdum")
+        Description = tk.Label(referendum_info_frame, text="Desccription of referendum")
         Description.grid(row=1, column=0)
-        Description_Entry = tk.Entry(refremdum_info_frame)
+        Description_Entry = tk.Entry(referendum_info_frame)
         Description_Entry.grid(row=1, column=1, padx=50, pady=10)
 
-        No_Cand = tk.Label(refremdum_info_frame, text="Number of Candidates")
+        No_Cand = tk.Label(referendum_info_frame, text="Number of Candidates")
         No_Cand.grid(row=2, column=0)
-        No_Cand_Entry = tk.Entry(refremdum_info_frame)
+        No_Cand_Entry = tk.Entry(referendum_info_frame)
         No_Cand_Entry.grid(row=2, column=1, padx=50, pady=10)
 
-        Date = tk.Label(refremdum_info_frame, text="Date")
+        Date = tk.Label(referendum_info_frame, text="Date")
         Date.grid(row=3, column=0)
-        Date_Entry = tk.Entry(refremdum_info_frame)
+        Date_Entry = tk.Entry(referendum_info_frame)
         Date_Entry.grid(row=3, column=1, padx=50, pady=10)
 
-        No_Voter = tk.Label(refremdum_info_frame, text="Number of  Voters")
+        No_Voter = tk.Label(referendum_info_frame, text="Number of  Voters")
         No_Voter.grid(row=4, column=0)
-        No_Voter_Entry = tk.Entry(refremdum_info_frame)
+        No_Voter_Entry = tk.Entry(referendum_info_frame)
         No_Voter_Entry.grid(row=4, column=1, padx=50, pady=10)
 
-        Sec_Key = tk.Label(refremdum_info_frame, text="Security Key")
+        Sec_Key = tk.Label(referendum_info_frame, text="Security Key")
         Sec_Key.grid(row=5, column=0)
-        Sec_Key_Entry = tk.Entry(refremdum_info_frame)
+        Sec_Key_Entry = tk.Entry(referendum_info_frame)
         Sec_Key_Entry.grid(row=5, column=1, padx=50, pady=10)
 
-        Min_thr_Key = tk.Label(refremdum_info_frame, text="minimum approval threshold")
+        Min_thr_Key = tk.Label(referendum_info_frame, text="minimum approval threshold")
 
-        Min_thr_Key_Entry = tk.Spinbox(refremdum_info_frame , from_= 0 , to= 100)
+        Min_thr_Key_Entry = tk.Spinbox(referendum_info_frame , from_= 0 , to= 100)
 
 
 

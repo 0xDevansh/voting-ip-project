@@ -3,11 +3,11 @@ import tkinter.ttk as ttk
 from .opening_page import OpeningPageFrame
 from .credits import CreditsFrame
 from .help import Helpframe
-from .data_entry import ElectionDataEntryFrame
+from .create_election import CreateElectionFrame
 from .cand_entry import CandidateEntryFrame
 from .start_election_frame import StartElection
 from .ftpt_election_window import VotingWindow
-from .Voting_security_check import VotingSecurityCheck
+from .voting_security_check import VotingSecurityCheck
 from .result_page import Result
 class App(tk.Tk):
     # destruct_on_switch should be True for frames
@@ -16,7 +16,7 @@ class App(tk.Tk):
         'opening': {'title': 'Main Page', 'frame': OpeningPageFrame},
         'credits': {'title': 'Credits', 'frame': CreditsFrame},
         'help' : {'title' : 'Help??', 'frame' : Helpframe},
-        'cre_elec': {'title' : 'Create election' , 'frame' : ElectionDataEntryFrame},
+        'cre_elec': {'title' : 'Create election' , 'frame' : CreateElectionFrame},
         'cand_entry' : {'title' : 'Enter Candidates' , 'frame' : CandidateEntryFrame},
         'start_election': {'title': 'Start Election', 'frame': StartElection},
         'voting_window' : {'title': 'Voting Window', 'frame': VotingWindow},

@@ -9,7 +9,7 @@ from backend.db.Database import Database
 class ReferendumEntryFrame(ttk.Frame):
     def __init__(self, app, context):
         super().__init__(app)
-        num_refremdums = 5
+        num_referendums = 5
         l1 = []
 
         l2 = []
@@ -19,14 +19,14 @@ class ReferendumEntryFrame(ttk.Frame):
             l4 = []
             l5 = []
             Data = {}
-            for i in range(num_refremdums):
+            for i in range(num_referendums):
                 if l2[i].get() and l3[i].get():
                    l4.append(l2[i].get())
                    l5.append(l3[i].get())
-                   Data['refremdum ' + str(i+1)] = {"refremdum_name" : l4[i], "Party" : l5[i]}
+                   Data['referendum ' + str(i+1)] = {"referendum_name" : l4[i], "Party" : l5[i]}
 
                 else:
-                    tkinter.messagebox.showerror(title="Error", message='refremdum' + str(i+1) + 'data incomplete')
+                    tkinter.messagebox.showerror(title="Error", message='referendum' + str(i+1) + 'data incomplete')
                     break
 
             print(l4)
@@ -37,12 +37,12 @@ class ReferendumEntryFrame(ttk.Frame):
         self.frame = tk.Frame(self)
         self.frame.pack()
 
-        ref_entry_frame = tk.LabelFrame(self.frame, text="refremdum Entry")
+        ref_entry_frame = tk.LabelFrame(self.frame, text="referendum Entry")
         ref_entry_frame.grid(row=0, column=0, sticky="news")
 
 
-        for i in range(num_refremdums):
-           l1.append(tk.Label(ref_entry_frame, text="refremdum" + str(i + 1)))
+        for i in range(num_referendums):
+           l1.append(tk.Label(ref_entry_frame, text="referendum" + str(i + 1)))
            l2.append(tk.Entry(ref_entry_frame))
            l3.append(tk.Entry(ref_entry_frame))
 
@@ -53,6 +53,6 @@ class ReferendumEntryFrame(ttk.Frame):
 
         button = tk.Button(ref_entry_frame, text="Submit" , command= get_data)
 
-        button.grid(row=num_refremdums, column=1)
+        button.grid(row=num_referendums, column=1)
 
 
