@@ -7,7 +7,7 @@ from backend.db.Database import Database
 # for easy access cand_entry is in referendum
 
 class CandidateEntryFrame(ttk.Frame):
-    def __init__(self, app):
+    def __init__(self, app, context):
         super().__init__(app)
         num_candidates = 5
         l1 = []

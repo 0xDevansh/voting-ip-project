@@ -4,7 +4,7 @@ from tkinter import messagebox
 #Renmae to Election window
 
 class VotingWindow(ttk.Frame):
-    def __init__(self, app):
+    def __init__(self, app, context):
         super().__init__(app)
         num_of_candidate = 5
         type = 'ftpt'

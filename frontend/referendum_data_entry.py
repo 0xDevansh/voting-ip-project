@@ -4,7 +4,7 @@ import tkinter.messagebox
 
 #Rename file to data_entry
 class ReferendumDataEntryFrame(ttk.Frame):
-    def __init__(self, app):
+    def __init__(self, app, context):
         super().__init__(app)
 
 

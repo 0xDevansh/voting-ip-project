@@ -6,7 +6,7 @@ from backend.approval import calculate_approval
 from backend.fptp import calculate_fptp
 
 class Result(ttk.Frame):
-    def __init__(self, app):
+    def __init__(self, app, context):
         super().__init__(app)
         candidates = ['modi', 'lakshman-singh', 'trump', 'CAK']
         votes = [ 'trump', 'lakshman-singh', 'CAK' , 'modi' , 'trump']

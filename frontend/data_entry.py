@@ -5,7 +5,7 @@ from backend.db.Database import Database
 
 #Rename file to data_entry
 class ElectionDataEntryFrame(ttk.Frame):
-    def __init__(self, app):
+    def __init__(self, app, context):
         super().__init__(app)
 
 

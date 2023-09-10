@@ -6,7 +6,7 @@ import tkinter.ttk as ttk
 # for easy access cand_entry is in referendum
 
 class VotingSecurityCheck(ttk.Frame):
-    def __init__(self, app):
+    def __init__(self, app, context):
         super().__init__(app)
         password = "password" # security key to be assigned here
 

@@ -2,9 +2,8 @@ import tkinter as tk
 import tkinter.ttk as ttk
 
 class OpeningPageFrame(ttk.Frame):
-    def __init__(self, app):
+    def __init__(self, app, context):
         super().__init__(app)
-        print('Opening frame created')
         self.grid_columnconfigure(0, weight=1)
         # 6 = no of elements to be centered
         for i in range(7):

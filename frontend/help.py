@@ -2,7 +2,7 @@ import tkinter as tk
 import tkinter.ttk as ttk
 
 class Helpframe(ttk.Frame):
-    def __init__(self, app):
+    def __init__(self, app, context):
         super().__init__(app)
         self.grid_columnconfigure(0, weight=1)
         # 6 = no of elements to be centered
