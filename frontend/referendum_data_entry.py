@@ -76,21 +76,7 @@ class ReferendumDataEntryFrame(ttk.Frame):
                  app.show_frame('refrendum_entry')
                  print(Data_Entry)
             return Data_Entry
-        def do():
-            che = Type_of_referendum_Entry.get()
-            if che == "Approval voting":
-                Min_thr_Key.grid(row=6, column=0)
-                Min_thr_Key_Entry.grid(row=6, column=1, padx=50, pady=10)
 
-                Max_app_Key.grid(row=7, column=0)
-                Max_app_Key_Entry.grid(row=7, column=1, padx=50, pady=10)
-
-            else:
-                Min_thr_Key.grid_remove()
-                Min_thr_Key_Entry.grid_remove()
-
-                Max_app_Key.grid_remove()
-                Max_app_Key_Entry.grid_remove()
 
 
         self.frame = tk.Frame(self)
