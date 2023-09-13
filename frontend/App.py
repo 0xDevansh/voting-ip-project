@@ -4,11 +4,11 @@ from .opening_page import OpeningPageFrame
 from .credits import CreditsFrame
 from .help import Helpframe
 from .create_election import CreateElectionFrame
-from .cand_entry import CandidateEntryFrame
-from .start_election_frame import StartElection
-from .ftpt_election_window import VotingWindow
-from .voting_security_check import VotingSecurityCheck
-from .result_page import Result
+from .candidate_entry import CandidateEntryFrame
+from .start_election import StartElectionFrame
+from .voting_window import VotingWindow
+from .voting_security_check import VotingSecurityCheckFrame
+from .result_page import ResultFrame
 class App(tk.Tk):
     # destruct_on_switch should be True for frames
     # that hold data or are entry forms
@@ -18,10 +18,10 @@ class App(tk.Tk):
         'help' : {'title' : 'Help??', 'frame' : Helpframe},
         'cre_elec': {'title' : 'Create election' , 'frame' : CreateElectionFrame},
         'cand_entry' : {'title' : 'Enter Candidates' , 'frame' : CandidateEntryFrame},
-        'start_election': {'title': 'Start Election', 'frame': StartElection},
+        'start_election': {'title': 'Start Election', 'frame': StartElectionFrame},
         'voting_window' : {'title': 'Voting Window', 'frame': VotingWindow},
-        'voting_security_check' : {'title': 'Security check', 'frame': VotingSecurityCheck},
-        'result_page': {'title': 'Result', 'frame': Result},
+        'voting_security_check' : {'title': 'Security check', 'frame': VotingSecurityCheckFrame},
+        'result_page': {'title': 'Result', 'frame': ResultFrame},
 
     }
 
@@ -29,7 +29,7 @@ class App(tk.Tk):
         super().__init__()
         print('App created')
         self.title('Poll Pilot')
-        self.state('zoomed')
+        # self.state('zoomed')
         self.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=1)
         self.current_frame_name = 'opening'
