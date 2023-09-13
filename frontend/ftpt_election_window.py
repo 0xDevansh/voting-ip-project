@@ -8,7 +8,7 @@ class VotingWindow(ttk.Frame):
     def __init__(self, app, context):
         super().__init__(app)
         num_of_candidate = 5
-        type = 'approval'
+        type = 'referendum'
         election_title = 'The Dumb contest'
         candidate_list = ["modi" , "Borris" , "Trump" , "Erodoan", "Meloni"]
         candidate_party = ["BJP" , "Cons" , "Rep" , "TNP" , "Brothers of Italy" ]
@@ -75,7 +75,6 @@ class VotingWindow(ttk.Frame):
 
             Btn_1 = tk.Button(User_info_frame , text='submit', command= get_data)
             Btn_1.grid(row = num_of_candidate + 1 , column= 1)
-####################################################################################################################
         elif type == 'ftpt':
             if 'None of the Above' in candidate_list:
                 pass
@@ -193,6 +192,54 @@ class VotingWindow(ttk.Frame):
             Votebox.grid(row=num_of_candidate + 2, column=1, pady=10, padx=10)
             Btn_1 = tk.Button(User_info_frame, text='submit', command=get_vote)
             Btn_1.grid(row=num_of_candidate + 3, column=0, pady=10, padx=10)
+        elif type == 'referendum':
+            l1 = []
+            l2= []
+            l3 = []
+            votes = []
+            def get_data():
+                Check = 0
+                for i in range(num_of_candidate):
+                    Choice = l3[i].get()
+                    if Choice in ['Approve' , 'Dissaprove' , 'Abstain']:
+                        votes.append(Choice)
+                        if i == num_of_candidate - 1:
+                             print(votes)
+                             app.show_frame('voting_security_check')
+                    else:
+                        tk.messagebox.showerror(title='Error', message="Please select a valid choice in referendum :-" + str(i+1))
+                        votes.clear()
+                        break
+
+
+
+            for i in range(3):
+                self.grid_rowconfigure(i, weight=1)
+            self.grid_columnconfigure(0, weight=1)
+            self.frame = tk.Frame(self)
+            self.frame.grid()
+
+            self.title_label =  tk.Label(self.frame , text= election_title )
+            self.title_label.grid(row= 0 , column=0)
+            User_info_frame = tk.LabelFrame(self.frame)
+            User_info_frame.grid(row=1, column=0, sticky="news")
+
+            label1 = tk.Label(User_info_frame, text="Refrendum Name")
+            label1.grid(row=0, column=0, pady=10)
+            label2 = tk.Label(User_info_frame, text="Refrendum Description")
+            label2.grid(row=0, column=1,padx =20,  pady=10)
+            label3 = tk.Label(User_info_frame, text="Select here")
+            label3.grid(row=0, column=2, padx= 20 , pady=10)
+            for i in range(num_of_candidate):
+                l1.append(tk.Label(User_info_frame , text= candidate_list[i]))
+                l1[i].grid(row = i+1 , column= 0)
+                l2.append(tk.Label(User_info_frame , text= candidate_party[i]))
+                l2[i].grid(row= i+1 , column= 1)
+                l3.append(ttk.Combobox(User_info_frame, values= ['Approve' , 'Dissaprove' , 'Abstain']))
+                l3[i].grid(row= i+1 , column= 2)
+            Btn_1 = tk.Button(User_info_frame , text='submit' , command=get_data)
+            Btn_1.grid(row = num_of_candidate + 1 , column= 1)
+
 
 
 
