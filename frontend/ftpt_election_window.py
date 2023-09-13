@@ -232,11 +232,11 @@ class VotingWindow(ttk.Frame):
             label3.grid(row=0, column=2, padx= 20 , pady=10)
             for i in range(num_of_candidate):
                 l1.append(tk.Label(User_info_frame , text= candidate_list[i]))
-                l1[i].grid(row = i+1 , column= 0)
+                l1[i].grid(row = i+1 , column= 0 ,padx =10,  pady=10)
                 l2.append(tk.Label(User_info_frame , text= candidate_party[i]))
-                l2[i].grid(row= i+1 , column= 1)
+                l2[i].grid(row= i+1 , column= 1, padx =10,  pady=10)
                 l3.append(ttk.Combobox(User_info_frame, values= ['Approve' , 'Dissaprove' , 'Abstain']))
-                l3[i].grid(row= i+1 , column= 2)
+                l3[i].grid(row= i+1 , column= 2, padx =10,  pady=10)
             Btn_1 = tk.Button(User_info_frame , text='submit' , command=get_data)
             Btn_1.grid(row = num_of_candidate + 1 , column= 1)
 
