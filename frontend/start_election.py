@@ -8,12 +8,13 @@ import tkinter.ttk as ttk
 class StartElectionFrame(ttk.Frame):
     def __init__(self, app, context):
         super().__init__(app)
-        password = "password" # security key to be assigned here
+        poll = context['poll']
+        sec_key = poll['security_key']
 
         def start_election():
             ent_password = entry1.get()
 
-            if ent_password == password:
+            if ent_password == sec_key:
                 app.show_frame('voting_window')
             else:
                 tkinter.messagebox.showerror(title= "error" , message= "Security key is incorrect")
