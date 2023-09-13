@@ -15,10 +15,10 @@ class CandidateEntryFrame(ttk.Frame):
         l2 = []
 
         l3 = []
+        l4 = []
+        l5 = []
+        Data = {}
         def get_data():
-            l4 = []
-            l5 = []
-            Data = {}
             for i in range(num_candidates):
                 if l2[i].get() and l3[i].get():
                    l4.append(l2[i].get())

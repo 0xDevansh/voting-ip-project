@@ -36,9 +36,11 @@ def calculate_runoff(votes, candidates):
         # eliminate last candidate
         min_votes = min(num_votes.values())
         if list(num_votes.values()).count(min_votes) > 1:
-            # eliminate based on points
-            c_points = [c for (c, p) in sorted_cand_points if num_votes[c] == min_votes]
-            elim_cand = c_points[0]
+            # eliminate based on initial points
+            elim_candidates = [c for (c, v) in num_votes.items() if v == min_votes]
+            elim_points = [(c, v) for (c, v) in sorted_cand_points if c in elim_candidates]
+            # sorted_cand_points is already sorted ascending by points
+            elim_cand = elim_points[0][0]
         else:
             elim_cand = get_keys_with_value(num_votes, min_votes)[0]
         eliminated.append(elim_cand)
