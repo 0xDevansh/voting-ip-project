@@ -32,21 +32,21 @@ class Database():
     def get_poll(self, id=None, name=None):
         cursor = self.conn.cursor()
         if id:
-            cursor.execute('SELECT id, name, type, description, inst_name, num_candidates, secure_mode, num_voters, max_approved, min_threshold, date_created FROM polls WHERE id = ?', (id,))
+            cursor.execute('SELECT id, name, type, description, inst_name, num_candidates, security_key, num_voters, max_approved, min_threshold, date_created FROM polls WHERE id = ?', (id,))
             values = cursor.fetchone()
         elif name:
-            cursor.execute('SELECT id, name, type, description, inst_name, num_candidates, secure_mode, num_voters, max_approved, min_threshold, date_created FROM polls WHERE name = ?', (name,))
+            cursor.execute('SELECT id, name, type, description, inst_name, num_candidates, security_key, num_voters, max_approved, min_threshold, date_created FROM polls WHERE name = ?', (name,))
             values = cursor.fetchone()
         else:
-            cursor.execute('SELECT id, name, type, description, inst_name, num_candidates, secure_mode, num_voters, max_approved, min_threshold, date_created FROM polls')
+            cursor.execute('SELECT id, name, type, description, inst_name, num_candidates, security_key, num_voters, max_approved, min_threshold, date_created FROM polls')
             rows = cursor.fetchall()
             res = []
             for row in rows:
-                res.append({'id': row[0], 'name': row[1], 'type': row[2], 'description': row[3], 'inst_name': row[4], 'num_candidates': row[5], 'secure_mode': row[6], 'num_voters': row[7], 'max_approved': row[8], 'min_threshold': row[9], 'date_created': row[10]})
+                res.append({'id': row[0], 'name': row[1], 'type': row[2], 'description': row[3], 'inst_name': row[4], 'num_candidates': row[5], 'security_key': row[6], 'num_voters': row[7], 'max_approved': row[8], 'min_threshold': row[9], 'date_created': row[10]})
             return res
         cursor.close()
         if values:
-            return {'id': values[0], 'name': values[1], 'type': values[2], 'description': values[3], 'inst_name': values[4], 'num_candidates': values[5], 'secure_mode': values[6], 'num_voters': values[7], 'max_approved': values[8], 'min_threshold': values[9], 'date_created': values[10]}
+            return {'id': values[0], 'name': values[1], 'type': values[2], 'description': values[3], 'inst_name': values[4], 'num_candidates': values[5], 'security_key': values[6], 'num_voters': values[7], 'max_approved': values[8], 'min_threshold': values[9], 'date_created': values[10]}
         else:
             return None
 
@@ -129,14 +129,6 @@ class Database():
         cursor.close()
         self.conn.commit()
 
-    def check_security_key(self, poll_id, key):
-        cursor = self.conn.cursor()
-        cursor.execute('SELECT security_key FROM polls WHERE poll_id = ?', (poll_id,))
-        data = cursor.fetchone()
-        cursor.close()
-        if not data:
-            raise Exception("poll doesn't exist")
-        return data[0] == key
 # checks if the given query returns any rows
 def has_rows(cursor, query: str, params: tuple) -> bool:
     if len(params):

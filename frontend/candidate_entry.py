@@ -2,6 +2,7 @@ import tkinter as tk
 import tkinter.messagebox
 import tkinter.ttk as ttk
 from backend.db.Database import Database
+from frontend.utils import snake_case
 
 
 # for easy access cand_entry is in referendum
@@ -9,7 +10,8 @@ from backend.db.Database import Database
 class CandidateEntryFrame(ttk.Frame):
     def __init__(self, app, context):
         super().__init__(app)
-        num_candidates = 5
+        poll =context['poll']
+        num_candidates = poll['num_candidates']
         l1 = []
 
         l2 = []
@@ -17,21 +19,31 @@ class CandidateEntryFrame(ttk.Frame):
         l3 = []
         l4 = []
         l5 = []
-        Data = {}
         def get_data():
+            data = []
             for i in range(num_candidates):
                 if l2[i].get() and l3[i].get():
                    l4.append(l2[i].get())
                    l5.append(l3[i].get())
-                   Data['candidate ' + str(i+1)] = {"candidate_name" : l4[i], "Party" : l5[i]}
+                   data.append({"name" : l4[i], "faction" : l5[i]})
 
                 else:
                     tkinter.messagebox.showerror(title="Error", message='Candidate' + str(i+1) + 'data incomplete')
-                    break
+                    return
 
-            print(l4)
-            print(Data)
-            app.show_frame('start_election')
+            db = Database.get_instance()
+            db_candidates = []
+            cand_ids = []
+            for cand in data:
+                candidate_id = snake_case(cand['name'])
+                if candidate_id in cand_ids:
+                    tkinter.messagebox.showerror(title="Error", message='Candidate names are too similar!')
+                    return
+                cand_ids.append(candidate_id)
+                db_candidates.append({'candidate_id': candidate_id, 'name': cand['name'], 'faction': cand['faction'] })
+            db.register_candidates(poll['id'], db_candidates)
+            print('Registered candidates:', db_candidates)
+            app.show_frame('start_election', context={'poll': poll})
 
 
 

@@ -22,14 +22,13 @@ class App(tk.Tk):
         'voting_window' : {'title': 'Voting Window', 'frame': VotingWindow},
         'voting_security_check' : {'title': 'Security check', 'frame': VotingSecurityCheckFrame},
         'result_page': {'title': 'Result', 'frame': ResultFrame},
-
     }
 
     def __init__(self):
         super().__init__()
         print('App created')
         self.title('Poll Pilot')
-        # self.state('zoomed')
+        self.state('zoomed')
         self.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=1)
         self.current_frame_name = 'opening'
