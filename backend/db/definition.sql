@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS polls (
     num_voters INTEGER,
     max_approved INTEGER,
     min_threshold REAL,
+    status TEXT DEFAULT 'not_started',
     date_created DATETIME DEFAULT current_timestamp
 );
 

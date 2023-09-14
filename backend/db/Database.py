@@ -32,37 +32,41 @@ class Database():
     def get_poll(self, id=None, name=None):
         cursor = self.conn.cursor()
         if id:
-            cursor.execute('SELECT id, name, type, description, inst_name, num_candidates, security_key, num_voters, max_approved, min_threshold, date_created FROM polls WHERE id = ?', (id,))
+            cursor.execute('SELECT id, name, type, description, status, inst_name, num_candidates, security_key, num_voters, max_approved, min_threshold, date_created FROM polls WHERE id = ?', (id,))
             values = cursor.fetchone()
         elif name:
-            cursor.execute('SELECT id, name, type, description, inst_name, num_candidates, security_key, num_voters, max_approved, min_threshold, date_created FROM polls WHERE name = ?', (name,))
+            cursor.execute('SELECT id, name, type, description, status, inst_name, num_candidates, security_key, num_voters, max_approved, min_threshold, date_created FROM polls WHERE name = ?', (name,))
             values = cursor.fetchone()
         else:
-            cursor.execute('SELECT id, name, type, description, inst_name, num_candidates, security_key, num_voters, max_approved, min_threshold, date_created FROM polls')
+            cursor.execute('SELECT id, name, type, description, status, inst_name, num_candidates, security_key, num_voters, max_approved, min_threshold, date_created FROM polls')
             rows = cursor.fetchall()
             res = []
             for row in rows:
-                res.append({'id': row[0], 'name': row[1], 'type': row[2], 'description': row[3], 'inst_name': row[4], 'num_candidates': row[5], 'security_key': row[6], 'num_voters': row[7], 'max_approved': row[8], 'min_threshold': row[9], 'date_created': row[10]})
+                res.append({'id': row[0], 'name': row[1], 'type': row[2], 'description': row[3], 'status': row[4], 'inst_name': row[5], 'num_candidates': row[6], 'security_key': row[7], 'num_voters': row[8], 'max_approved': row[9], 'min_threshold': row[10], 'date_created': row[11]})
             return res
         cursor.close()
         if values:
-            return {'id': values[0], 'name': values[1], 'type': values[2], 'description': values[3], 'inst_name': values[4], 'num_candidates': values[5], 'security_key': values[6], 'num_voters': values[7], 'max_approved': values[8], 'min_threshold': values[9], 'date_created': values[10]}
+            return {'id': values[0], 'name': values[1], 'type': values[2], 'description': values[3], 'status': row[4], 'inst_name': values[5], 'num_candidates': values[6], 'security_key': values[7], 'num_voters': values[8], 'max_approved': values[9], 'min_threshold': values[10], 'date_created': values[11]}
         else:
             return None
 
-    def create_poll(self, name, type, description=None, security_key=None, secure_mode=False, inst_name=None, num_candidates=0, num_voters=None, max_approved=None, min_threshold=None):
+    def create_poll(self, name, type, description=None, status='not_started', security_key=None, secure_mode=False, inst_name=None, num_candidates=0, num_voters=None, max_approved=None, min_threshold=None):
+        type_values = ['runoff', 'fptp', 'approval', 'referendum']
+        status_values = ['not_started', 'running', 'completed']
         cursor = self.conn.cursor()
         # input validation
         if secure_mode and not security_key:
             raise Exception('security_key required for secure mode')
-        if type not in ['runoff', 'fptp', 'approval', 'referendum']:
-            raise Exception(f'Invalid type: {type}')
+        if type not in type_values:
+            raise Exception(f'Invalid type: {type}, must be one of {type_values}')
+        if status not in status_values:
+            raise Exception(f'Invalid status: {status}, must be one of {status_values}')
         cursor.execute('SELECT id FROM polls WHERE name = ?', (name,))
         if cursor.fetchone():
             raise Exception('Poll with the same name already exists')
 
         secure_mode = 1 if secure_mode else 0
-        cursor.execute('INSERT INTO polls (name, type, description, security_key, secure_mode, num_voters, max_approved, min_threshold, inst_name, num_candidates) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', (name, type, description, security_key, secure_mode, num_voters, max_approved, min_threshold, inst_name, num_candidates))
+        cursor.execute('INSERT INTO polls (name, type, description, status, security_key, secure_mode, num_voters, max_approved, min_threshold, inst_name, num_candidates) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', (name, type, description, status, security_key, secure_mode, num_voters, max_approved, min_threshold, inst_name, num_candidates))
         cursor.close()
         self.conn.commit()
         return self.get_poll(name=name)
@@ -116,10 +120,15 @@ class Database():
 
     def save_vote(self, poll_id, vote):
         cursor = self.conn.cursor()
-        cursor.execute('SELECT num_voters FROM polls WHERE id = ?', (poll_id,))
+        cursor.execute('SELECT num_voters, status FROM polls WHERE id = ?', (poll_id,))
         data = cursor.fetchone()
         if not data:
             raise Exception('poll not found')
+        if data[1] == 'completed':
+            raise Exception('election has been completed')
+        if data[1] == 'not_started':
+            print('Setting status to running')
+            cursor.execute('UPDATE polls SET status=\'running\' WHERE poll_id=?', (poll_id,))
         num_voters = data[0]
         cursor.execute('SELECT COUNT(*) FROM votes WHERE poll_id = ?', (poll_id,))
         votes_cast = cursor.fetchone()[0]
