@@ -9,7 +9,9 @@ class StartElectionFrame(ttk.Frame):
     def __init__(self, app, context):
         super().__init__(app)
         poll = context['poll']
+        print(poll)
         sec_key = poll['security_key']
+        # sec_key = 'password'
 
         def start_election():
             ent_password = entry1.get()

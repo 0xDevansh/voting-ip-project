@@ -2,6 +2,9 @@ import tkinter as tk
 import tkinter.ttk as ttk
 import tkinter.messagebox
 
+from backend.db.Database import Database
+
+
 #Rename file to data_entry
 class CreateReferendumFrame(ttk.Frame):
     def __init__(self, app, context):
@@ -47,12 +50,6 @@ class CreateReferendumFrame(ttk.Frame):
                 Alpha +=1
             else:
                 l[5] = 1
-            if int(min_threshold) == 0:
-                min_threshold = 50
-            elif min_threshold:
-                pass
-            else:
-                min_threshold = 50
             Data_Entry = {"Name": name_institution, "Type_of_inst": type_institution,
                           "title_elec": title_referendum, "desc": description, "Num_voter": number_voter,
                           "Num_can": num_candidates, "Date": date_referendum, "Sec_key": security_key,
@@ -71,10 +68,19 @@ class CreateReferendumFrame(ttk.Frame):
                 tkinter.messagebox.showerror(title="Error105", message="You have not selected the type of referendum")
             elif l[4] == 1:
                 tkinter.messagebox.showerror(title="Error106", message="You have not accepted the Terms and Condition")
-            else :
-                 print("succsess")
-                 app.show_frame('refrendum_entry')
-                 print(Data_Entry)
+            else:
+                # save to db
+                try:
+                    db = Database.get_instance()
+                    poll = db.create_poll(name=title_referendum, type='referendum', description=description,
+                                          security_key=security_key, secure_mode=True, inst_name=name_institution,
+                                          num_candidates=num_candidates, num_voters=number_voter,
+                                          min_threshold=min_threshold)
+                    print('Poll created: ', poll)
+                    app.show_frame('cand_entry', context={'poll': poll})
+                except Exception as exc:
+                    print(exc)
+                    tkinter.messagebox.showerror(title='Error109', message=str(exc))
             return Data_Entry
 
 

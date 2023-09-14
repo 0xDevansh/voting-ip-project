@@ -11,7 +11,7 @@ class VotingWindow(ttk.Frame):
         type = 'referendum'
         election_title = 'The Dumb contest'
         candidate_list = ["modi" , "Borris" , "Trump" , "Erodoan", "Meloni"]
-        candidate_party = ["BJP" , "Cons" , "Rep" , "TNP" , "Brothers of Italy" ]
+        self.candidate_party = ["BJP" , "Cons" , "Rep" , "TNP" , "Brothers of Italy" ]
 
 
         if type == 'approval':
@@ -65,7 +65,7 @@ class VotingWindow(ttk.Frame):
             for i in range(num_of_candidate):
                 l1.append(tk.Label(User_info_frame , text= candidate_list[i]))
                 l1[i].grid(row = i+1 , column= 0)
-                l2.append(tk.Label(User_info_frame , text= candidate_party[i]))
+                l2.append(tk.Label(User_info_frame , text= self.candidate_party[i]))
                 l2[i].grid(row= i+1 , column= 1)
                 l4.append(tk.StringVar(value= 'No'))
 
@@ -80,7 +80,7 @@ class VotingWindow(ttk.Frame):
                 pass
             else:
                 candidate_list.append("None of the Above")
-                candidate_party.append('NOTA')
+                self.candidate_party.append('NOTA')
                 num_of_candidate+=1
             l1 = []
             l2 = []
@@ -110,7 +110,7 @@ class VotingWindow(ttk.Frame):
             for i in range(num_of_candidate):
                 l1.append(tk.Label(User_info_frame , text= candidate_list[i]))
                 l1[i].grid(row = i+1 , column= 0 , pady= 10)
-                l2.append(tk.Label(User_info_frame , text= candidate_party[i]))
+                l2.append(tk.Label(User_info_frame , text= self.candidate_party[i]))
                 l2[i].grid(row= i+1 , column= 2 , pady = 10)
             n =  tk.StringVar()
             Votebox = ttk.Combobox(User_info_frame, textvariable= n)
@@ -182,7 +182,7 @@ class VotingWindow(ttk.Frame):
             for i in range(num_of_candidate):
                 l1.append(tk.Label(User_info_frame, text=candidate_list[i]))
                 l1[i].grid(row=i + 1, column=0, pady=10,padx=10)
-                l2.append(tk.Label(User_info_frame, text=candidate_party[i]))
+                l2.append(tk.Label(User_info_frame, text=self.candidate_party[i]))
                 l2[i].grid(row=i + 1, column=2, pady=10, padx=10)
             n = tk.StringVar()
             Label20 = tk.Label(User_info_frame, text = "Please enter your choice number:- " + str(len(counter)))
@@ -233,13 +233,15 @@ class VotingWindow(ttk.Frame):
             for i in range(num_of_candidate):
                 l1.append(tk.Label(User_info_frame , text= candidate_list[i]))
                 l1[i].grid(row = i+1 , column= 0)
-                l2.append(tk.Label(User_info_frame , text= candidate_party[i]))
+                l2.append(tk.Button(User_info_frame, text= 'Show description', command=self.show_ref_description(i)))
                 l2[i].grid(row= i+1 , column= 1)
                 l3.append(ttk.Combobox(User_info_frame, values= ['Approve' , 'Dissaprove' , 'Abstain']))
                 l3[i].grid(row= i+1 , column= 2)
             Btn_1 = tk.Button(User_info_frame , text='submit' , command=get_data)
             Btn_1.grid(row = num_of_candidate + 1 , column= 1)
 
+    def show_ref_description(self, i):
+        return lambda: tk.messagebox.showerror(message=self.candidate_party[i])
 
 
 
