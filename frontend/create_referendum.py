@@ -47,7 +47,7 @@ class CreateReferendumFrame(ttk.Frame):
             else:
                 l[4] = 1
             if int(min_threshold) == 0:
-                min_threshold = 50
+                min_threshold = None
             Data_Entry = {"Name": name_institution, "Type_of_inst": type_institution,
                           "title_elec": title_referendum, "desc": description, "Num_voter": number_voter,
                           "Num_can": num_candidates, "Date": date_referendum, "Sec_key": security_key,
