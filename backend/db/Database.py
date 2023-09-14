@@ -46,7 +46,7 @@ class Database():
             return res
         cursor.close()
         if values:
-            return {'id': values[0], 'name': values[1], 'type': values[2], 'description': values[3], 'status': row[4], 'inst_name': values[5], 'num_candidates': values[6], 'security_key': values[7], 'num_voters': values[8], 'max_approved': values[9], 'min_threshold': values[10], 'date_created': values[11]}
+            return {'id': values[0], 'name': values[1], 'type': values[2], 'description': values[3], 'status': values[4], 'inst_name': values[5], 'num_candidates': values[6], 'security_key': values[7], 'num_voters': values[8], 'max_approved': values[9], 'min_threshold': values[10], 'date_created': values[11]}
         else:
             return None
 

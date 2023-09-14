@@ -35,7 +35,7 @@ class App(tk.Tk):
         super().__init__()
         print('App created')
         self.title('Poll Pilot')
-        self.state('zoomed')
+        # self.state('zoomed')
         self.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=1)
         self.current_frame_name = 'opening'

@@ -2,6 +2,7 @@ import tkinter as tk
 import tkinter.ttk as ttk
 import tkinter.messagebox
 from backend.db.Database import Database
+import traceback
 
 #Rename file to data_entry
 class CreateElectionFrame(ttk.Frame):
@@ -104,7 +105,7 @@ class CreateElectionFrame(ttk.Frame):
                     print('success')
                     app.show_frame('cand_entry', context={'poll': poll})
                 except Exception as exc:
-                    print(exc)
+                    traceback.print_exc()
                     tkinter.messagebox.showerror(title='Error109', message=str(exc))
 
             return Data_Entry
