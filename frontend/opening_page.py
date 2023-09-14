@@ -16,12 +16,11 @@ class OpeningPageFrame(ttk.Frame):
 
         self.btn1 = ttk.Button(self, text="Create An Election", command=app.show_frame_factory('cre_elec'))
         self.btn1.grid(row=2, column=0)
-        self.btn2 = ttk.Button(self, text="Create A Refrendum", command=app.show_frame_factory('start_election'))
-        #for easy access cand_entry is in referendum
+        self.btn2 = ttk.Button(self, text="Create A Refrendum", command=app.show_frame_factory('create_ref'))
         self.btn2.grid(row=3, column=0)
-        self.btn3 = ttk.Button(self, text="HELP??", command=app.show_frame_factory('voting_window'))
+        self.btn3 = ttk.Button(self, text="HELP??", command=app.show_frame_factory('help'))
         self.btn3.grid(row=4, column=0)
         self.btn4 = ttk.Button(self, text="Credits", command=app.show_frame_factory('credits'))
         self.btn4.grid(row=5, column=0)
-        self.btn5 = ttk.Button(self, text="TESTS", command=app.show_frame_factory('start_election'))
+        self.btn5 = ttk.Button(self, text="TESTS", command=app.show_frame_factory('cand_entry'))
         self.btn5.grid(row=6, column=0)

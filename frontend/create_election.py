@@ -56,14 +56,8 @@ class CreateElectionFrame(ttk.Frame):
                 Alpha +=1
             else:
                 l[5] = 1
-            if int(min_threshold) == 0:
-                min_threshold = 50
-            elif min_threshold:
-                Alpha +=1
-                pass
-            else:
-                min_threshold = 50
             if max_approved:
+
                 try:
                     int(max_approved)
                     if max_approved <= num_candidates:
@@ -75,6 +69,8 @@ class CreateElectionFrame(ttk.Frame):
                     l[7] = 1
             else:
                 max_approved = 1
+                if int(min_threshold) == 0:
+                    min_threshold = 50
                 Alpha +=1
             Data_Entry = {"Name": name_institution, "Type of inst": type_institution, "Type_elec": type,
                           "title elec": title_election, "desc": description, "Num voter": number_voter,

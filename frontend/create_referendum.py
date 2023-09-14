@@ -75,7 +75,7 @@ class CreateReferendumFrame(ttk.Frame):
                                           num_candidates=num_candidates, num_voters=number_voter,
                                           min_threshold=min_threshold)
                     print('Poll created: ', poll)
-                    app.show_frame('cand_entry', context={'poll': poll})
+                    app.show_frame('ref_entry', context={'poll': poll})
                 except Exception as exc:
                     print(exc)
                     tkinter.messagebox.showerror(title='Error109', message=str(exc))
