@@ -46,10 +46,8 @@ class CreateReferendumFrame(ttk.Frame):
                 Alpha += 1
             else:
                 l[4] = 1
-            if type:
-                Alpha +=1
-            else:
-                l[5] = 1
+            if int(min_threshold) == 0:
+                min_threshold = 50
             Data_Entry = {"Name": name_institution, "Type_of_inst": type_institution,
                           "title_elec": title_referendum, "desc": description, "Num_voter": number_voter,
                           "Num_can": num_candidates, "Date": date_referendum, "Sec_key": security_key,
@@ -113,12 +111,12 @@ class CreateReferendumFrame(ttk.Frame):
         title_referendum_Entry.grid(row=0, column=1, padx=50, pady=10)
 
 
-        Description = tk.Label(referendum_info_frame, text="Desccription of referendum")
+        Description = tk.Label(referendum_info_frame, text="Description of referendum")
         Description.grid(row=1, column=0)
         Description_Entry = tk.Entry(referendum_info_frame)
         Description_Entry.grid(row=1, column=1, padx=50, pady=10)
 
-        No_Cand = tk.Label(referendum_info_frame, text="Number of Candidates")
+        No_Cand = tk.Label(referendum_info_frame, text="Number of Referendum")
         No_Cand.grid(row=2, column=0)
         No_Cand_Entry = tk.Entry(referendum_info_frame)
         No_Cand_Entry.grid(row=2, column=1, padx=50, pady=10)
@@ -139,8 +137,9 @@ class CreateReferendumFrame(ttk.Frame):
         Sec_Key_Entry.grid(row=5, column=1, padx=50, pady=10)
 
         Min_thr_Key = tk.Label(referendum_info_frame, text="minimum approval threshold")
-
+        Min_thr_Key.grid(row=6, column=0)
         Min_thr_Key_Entry = tk.Spinbox(referendum_info_frame , from_= 0 , to= 100)
+        Min_thr_Key_Entry.grid(row=6, column=1, padx=50, pady=10)
 
 
 

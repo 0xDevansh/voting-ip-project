@@ -23,7 +23,7 @@ class ReferendumEntryFrame(ttk.Frame):
                 if l2[i].get() and l3[i].get():
                    l4.append(l2[i].get())
                    l5.append(l3[i].get())
-                   Data['referendum ' + str(i+1)] = {"referendum_name" : l4[i], "Party" : l5[i]}
+                   Data['referendum ' + str(i+1)] = {"referendum_name" : l4[i], "Description" : l5[i]}
 
                 else:
                     tkinter.messagebox.showerror(title="Error", message='referendum' + str(i+1) + 'data incomplete')
