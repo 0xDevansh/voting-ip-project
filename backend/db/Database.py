@@ -50,6 +50,30 @@ class Database():
         else:
             return None
 
+    def save_result(self, id, winners, order, eliminated=None):
+        json_winners = json.dumps(winners)
+        json_order = json.dumps(order)
+        json_eliminated = None
+        if eliminated != None:
+            json_eliminated = json.dumps(eliminated)
+
+        cursor = self.conn.cursor()
+        cursor.execute('INSERT INTO poll_result (poll_id, winners, order_cands, eliminated) VALUES (?, ?, ?, ?)', (id, json_winners, json_order, json_eliminated))
+        cursor.close()
+        self.conn.commit()
+
+    def get_result(self, id):
+        cursor = self.conn.cursor()
+        cursor.execute('SELECT poll_id, winners, order_cands, eliminated FROM poll_result WHERE poll_id = ?', (id,))
+        row = cursor.fetchone()
+        cursor.close()
+        if not row:
+            return None
+        winners = json.loads(row[1])
+        order = json.loads(row[2])
+        eliminated = json.loads(row[3])
+        return {'winners': winners, 'order': order, 'eliminated': eliminated}
+
     def create_poll(self, name, type, description=None, status='not_started', security_key=None, secure_mode=False, inst_name=None, num_candidates=0, num_voters=None, max_approved=None, min_threshold=None):
         type_values = ['runoff', 'fptp', 'approval', 'referendum']
         status_values = ['not_started', 'running', 'completed']

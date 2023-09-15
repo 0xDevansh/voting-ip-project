@@ -17,8 +17,14 @@ def calculate_result(poll_id):
     candidates = db.get_poll_candidates(poll_id)
     candidate_ids = [c['candidate_id'] for c in candidates]
     if poll['type'] == 'fptp':
-        return calculate_fptp(votes, candidate_ids)
+        result = calculate_fptp(votes, candidate_ids)
+        db.save_result(poll_id, result['winners'], result['order'])
+        return result
     elif poll['type'] == 'runoff':
-        return calculate_runoff(votes, candidate_ids)
+        result = calculate_runoff(votes, candidate_ids)
+        db.save_result(poll_id, result['winners'], result['order'], eliminated=result['eliminated'])
+        return result
     elif poll['type'] == 'approval':
-        return calculate_approval(votes, candidate_ids, max_approved=poll['max_approved'], min_threshold=poll['min_threshold'])
+        result = calculate_approval(votes, candidate_ids, max_approved=poll['max_approved'], min_threshold=poll['min_threshold'])
+        db.save_result(poll_id, result['winners'], result['order'])
+        return result
