@@ -33,12 +33,12 @@ class ElectionNavigationFrame(ttk.Frame):
         for i, poll in enumerate(polls):
 
             Ref_name_label.append(tk.Label(election_nav_frame_2, text=poll['name']))
-            Ref_name_label.append(tk.Label(election_nav_frame_2, text=poll['type']))
+            Ref_type_label.append(tk.Label(election_nav_frame_2, text=poll['type']))
             Ref_status_Label.append(tk.Label(election_nav_frame_2,text=poll['status']))
 
 
             Ref_name_label[i].grid(row=i+1, column=0,padx=50)
-            Ref_type_label[i].grid(row=i+1, column=0,padx=50)
+            Ref_type_label[i].grid(row=i+1, column=1,padx=50)
             Ref_status_Label[i].grid(row=i+1, column=2, padx=50, pady=10)
 
             if poll['status'] == 'not_started':
