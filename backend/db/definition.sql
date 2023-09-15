@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS poll_result (
     poll_id INTEGER PRIMARY KEY,
     winners TEXT,
     order_cands TEXT,
-    eliminated TEXT,
+    eliminated TEXT
 );
 
 CREATE TABLE IF NOT EXISTS votes (
