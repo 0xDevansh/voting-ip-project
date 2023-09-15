@@ -2,16 +2,26 @@ import tkinter as tk
 import tkinter.messagebox
 import tkinter.ttk as ttk
 from tkinter import messagebox
+
+from backend.db.Database import Database
+
+
 #Renmae to Election window
 
 class VotingWindow(ttk.Frame):
     def __init__(self, app, context):
         super().__init__(app)
-        num_of_candidate = 5
-        type = 'referendum'
-        election_title = 'The Dumb contest'
-        candidate_list = ["modi" , "Borris" , "Trump" , "Erodoan", "Meloni"]
-        self.candidate_party = ["BJP" , "Cons" , "Rep" , "TNP" , "Brothers of Italy" ]
+        poll = context['poll']
+        db = Database.get_instance()
+        candidates = db.get_poll_candidates(poll['id'])
+        num_of_candidate = poll['num_candidates']
+        type = poll['type']
+        election_title = poll['name']
+        candidate_names = []
+        self.candidate_party = []
+        for cand in candidates:
+            candidate_names.append(cand['name'])
+            self.candidate_party.append(cand['faction'])
 
 
         if type == 'approval':
@@ -29,7 +39,7 @@ class VotingWindow(ttk.Frame):
 
                 for j in range(num_of_candidate):
                     if l5[j] == 'Yes':
-                        l6.append(candidate_list[j])
+                        l6.append(candidate_names[j])
                         Check += 1
 
                     else:
@@ -42,7 +52,7 @@ class VotingWindow(ttk.Frame):
                 l5.clear()
                 l6.clear()
                 print(votes)
-                app.show_frame('voting_security_check')
+                # app.show_frame('voting_security_check')
 
 
             for i in range(3):
@@ -63,7 +73,7 @@ class VotingWindow(ttk.Frame):
             label3 = tk.Label(User_info_frame, text="Select here")
             label3.grid(row=0, column=2, padx= 20 , pady=10)
             for i in range(num_of_candidate):
-                l1.append(tk.Label(User_info_frame , text= candidate_list[i]))
+                l1.append(tk.Label(User_info_frame , text= candidate_names[i]))
                 l1[i].grid(row = i+1 , column= 0)
                 l2.append(tk.Label(User_info_frame , text= self.candidate_party[i]))
                 l2[i].grid(row= i+1 , column= 1)
@@ -76,10 +86,10 @@ class VotingWindow(ttk.Frame):
             Btn_1 = tk.Button(User_info_frame , text='submit', command= get_data)
             Btn_1.grid(row = num_of_candidate + 1 , column= 1)
         elif type == 'ftpt':
-            if 'None of the Above' in candidate_list:
+            if 'None of the Above' in candidate_names:
                 pass
             else:
-                candidate_list.append("None of the Above")
+                candidate_names.append("None of the Above")
                 self.candidate_party.append('NOTA')
                 num_of_candidate+=1
             l1 = []
@@ -108,13 +118,13 @@ class VotingWindow(ttk.Frame):
             label2 = tk.Label(User_info_frame, text="Candidate Party")
             label2.grid(row=0, column=2,padx =20,  pady=10)
             for i in range(num_of_candidate):
-                l1.append(tk.Label(User_info_frame , text= candidate_list[i]))
+                l1.append(tk.Label(User_info_frame , text= candidate_names[i]))
                 l1[i].grid(row = i+1 , column= 0 , pady= 10)
                 l2.append(tk.Label(User_info_frame , text= self.candidate_party[i]))
                 l2[i].grid(row= i+1 , column= 2 , pady = 10)
             n =  tk.StringVar()
             Votebox = ttk.Combobox(User_info_frame, textvariable= n)
-            Votebox['values'] = candidate_list
+            Votebox['values'] = candidate_names
             Votebox.grid(row= num_of_candidate + 1 , column = 1)
             Btn_1 = tk.Button(User_info_frame , text='submit' , command= getvote)
             Btn_1.grid(row = num_of_candidate + 2 , column= 1)
@@ -131,7 +141,7 @@ class VotingWindow(ttk.Frame):
 
                 try:
                     rank_Vote = n.get()
-                    candidate_list.remove(rank_Vote)
+                    candidate_names.remove(rank_Vote)
                     counter.append('')
                     total_vote.append(rank_Vote)
                 except:
@@ -141,12 +151,12 @@ class VotingWindow(ttk.Frame):
                 Label20 = tk.Label(User_info_frame, text="Please enter your choice number:- " + str(len(counter)))
                 Label20.grid(row=num_of_candidate + 1, column=1, pady=10, padx=10)
                 Votebox = ttk.Combobox(User_info_frame, textvariable=n)
-                Votebox['values'] = candidate_list
+                Votebox['values'] = candidate_names
                 Votebox.grid(row=num_of_candidate + 2, column=1, pady=10, padx=10)
                 def terminate():
                     try:
                         rank_Vote = n.get()
-                        candidate_list.remove(rank_Vote)
+                        candidate_names.remove(rank_Vote)
                         counter.append('')
                         total_vote.append(rank_Vote)
                     except:
@@ -180,7 +190,7 @@ class VotingWindow(ttk.Frame):
             label2 = tk.Label(User_info_frame, text="Candidate Party")
             label2.grid(row=0, column=2, padx=10, pady=10)
             for i in range(num_of_candidate):
-                l1.append(tk.Label(User_info_frame, text=candidate_list[i]))
+                l1.append(tk.Label(User_info_frame, text=candidate_names[i]))
                 l1[i].grid(row=i + 1, column=0, pady=10,padx=10)
                 l2.append(tk.Label(User_info_frame, text=self.candidate_party[i]))
                 l2[i].grid(row=i + 1, column=2, pady=10, padx=10)
@@ -188,7 +198,7 @@ class VotingWindow(ttk.Frame):
             Label20 = tk.Label(User_info_frame, text = "Please enter your choice number:- " + str(len(counter)))
             Label20.grid(row=num_of_candidate + 1, column=1 ,pady=10, padx=10)
             Votebox = ttk.Combobox(User_info_frame, textvariable=n)
-            Votebox['values'] = candidate_list
+            Votebox['values'] = candidate_names
             Votebox.grid(row=num_of_candidate + 2, column=1, pady=10, padx=10)
             Btn_1 = tk.Button(User_info_frame, text='submit', command=get_vote)
             Btn_1.grid(row=num_of_candidate + 3, column=0, pady=10, padx=10)
@@ -231,7 +241,7 @@ class VotingWindow(ttk.Frame):
             label3 = tk.Label(User_info_frame, text="Select here")
             label3.grid(row=0, column=2, padx= 20 , pady=10)
             for i in range(num_of_candidate):
-                l1.append(tk.Label(User_info_frame , text= candidate_list[i]))
+                l1.append(tk.Label(User_info_frame , text= candidate_names[i]))
                 l1[i].grid(row = i+1 , column= 0)
                 l2.append(tk.Button(User_info_frame, text= 'Show description', command=self.show_ref_description(i)))
                 l2[i].grid(row= i+1 , column= 1)
