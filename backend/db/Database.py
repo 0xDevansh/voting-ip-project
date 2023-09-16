@@ -174,7 +174,7 @@ class Database():
             raise Exception('election has been completed')
         if data[1] == 'not_started':
             print('Setting status to running')
-            cursor.execute('UPDATE polls SET status=\'running\' WHERE poll_id=?', (poll_id,))
+            cursor.execute('UPDATE polls SET status=\'running\' WHERE id=?', (poll_id,))
         num_voters = data[0]
         cursor.execute('SELECT COUNT(*) FROM votes WHERE poll_id = ?', (poll_id,))
         votes_cast = cursor.fetchone()[0]

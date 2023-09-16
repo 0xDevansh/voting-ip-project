@@ -1,12 +1,11 @@
 import tkinter as tk
 import tkinter.messagebox
 import tkinter.ttk as ttk
-from tkinter import messagebox
+import traceback
 
 from backend.db.Database import Database
+from frontend.utils import snake_case
 
-
-#Renmae to Election window
 
 class VotingWindow(ttk.Frame):
     def __init__(self, app, context):
@@ -32,7 +31,7 @@ class VotingWindow(ttk.Frame):
             checkbutton_var_value= []
             approval_list = []
             votes = []
-            def get_data_approval():
+            def get_vote_approval():
                 Check = 0
                 for i in range(num_of_candidate):
                     checkbutton_var_value.append(checkbutton_var[i].get())
@@ -81,7 +80,7 @@ class VotingWindow(ttk.Frame):
                                     onvalue="Yes", offvalue="No"))
                 checkbutton_list[i].grid(row= i+1 , column= 2)
 
-            Btn_1 = tk.Button(User_info_frame , text='submit', command= get_data_approval)
+            Btn_1 = tk.Button(User_info_frame , text='submit', command= get_vote_approval)
             Btn_1.grid(row = num_of_candidate + 1 , column= 1)
         elif type == 'fptp':
 
@@ -96,11 +95,18 @@ class VotingWindow(ttk.Frame):
             label_list_1 = []
             label_list_2 = []
             votes = []
-            def getvote_fptp():
-                Vote = var_for_combobox.get()
-                votes.append(Vote)
-                app.show_frame('voting_security_check')
-                print(votes)
+            def get_vote_fptp():
+                vote = var_for_combobox.get()
+                print(vote)
+                votes.append(vote)
+                try:
+                    candidate_id = snake_case(vote)
+                    db.save_vote(poll['id'], vote)
+                    app.show_frame('voting_security_check', {'poll': poll})
+                except Exception as exc:
+                    traceback.print_exc()
+                    tk.messagebox.showerror(message=str(exc))
+
             for i in range(3):
                 self.grid_rowconfigure(i, weight=1)
             self.grid_columnconfigure(0, weight=1)
@@ -125,7 +131,7 @@ class VotingWindow(ttk.Frame):
             Votebox = ttk.Combobox(User_info_frame, textvariable= var_for_combobox)
             Votebox['values'] = self.candidate_names
             Votebox.grid(row= num_of_candidate + 1 , column = 1)
-            Btn_1 = tk.Button(User_info_frame , text='submit' , command= getvote_fptp)
+            Btn_1 = tk.Button(User_info_frame , text='submit' , command= get_vote_fptp)
             Btn_1.grid(row = num_of_candidate + 2 , column= 1)
         elif type == 'runoff':
             counter = ['1']
@@ -136,7 +142,7 @@ class VotingWindow(ttk.Frame):
             rank_votes = []
             votes = []
 
-            def get_data_runoff():
+            def get_vote_runoff():
 
                 try:
                     rank_Vote = var_for_combobox.get()
@@ -199,7 +205,7 @@ class VotingWindow(ttk.Frame):
             Votebox = ttk.Combobox(User_info_frame, textvariable=var_for_combobox)
             Votebox['values'] = self.candidate_names
             Votebox.grid(row=num_of_candidate + 2, column=1, pady=10, padx=10)
-            Btn_1 = tk.Button(User_info_frame, text='submit', command=get_data_runoff)
+            Btn_1 = tk.Button(User_info_frame, text='submit', command=get_vote_runoff)
             Btn_1.grid(row=num_of_candidate + 3, column=0, pady=10, padx=10)
         elif type == 'referendum':
             label_list_1 = []
