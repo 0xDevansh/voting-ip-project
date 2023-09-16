@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS poll_candidate (
 
 CREATE TABLE IF NOT EXISTS poll_proposal (
     poll_id INTEGER,
-    proposal_id INTEGER,
+    proposal_id INTEGER AUTOINCREMENT,
     name TEXT,
     description TEXT,
     PRIMARY KEY (poll_id, proposal_id)
