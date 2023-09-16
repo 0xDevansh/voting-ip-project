@@ -1,6 +1,7 @@
 import tkinter as tk
 import tkinter.messagebox
 import tkinter.ttk as ttk
+import traceback
 
 from backend.db.Database import Database
 
@@ -12,11 +13,13 @@ class ElectionNavigationFrame(ttk.Frame):
         self.frame = tk.Frame(self)
         self.frame.pack()
 
-        db = Database.get_instance()
-        polls = db.get_poll()
-        print(polls)
-       # election_nav_frame_1 = tk.LabelFrame(self.frame)
-        #election_nav_frame_1.grid(row=0, column=0, sticky="news")
+        try:
+            db = Database.get_instance()
+            polls = db.get_poll()
+        except Exception as exc:
+            traceback.print_exc()
+            tk.messagebox.showerror(message=str(exc))
+
         election_nav_frame_2 = tk.LabelFrame(self.frame)
         election_nav_frame_2.grid(row=0, column=0, sticky="news")
         text_for_labels = ["Election  name","Type" ,"Status", "Commands"]
