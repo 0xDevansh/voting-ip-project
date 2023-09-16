@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS poll_result (
     winners TEXT,
     order_cands TEXT,
     eliminated TEXT,
+    referendum_result TEXT,
     FOREIGN KEY (poll_id) REFERENCES polls(id)
 );
 

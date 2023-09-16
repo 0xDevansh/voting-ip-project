@@ -234,9 +234,9 @@ class VotingWindow(ttk.Frame):
                         votes.clear()
                         break
                 try:
-                    db_votes = []
+                    db_votes = {}
                     for i, cand in enumerate(candidates):
-                        db_votes.append({cand['name']: choices_short[votes[i]]})
+                        db_votes[cand['name']] = choices_short[votes[i]]
                     print(db_votes)
                     db.save_vote(poll['id'], db_votes)
                     app.show_frame('voting_security_check', {'poll': poll})

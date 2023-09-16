@@ -50,29 +50,35 @@ class Database():
         else:
             return None
 
-    def save_result(self, id, winners, order, eliminated=None):
+    def save_result(self, id, winners, order, eliminated=None, referendum_result=None):
         json_winners = json.dumps(winners)
         json_order = json.dumps(order)
         json_eliminated = None
+        json_referendum_result = None
         if eliminated != None:
             json_eliminated = json.dumps(eliminated)
+        if referendum_result != None:
+            json_referendum_result = json.dumps(referendum_result)
 
         cursor = self.conn.cursor()
-        cursor.execute('INSERT INTO poll_result (poll_id, winners, order_cands, eliminated) VALUES (?, ?, ?, ?)', (id, json_winners, json_order, json_eliminated))
+        cursor.execute('INSERT INTO poll_result (poll_id, winners, order_cands, eliminated, referendum_result) VALUES (?, ?, ?, ?, ?)', (id, json_winners, json_order, json_eliminated, json_referendum_result))
         cursor.close()
         self.conn.commit()
 
     def get_result(self, id):
         cursor = self.conn.cursor()
-        cursor.execute('SELECT poll_id, winners, order_cands, eliminated FROM poll_result WHERE poll_id = ?', (id,))
+        cursor.execute('SELECT poll_id, winners, order_cands, eliminated, referendum_result FROM poll_result WHERE poll_id = ?', (id,))
         row = cursor.fetchone()
         cursor.close()
         if not row:
             return None
-        winners = json.loads(row[1])
-        order = json.loads(row[2])
-        eliminated = json.loads(row[3])
-        return {'winners': winners, 'order': order, 'eliminated': eliminated}
+
+        winners = json.loads(row[1]) if row[1] else None
+        order = json.loads(row[2]) if row[2] else None
+        eliminated = json.loads(row[3]) if row[3] else None
+        referendum_result = json.loads(row[4]) if row[4] else None
+
+        return {'winners': winners, 'order': order, 'eliminated': eliminated, 'referendum_result': referendum_result}
 
     def create_poll(self, name, type, description=None, status='not_started', security_key=None, secure_mode=False, inst_name=None, num_candidates=0, num_voters=None, max_approved=None, min_threshold=None):
         type_values = ['runoff', 'fptp', 'approval', 'referendum']
