@@ -44,12 +44,16 @@ class VotingWindow(ttk.Frame):
                     else:
                         pass
                 if len(approval_list) == 0:
-                    approval_list.append('NOTA')
-                votes.append(approval_list.copy())
-                checkbutton_var_value.clear()
-                approval_list.clear()
-                print(votes)
-                # app.show_frame('voting_security_check')
+                    approval_list.append('abs')
+                print(approval_list)
+                try:
+                    db.save_vote(poll['id'], approval_list)
+                    checkbutton_var_value.clear()
+                    approval_list.clear()
+                    app.show_frame('voting_security_check', {'poll': poll})
+                except Exception as exc:
+                    traceback.print_exc()
+                    tk.messagebox.showerror(message=str(exc))
 
 
             for i in range(3):
