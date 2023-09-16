@@ -74,12 +74,13 @@ class CreateReferendumFrame(ttk.Frame):
                                           security_key=security_key, secure_mode=True, inst_name=name_institution,
                                           num_candidates=num_candidates, num_voters=number_voter,
                                           min_threshold=min_threshold)
-                    print('Poll created: ', poll)
+                    print('Referendum created: ', poll)
                     app.show_frame('ref_entry', context={'poll': poll})
                 except Exception as exc:
                     print(exc)
                     tkinter.messagebox.showerror(title='Error109', message=str(exc))
-            return Data_Entry
+                finally:
+                    return Data_Entry
 
 
 
@@ -102,7 +103,7 @@ class CreateReferendumFrame(ttk.Frame):
 
 
 
-        referendum_info_frame = tk.LabelFrame(self.frame, text="referendum Information")
+        referendum_info_frame = tk.LabelFrame(self.frame, text="Referendum Information")
         referendum_info_frame.grid(row=1, column=0, sticky="news")
 
         title_referendum = tk.Label(referendum_info_frame, text="Title of referendum")
@@ -116,7 +117,7 @@ class CreateReferendumFrame(ttk.Frame):
         Description_Entry = tk.Entry(referendum_info_frame)
         Description_Entry.grid(row=1, column=1, padx=50, pady=10)
 
-        No_Cand = tk.Label(referendum_info_frame, text="Number of Referendum")
+        No_Cand = tk.Label(referendum_info_frame, text="Number of Proposals")
         No_Cand.grid(row=2, column=0)
         No_Cand_Entry = tk.Entry(referendum_info_frame)
         No_Cand_Entry.grid(row=2, column=1, padx=50, pady=10)

@@ -1,6 +1,8 @@
 import tkinter as tk
 import tkinter.messagebox
 import tkinter.ttk as ttk
+import traceback
+
 from backend.db.Database import Database
 from frontend.utils import snake_case
 
@@ -33,20 +35,25 @@ class CandidateEntryFrame(ttk.Frame):
                     l5.clear()
                     return
 
-            db = Database.get_instance()
-            db_candidates = []
-            cand_ids = []
-            for cand in data:
-                candidate_id = snake_case(cand['name'])
-                if candidate_id in cand_ids:
-                    tkinter.messagebox.showerror(title="Error", message='Candidate names are too similar!')
-                    cand_ids.clear()
-                    return
-                cand_ids.append(candidate_id)
-                db_candidates.append({'candidate_id': candidate_id, 'name': cand['name'], 'faction': cand['faction'] })
-            db.register_candidates(poll['id'], db_candidates)
-            print('Registered candidates:', db_candidates)
-            app.show_frame('elec_navigation')
+            try:
+                db = Database.get_instance()
+                db_candidates = []
+                cand_ids = []
+                for cand in data:
+                    candidate_id = snake_case(cand['name'])
+                    if candidate_id in cand_ids:
+                        tkinter.messagebox.showerror(title="Error", message='Candidate names are too similar!')
+                        cand_ids.clear()
+                        return
+                    cand_ids.append(candidate_id)
+                    db_candidates.append({'candidate_id': candidate_id, 'name': cand['name'], 'faction': cand['faction'] })
+                db.register_candidates(poll['id'], db_candidates)
+                print('Registered candidates:', db_candidates)
+                app.show_frame('elec_navigation')
+            except Exception as exc:
+                traceback.print_exc()
+                tk.messagebox.showerror(message=str(exc))
+
 
 
 
