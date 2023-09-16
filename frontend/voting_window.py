@@ -47,7 +47,8 @@ class VotingWindow(ttk.Frame):
                     approval_list.append('abs')
                 print(approval_list)
                 try:
-                    db.save_vote(poll['id'], approval_list)
+                    id_approval_list = list(map(lambda x: snake_case(x), approval_list))
+                    db.save_vote(poll['id'], id_approval_list)
                     checkbutton_var_value.clear()
                     approval_list.clear()
                     app.show_frame('voting_security_check', {'poll': poll})
@@ -104,8 +105,8 @@ class VotingWindow(ttk.Frame):
                 print(vote)
                 votes.append(vote)
                 try:
-                    candidate_id = snake_case(vote)
-                    db.save_vote(poll['id'], vote)
+                    vote_id = snake_case(vote)
+                    db.save_vote(poll['id'], vote_id)
                     app.show_frame('voting_security_check', {'poll': poll})
                 except Exception as exc:
                     traceback.print_exc()
@@ -168,20 +169,19 @@ class VotingWindow(ttk.Frame):
                         self.candidate_names.remove(rank_Vote)
                         counter.append('')
                         votes.append(rank_Vote)
-                    except:
-                       pass
 
-                    rank_votes.append(votes)
-                    app.show_frame('voting_security_check')
-                    print(rank_votes)
+                        id_votes = list(map(lambda x: snake_case(x), votes))
+                        db.save_vote(poll['id'], id_votes)
+                        app.show_frame('voting_security_check', {'poll': poll})
+                    except Exception as exc:
+                        traceback.print_exc()
+                        tk.messagebox.showerror(message=str(exc))
+
                 if len(counter) >= 3:
-                    Btn_2 =tk.Button(User_info_frame, text= 'terminate', command= get_vote_runoff)
+                    Btn_2 =tk.Button(User_info_frame, text= 'finalise', command= get_vote_runoff)
                     Btn_2.grid(row=num_of_candidate + 3, column=2, pady=10, padx=10)
                     if len(counter) == num_of_candidate:
                         Btn_1.grid_remove()
-
-
-                print(rank_Vote ,votes)
 
             for i in range(3):
                 self.grid_rowconfigure(i, weight=1)
