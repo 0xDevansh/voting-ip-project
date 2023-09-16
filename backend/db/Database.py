@@ -179,6 +179,19 @@ class Database():
         # because voting_window uses it that way
         return [{'candidate_id': c[0], 'name': c[1], 'faction': c[2]} for c in res]
 
+    def mark_as_completed(self, poll_id):
+        cursor = self.conn.cursor()
+        cursor.execute('UPDATE polls SET status=\'completed\' WHERE id = ?', (poll_id,))
+        cursor.close()
+        self.conn.commit()
+
+    def get_num_votes(self, poll_id):
+        cursor = self.conn.cursor()
+        cursor.execute('SELECT COUNT(*) FROM votes WHERE poll_id = ?', (poll_id,))
+        num_votes = cursor.fetchone()[0]
+        cursor.close()
+        return num_votes
+
     def save_vote(self, poll_id, vote):
         cursor = self.conn.cursor()
         cursor.execute('SELECT num_voters, status FROM polls WHERE id = ?', (poll_id,))

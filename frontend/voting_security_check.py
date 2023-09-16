@@ -1,6 +1,10 @@
 import tkinter as tk
 import tkinter.messagebox
 import tkinter.ttk as ttk
+import traceback
+
+from backend.calculate_result import calculate_result
+from backend.db.Database import Database
 
 
 # for easy access cand_entry is in referendum
@@ -24,7 +28,16 @@ class VotingSecurityCheckFrame(ttk.Frame):
             ent_password = entry1.get()
 
             if ent_password == sec_key:
-                app.show_frame('result_page', {'poll': poll})
+                # generate result
+                try:
+                    db = Database.get_instance()
+                    db.mark_as_completed(poll['id'])
+                    result = calculate_result(poll['id'])
+                    print(result)
+                    app.show_frame('result_page', {'poll': poll, 'result': result})
+                except Exception as exc:
+                    traceback.print_exc()
+                    tk.messagebox.showerror(message=str(exc))
             else:
                 tkinter.messagebox.showerror(title="error", message="Security key is incorrect")
 
