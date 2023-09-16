@@ -1,6 +1,8 @@
 import tkinter as tk
 import tkinter.messagebox
 import tkinter.ttk as ttk
+import traceback
+
 from backend.db.Database import Database
 
 
@@ -9,7 +11,8 @@ from backend.db.Database import Database
 class ReferendumEntryFrame(ttk.Frame):
     def __init__(self, app, context):
         super().__init__(app)
-        num_proposals = 5
+        poll = context['poll']
+        num_proposals = poll['num_candidates']
         l1 = []
 
         l2 = []
@@ -18,21 +21,24 @@ class ReferendumEntryFrame(ttk.Frame):
         def get_data():
             l4 = []
             l5 = []
-            Data = {}
+            data = []
             for i in range(num_proposals):
                 if l2[i].get() and l3[i].get():
                    l4.append(l2[i].get())
                    l5.append(l3[i].get())
-                   Data['referendum ' + str(i+1)] = {"referendum_name" : l4[i], "Description" : l5[i]}
-                   if i == num_proposals-1:
-                       print(l4)
-                       print(Data)
-                       app.show_frame('elec_navigation')
-
+                   data.append({"name" : l4[i], "description" : l5[i]})
 
                 else:
                     tkinter.messagebox.showerror(title="Error", message='Proposal' + str(i+1) + 'data incomplete')
                     break
+            try:
+                print(data)
+                db = Database.get_instance()
+                db.register_proposals(poll['id'], data)
+                app.show_frame('elec_navigation')
+            except Exception as exc:
+                traceback.print_exc()
+                tk.messagebox.showerror(message=str(exc))
 
 
 
