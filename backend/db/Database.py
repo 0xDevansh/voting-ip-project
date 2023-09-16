@@ -108,7 +108,7 @@ class Database():
                 raise Exception('candidate should have candidate_id and name fields')
             if 'faction' not in cand:
                 cand['faction'] = None
-            if cand['name'] == 'abs':
+            if cand['candidate_id'] == 'abs':
                 raise Exception('abs is a reserved id')
             if cand['candidate_id'] in candidate_ids or cand['candidate_id'] in existing_candidates:
                 raise Exception(f"Duplicate candidate id: {cand['candidate_id']}")
@@ -116,6 +116,28 @@ class Database():
             records.append((poll_id, cand['candidate_id'], cand['name'], cand['faction']))
         # save voters
         cursor.executemany('INSERT INTO poll_candidate (poll_id, candidate_id, name, faction) VALUES (?, ?, ?, ?)', records)
+        cursor.close()
+        self.conn.commit()
+
+    def register_proposals(self, poll_id, proposals):
+        cursor = self.conn.cursor()
+        # validate candidates
+        proposal_names = []
+        records = []
+        cursor.execute('SELECT candidate_id FROM poll_proposal WHERE poll_id = ?', (poll_id,))
+        existing_proposals = cursor.fetchall()
+        existing_proposals = [c[0] for c in existing_proposals]
+        for prop in proposals:
+            if 'name' not in prop or 'description' not in prop:
+                raise Exception('proposal should have name and description fields')
+            if prop['name'] == 'abs':
+                raise Exception('abs is a reserved name')
+            if prop['name'] in proposal_names or prop['name'] in existing_proposals:
+                raise Exception(f"Duplicate proposal name: {prop['name']}")
+            proposal_names.append(prop['name'])
+            records.append((poll_id, prop['name'], prop['description']))
+        # save proposals
+        cursor.executemany('INSERT INTO poll_proposal (poll_id, name, description) VALUES (?, ?, ?)', records)
         cursor.close()
         self.conn.commit()
 
