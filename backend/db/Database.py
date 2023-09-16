@@ -121,10 +121,10 @@ class Database():
 
     def register_proposals(self, poll_id, proposals):
         cursor = self.conn.cursor()
-        # validate candidates
+        # validate proposals
         proposal_names = []
         records = []
-        cursor.execute('SELECT candidate_id FROM poll_proposal WHERE poll_id = ?', (poll_id,))
+        cursor.execute('SELECT name FROM poll_proposal WHERE poll_id = ?', (poll_id,))
         existing_proposals = cursor.fetchall()
         existing_proposals = [c[0] for c in existing_proposals]
         for prop in proposals:
