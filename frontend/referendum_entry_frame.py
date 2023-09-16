@@ -9,7 +9,7 @@ from backend.db.Database import Database
 class ReferendumEntryFrame(ttk.Frame):
     def __init__(self, app, context):
         super().__init__(app)
-        num_referendums = 5
+        num_proposals = 5
         l1 = []
 
         l2 = []
@@ -19,19 +19,19 @@ class ReferendumEntryFrame(ttk.Frame):
             l4 = []
             l5 = []
             Data = {}
-            for i in range(num_referendums):
+            for i in range(num_proposals):
                 if l2[i].get() and l3[i].get():
                    l4.append(l2[i].get())
                    l5.append(l3[i].get())
                    Data['referendum ' + str(i+1)] = {"referendum_name" : l4[i], "Description" : l5[i]}
-                   if i == num_referendums-1:
+                   if i == num_proposals-1:
                        print(l4)
                        print(Data)
                        app.show_frame('elec_navigation')
 
 
                 else:
-                    tkinter.messagebox.showerror(title="Error", message='referendum' + str(i+1) + 'data incomplete')
+                    tkinter.messagebox.showerror(title="Error", message='Proposal' + str(i+1) + 'data incomplete')
                     break
 
 
@@ -50,8 +50,8 @@ class ReferendumEntryFrame(ttk.Frame):
             Labels[i].grid(row=0, column=i, padx=50)
 
 
-        for i in range(num_referendums):
-           l1.append(tk.Label(ref_entry_frame, text="referendum" + str(i + 1)))
+        for i in range(num_proposals):
+           l1.append(tk.Label(ref_entry_frame, text="Proposal" + str(i + 1)))
            l2.append(tk.Entry(ref_entry_frame))
            l3.append(tk.Entry(ref_entry_frame))
 
@@ -62,6 +62,6 @@ class ReferendumEntryFrame(ttk.Frame):
 
         button = tk.Button(ref_entry_frame, text="Submit" , command= get_data)
 
-        button.grid(row=num_referendums+1, column=1)
+        button.grid(row=num_proposals+1, column=1)
 
 
