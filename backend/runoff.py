@@ -31,7 +31,7 @@ def calculate_runoff(votes, candidates):
         if max_votes >= len(votes) / 2:
             remaining = sorted(num_votes.items(), key=lambda x:x[1], reverse=True)
             winner = get_keys_with_value(num_votes, max_votes)[0]
-            return {'winner': winner, 'order':order, 'eliminated':eliminated, 'remaining': remaining}
+            return {'winners': winner, 'order':order, 'eliminated':eliminated, 'remaining': remaining}
 
         # eliminate last candidate
         min_votes = min(num_votes.values())
