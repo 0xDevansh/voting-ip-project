@@ -24,22 +24,24 @@ CREATE TABLE IF NOT EXISTS poll_candidate (
 
 CREATE TABLE IF NOT EXISTS poll_proposal (
     poll_id INTEGER,
-    proposal_id INTEGER AUTOINCREMENT,
+    proposal_id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT,
     description TEXT,
-    PRIMARY KEY (poll_id, proposal_id)
-);
+    FOREIGN KEY (poll_id) REFERENCES polls(id)
+    );
 
 CREATE TABLE IF NOT EXISTS poll_result (
     poll_id INTEGER PRIMARY KEY,
     winners TEXT,
     order_cands TEXT,
-    eliminated TEXT
+    eliminated TEXT,
+    FOREIGN KEY (poll_id) REFERENCES polls(id)
 );
 
 CREATE TABLE IF NOT EXISTS votes (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     poll_id INTEGER,
     vote TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (poll_id) REFERENCES polls(id)
 );
