@@ -103,7 +103,7 @@ class CreateReferendumFrame(ttk.Frame):
 
 
 
-        referendum_info_frame = tk.LabelFrame(self.frame, text="referendum Information")
+        referendum_info_frame = tk.LabelFrame(self.frame, text="Referendum Information")
         referendum_info_frame.grid(row=1, column=0, sticky="news")
 
         title_referendum = tk.Label(referendum_info_frame, text="Title of referendum")
@@ -117,7 +117,7 @@ class CreateReferendumFrame(ttk.Frame):
         Description_Entry = tk.Entry(referendum_info_frame)
         Description_Entry.grid(row=1, column=1, padx=50, pady=10)
 
-        No_Cand = tk.Label(referendum_info_frame, text="Number of Referendum")
+        No_Cand = tk.Label(referendum_info_frame, text="Number of Proposals")
         No_Cand.grid(row=2, column=0)
         No_Cand_Entry = tk.Entry(referendum_info_frame)
         No_Cand_Entry.grid(row=2, column=1, padx=50, pady=10)

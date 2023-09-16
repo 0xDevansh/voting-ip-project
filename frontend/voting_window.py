@@ -234,9 +234,9 @@ class VotingWindow(ttk.Frame):
             User_info_frame = tk.LabelFrame(self.frame)
             User_info_frame.grid(row=1, column=0, sticky="news")
 
-            label1 = tk.Label(User_info_frame, text="Refrendum Name")
+            label1 = tk.Label(User_info_frame, text="Referendum Name")
             label1.grid(row=0, column=0, pady=10)
-            label2 = tk.Label(User_info_frame, text="Refrendum Description")
+            label2 = tk.Label(User_info_frame, text="Referendum Description")
             label2.grid(row=0, column=1,padx =20,  pady=10)
             label3 = tk.Label(User_info_frame, text="Select here")
             label3.grid(row=0, column=2, padx= 20 , pady=10)
