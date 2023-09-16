@@ -2,6 +2,7 @@
 from backend.approval import calculate_approval
 from backend.db.Database import Database
 from backend.fptp import calculate_fptp
+from backend.referendum import calculate_referendum
 from backend.runoff import calculate_runoff
 
 
@@ -27,4 +28,9 @@ def calculate_result(poll_id):
     elif poll['type'] == 'approval':
         result = calculate_approval(votes, candidate_ids, max_approved=poll['max_approved'], min_threshold=poll['min_threshold'])
         db.save_result(poll_id, result['winners'], result['order'])
+        return result
+    elif poll['type'] == 'referendum':
+        proposals = db.get_poll_proposals(poll['id'])
+        result = calculate_referendum(votes, proposals, min_threshold=poll['min_threshold'])
+        db.save_result(poll_id, referendum_result=result)
         return result

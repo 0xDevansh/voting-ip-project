@@ -2,7 +2,7 @@
 # returns list of winners (multiple winners if tie)
 
 
-def calculate_approval(votes, proposals, min_threshold=None):
+def calculate_referendum(votes, proposals, min_threshold=None):
     approved = {}
     disapproved = {}
     abstained = {}
