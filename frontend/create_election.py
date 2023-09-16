@@ -12,7 +12,6 @@ class CreateElectionFrame(ttk.Frame):
 
         def enter_data():
             name_institution = name_institution_Entry.get()
-            type_institution = type_institution_Entry.get()
             type = Type_of_election_Entry.get()
             type_codes = {
                 'Approval voting': 'approval',
@@ -73,7 +72,7 @@ class CreateElectionFrame(ttk.Frame):
                 if int(min_threshold) == 0:
                     min_threshold = None
                 Alpha +=1
-            Data_Entry = {"Name": name_institution, "Type of inst": type_institution, "Type_elec": type,
+            Data_Entry = {"Name": name_institution, "Type_elec": type,
                           "title elec": title_election, "desc": description, "Num voter": number_voter,
                           "Num_can": num_candidates, "Date": date_election, "Sec_key": security_key,
                           "tnc": tnc, "min_thr": min_threshold, "max_app": max_approved}
@@ -138,11 +137,6 @@ class CreateElectionFrame(ttk.Frame):
         name_institution.grid(row=0, column=0)
         name_institution_Entry = tk.Entry(User_info_frame)
         name_institution_Entry.grid(row=0, column=1, padx=50, pady=10)
-
-        type_institution = tk.Label(User_info_frame, text="Type of the institution")
-        type_institution.grid(row=1, column=0)
-        type_institution_Entry = tk.Entry(User_info_frame)
-        type_institution_Entry.grid(row=1, column=1, padx=50, pady=10)
 
         Type_of_election = tk.Label(User_info_frame, text="Type of election")
         Type_of_election.grid(row=2, column=0)

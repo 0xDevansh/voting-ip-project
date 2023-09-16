@@ -13,7 +13,6 @@ class CreateReferendumFrame(ttk.Frame):
 
         def enter_data():
             name_institution = name_institution_Entry.get()
-            type_institution = type_institution_Entry.get()
             title_referendum = title_referendum_Entry.get()
             description = Description_Entry.get()
             num_candidates = No_Cand_Entry.get() 
@@ -48,7 +47,7 @@ class CreateReferendumFrame(ttk.Frame):
                 l[4] = 1
             if int(min_threshold) == 0:
                 min_threshold = None
-            Data_Entry = {"Name": name_institution, "Type_of_inst": type_institution,
+            Data_Entry = {"Name": name_institution,
                           "title_elec": title_referendum, "desc": description, "Num_voter": number_voter,
                           "Num_can": num_candidates, "Date": date_referendum, "Sec_key": security_key,
                           "tnc": tnc}
@@ -94,12 +93,6 @@ class CreateReferendumFrame(ttk.Frame):
         name_institution.grid(row=0, column=0)
         name_institution_Entry = tk.Entry(User_info_frame)
         name_institution_Entry.grid(row=0, column=1, padx=50, pady=10)
-
-        type_institution = tk.Label(User_info_frame, text="Type of the institution")
-        type_institution.grid(row=1, column=0)
-        type_institution_Entry = tk.Entry(User_info_frame)
-        type_institution_Entry.grid(row=1, column=1, padx=50, pady=10)
-
 
 
 
