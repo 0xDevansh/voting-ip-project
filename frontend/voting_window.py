@@ -13,6 +13,8 @@ class VotingWindow(ttk.Frame):
         poll = context['poll']
         db = Database.get_instance()
         candidates = db.get_poll_candidates(poll['id'])
+        if poll['type'] == 'referendum':
+            candidates = db.get_poll_proposals(poll['id'])
         num_of_candidate = poll['num_candidates']
         type = poll['type']
         election_title = poll['name']
@@ -218,16 +220,29 @@ class VotingWindow(ttk.Frame):
             votes = []
             def get_vote_referendum():
                 Check = 0
+                choices_short = {
+                    'Disapprove': 'dis',
+                    'Approve': 'app',
+                    'Abstain': 'abs'
+                }
                 for i in range(num_of_candidate):
                     Choice = combobox_list[i].get()
-                    if Choice in ['Approve' , 'Dissaprove' , 'Abstain']:
+                    if Choice in ['Approve' , 'Disapprove' , 'Abstain']:
                         votes.append(Choice)
                     else:
                         tk.messagebox.showerror(title='Error', message="Please select a valid choice in referendum :-" + str(i+1))
                         votes.clear()
                         break
-                print(votes)
-                # app.show_frame('voting_security_check')
+                try:
+                    db_votes = []
+                    for i, cand in enumerate(candidates):
+                        db_votes.append({cand['name']: choices_short[votes[i]]})
+                    print(db_votes)
+                    db.save_vote(poll['id'], db_votes)
+                    app.show_frame('voting_security_check', {'poll': poll})
+                except Exception as exc:
+                    traceback.print_exc()
+                    tk.messagebox.showerror(message=str(exc))
 
 
 
@@ -253,7 +268,7 @@ class VotingWindow(ttk.Frame):
                 label_list_1[i].grid(row = i+1 , column= 0)
                 label_list_2.append(tk.Button(User_info_frame, text= 'Show description', command=self.show_ref_description(i)))
                 label_list_2[i].grid(row= i+1 , column= 1)
-                combobox_list.append(ttk.Combobox(User_info_frame, values= ['Approve' , 'Dissaprove' , 'Abstain']))
+                combobox_list.append(ttk.Combobox(User_info_frame, values= ['Approve' , 'Disapprove' , 'Abstain']))
                 combobox_list[i].grid(row= i+1 , column= 2)
             Btn_1 = tk.Button(User_info_frame , text='submit' , command=get_vote_referendum)
             Btn_1.grid(row = num_of_candidate + 1 , column= 1)

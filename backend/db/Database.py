@@ -164,6 +164,15 @@ class Database():
         cursor.close()
         return [{'candidate_id': c[0], 'name': c[1], 'faction': c[2]} for c in res]
 
+    def get_poll_proposals(self, poll_id):
+        cursor = self.conn.cursor()
+        cursor.execute('SELECT proposal_id, name, description FROM poll_proposal WHERE poll_id = ? ORDER BY proposal_id', (poll_id,))
+        res = cursor.fetchall()
+        cursor.close()
+        # deliberately left as candidate values
+        # because voting_window uses it that way
+        return [{'candidate_id': c[0], 'name': c[1], 'faction': c[2]} for c in res]
+
     def save_vote(self, poll_id, vote):
         cursor = self.conn.cursor()
         cursor.execute('SELECT num_voters, status FROM polls WHERE id = ?', (poll_id,))
