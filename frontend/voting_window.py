@@ -222,13 +222,12 @@ class VotingWindow(ttk.Frame):
                     Choice = combobox_list[i].get()
                     if Choice in ['Approve' , 'Dissaprove' , 'Abstain']:
                         votes.append(Choice)
-                        if i == num_of_candidate - 1:
-                             print(votes)
-                             app.show_frame('voting_security_check')
                     else:
                         tk.messagebox.showerror(title='Error', message="Please select a valid choice in referendum :-" + str(i+1))
                         votes.clear()
                         break
+                print(votes)
+                # app.show_frame('voting_security_check')
 
 
 
