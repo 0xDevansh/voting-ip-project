@@ -41,6 +41,7 @@ class App(tk.Tk):
         self.current_frame_name = 'opening'
         self.current_frame = None
 
+
         # show main page
         self.show_frame('opening')
 
