@@ -50,7 +50,7 @@ class Database():
         else:
             return None
 
-    def save_result(self, id, winners, order, eliminated=None, referendum_result=None):
+    def save_result(self, id, winners=None, order=None, eliminated=None, referendum_result=None):
         json_winners = json.dumps(winners)
         json_order = json.dumps(order)
         json_eliminated = None

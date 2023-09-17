@@ -35,7 +35,6 @@ class ResultFrame(ttk.Frame):
         min_threshold = poll['min_threshold']
         voter_turnout = round((actual_num_votes/(num_voters))*100,1)
         def Generate():
-            print('HERE')
             try:
                 db = Database.get_instance()
                 poll_result = context['result'] if 'result' in context else None
@@ -43,6 +42,18 @@ class ResultFrame(ttk.Frame):
                     poll_result = db.get_result(poll['id'])
                     if not result:
                         raise Exception('Result not found')
+                    # Switch candidate ids with names
+                    candidate_id_name = {}
+                    for cand in candidates:
+                        candidate_id_name[cand['candidate_id']] = cand['name']
+                    print(result)
+                    if 'winners' in result and result['winners'] != None:
+                        winners = []
+                        for w in result['winners']:
+                            winners.append(candidate_id_name[w])
+                        result['winners'] = winners
+
+
                     if type  == 'approval':
                         Winners = poll_result['winners']
                         Order = poll_result['order']
@@ -263,7 +274,7 @@ class ResultFrame(ttk.Frame):
                         Label_for_winner = []
                         for i in range(1):
                             Label_for_winner.append(
-                                tk.Label(Winner_info_frame, text='Winner :- ' + Winners, font=12))
+                                tk.Label(Winner_info_frame, text='Winner :- ' + Winners[0], font=12))
                             Label_for_winner[i].grid(row=i, column=0, sticky='news')
                             Winner_info_frame.grid_columnconfigure(i, weight=1)
 
