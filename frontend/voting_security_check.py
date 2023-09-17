@@ -34,7 +34,7 @@ class VotingSecurityCheckFrame(ttk.Frame):
                     result = calculate_result(poll['id'])
                     print(result)
                     db.mark_as_completed(poll['id'])
-                    app.show_frame('result_page', {'poll': poll, 'result': result})
+                    app.show_frame('result_page', {'poll': poll})
                 except Exception as exc:
                     traceback.print_exc()
                     tk.messagebox.showerror(message=str(exc))
