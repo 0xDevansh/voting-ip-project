@@ -418,5 +418,5 @@ class ResultFrame(ttk.Frame):
             self.grid_rowconfigure(i, weight=1)
         self.grid_columnconfigure(0, weight=1)
 
-        btn1 =tk.Button(self, text="Generate Result" , command = Generate)
+        btn1 =tk.Button(self, text="Show Result" , command = Generate)
         btn1.grid(row = 0 , column= 0)
