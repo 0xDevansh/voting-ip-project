@@ -158,8 +158,6 @@ class VotingWindow(ttk.Frame):
                     votes.append(rank_Vote)
                 except:
                     tkinter.messagebox.showerror(title="ERORR" , message="Please select a valid candidate from dropdown")
-
-
                 Label20 = tk.Label(User_info_frame, text="Please enter your choice number:- " + str(len(counter)))
                 Label20.grid(row=num_of_candidate + 1, column=1, pady=10, padx=10)
                 Votebox = ttk.Combobox(User_info_frame, textvariable=var_for_combobox)
@@ -179,7 +177,7 @@ class VotingWindow(ttk.Frame):
                         traceback.print_exc()
                         tk.messagebox.showerror(message=str(exc))
 
-                if len(counter) >= 3:
+                if len(counter) == num_of_candidate:
                     Btn_2 =tk.Button(User_info_frame, text= 'finalise', command= get_vote_runoff)
                     Btn_2.grid(row=num_of_candidate + 3, column=2, pady=10, padx=10)
                     if len(counter) == num_of_candidate:

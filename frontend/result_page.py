@@ -261,12 +261,13 @@ class ResultFrame(ttk.Frame):
                         Winner_info_frame = tk.LabelFrame(self.frame, text='The Winner is')
                         Winner_info_frame.grid(row=2, column=0, sticky="news")
                         Label_for_winner = []
-                        for i in range(len(Winners)):
+                        for i in range(1):
                             Label_for_winner.append(
-                                tk.Label(Winner_info_frame, text='Winner :- ' + Winners[i], font=12))
+                                tk.Label(Winner_info_frame, text='Winner :- ' + Winners, font=12))
                             Label_for_winner[i].grid(row=i, column=0, sticky='news')
                             Winner_info_frame.grid_columnconfigure(i, weight=1)
-                        Election_result_frame = tk.LabelFrame(self.frame, text='First Preference Votee')
+
+                        Election_result_frame = tk.LabelFrame(self.frame, text='First Preference Vote')
                         Election_result_frame.grid(row=3, column=0, sticky="news")
                         text_for_header = ["S. No", "Candidate", "faction", " Votes"]
                         Label_for_header = []
@@ -307,19 +308,22 @@ class ResultFrame(ttk.Frame):
                             Election_result_frame.grid_rowconfigure(i, weight=1)
 
                         Elimination_result_frame = tk.LabelFrame(self.frame, text='Elimination order')
-                        Elimination_result_frame.grid(row=3, column=0, sticky="news")
+                        Elimination_result_frame.grid(row=4, column=0, sticky="news")
                         Round_Label=[]
                         Eliminated_Label=[]
-                        text_for_header = ["Eliminated in ", "Candidate Eliminated"]
-                        Label_for_header = []
-                        for i in range(len((text_for_header))):
-                            Label_for_header.append(tk.Label(Election_result_frame, text=text_for_header[i]))
-                            Label_for_header[i].grid(row=0, column=i)
+                        text_for_header_2 = ["Eliminated in ","                 " ,"Candidate Eliminated"]
+                        Label_for_header_2 = []
+                        Empty_column=[]
+                        for i in range(len((text_for_header_2))):
+                            Label_for_header_2.append(tk.Label(Elimination_result_frame, text=text_for_header_2[i]))
+                            Label_for_header_2[i].grid(row=0, column=i)
                         for i in range(len(Eliminated)):
                             Round_Label.append(tk.Label(Elimination_result_frame,text="Round_no." + str(i+1)))
                             Round_Label[i].grid(row=i+1 ,column=0)
+                            Empty_column.append(tk.Label(Elimination_result_frame, text=''))
+                            Empty_column[i].grid(row=i + 1, column=1)
                             Eliminated_Label.append(tk.Label(Elimination_result_frame, text= Eliminated[i]))
-                            Eliminated_Label[i].grid(row=i + 1, column=1)
+                            Eliminated_Label[i].grid(row=i + 1, column=2)
 
 
 

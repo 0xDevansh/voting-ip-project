@@ -30,10 +30,11 @@ def calculate_referendum(votes, proposals, min_threshold=None):
         approve_percent = round(approved[name] / num_votes * 100, 2)
         disapprove_percent = round(disapproved[name] / num_votes * 100, 2)
         abstain_percent = round(abstained[name] / num_votes * 100, 2)
+        description= prop['description']
         res = 'dis'
         if approve_percent > min_threshold:
             res = 'app'
-        result.append({'name': name, 'description': poll['description'], 'approve_percent': approve_percent, 'disapprove_percent': disapprove_percent, 'abstain_percent': abstain_percent, 'result': res})
+        result.append({'name': name, 'description': description, 'approve_percent': approve_percent, 'disapprove_percent': disapprove_percent, 'abstain_percent': abstain_percent, 'result': res})
 
     return result
 
@@ -43,4 +44,4 @@ if __name__ == '__main__':
     poll = db.get_poll(name='referendum')
     props = db.get_poll_proposals(poll['id'])
     votes = db.get_poll_votes(poll['id'], only_values=True)
-    print(calculate_approval(votes, props, poll['min_threshold']))
+    print(calculate_referendum(votes, props, poll['min_threshold']))

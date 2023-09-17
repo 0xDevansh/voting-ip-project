@@ -35,8 +35,17 @@ class StartElectionFrame(ttk.Frame):
 
         label2 = tk.Label(self, text="Enter Security Key to Start")
         label2.grid(row=1, column=0,  pady= 10)
-        entry1 = tk.Entry(self)
+        entry1 = tk.Entry(self, show='*')
         entry1.grid(row=2, column=0)
+        def show_and_hide():
+            if entry1['show'] == '*':
+                entry1['show'] = ''
+            else:
+                entry1['show'] = '*'
+
+        checkBox_showPassword = tk.Checkbutton(self, text="show password", fg='red',
+                                             command=show_and_hide)
+        checkBox_showPassword.grid(row=3,column=0)
 
         start_button = tk.Button(self, text="Start", command = start_election)
-        start_button.grid(row=3, column=0 ,  pady= 10)
+        start_button.grid(row=4, column=0 ,  pady= 10)
