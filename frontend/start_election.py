@@ -49,5 +49,5 @@ class StartElectionFrame(ttk.Frame):
 
         start_button = tk.Button(self, text="Start", command = start_election)
         start_button.grid(row=4, column=0 ,  pady= 10)
-        start_button = tk.Button(self, text="Start", command=app.show_frame_factory('elec_navigation'))
-        start_button.grid(row=4, column=0, pady=10)
+        start_button = tk.Button(self, text="Back", command=app.show_frame_factory('elec_navigation'))
+        start_button.grid(row=5, column=0, pady=10)
