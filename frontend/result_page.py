@@ -9,15 +9,12 @@ class ResultFrame(ttk.Frame):
     def __init__(self, app, context):
         super().__init__(app)
         poll = context['poll']
-        result = None
         candidates = None
         actual_num_votes = 0
         if 'result' in context:
             result = context['result']
         try:
             db = Database.get_instance()
-            if not result:
-                result = db.get_result(poll['id'])
             candidates = db.get_poll_candidates(poll['id'])
             actual_num_votes = db.get_num_votes(poll['id'])
             if poll['type'] == 'referendum':
@@ -40,18 +37,20 @@ class ResultFrame(ttk.Frame):
                 poll_result = context['result'] if 'result' in context else None
                 if not poll_result:
                     poll_result = db.get_result(poll['id'])
-                    if not result:
+                    if not poll_result:
                         raise Exception('Result not found')
                     # Switch candidate ids with names
                     candidate_id_name = {}
                     for cand in candidates:
                         candidate_id_name[cand['candidate_id']] = cand['name']
-                    print(result)
-                    if 'winners' in result and result['winners'] != None:
-                        winners = []
-                        for w in result['winners']:
-                            winners.append(candidate_id_name[w])
-                        result['winners'] = winners
+                    print(poll_result)
+                    if 'winners' in poll_result and poll_result['winners'] != None:
+                        poll_result['winners'] = list(map(lambda w:candidate_id_name[w], poll_result['winners']))
+                    if 'eliminated' in poll_result and poll_result['eliminated'] != None:
+                        poll_result['eliminated'] = list(map(lambda w:candidate_id_name[w], poll_result['eliminated']))
+                    if 'order' in poll_result and poll_result['order'] != None:
+                        poll_result['order'] = list(map(lambda o:[candidate_id_name[o[0]], o[1]], poll_result['order']))
+
 
 
                     if type  == 'approval':

@@ -30,7 +30,19 @@ class ElectionNavigationFrame(ttk.Frame):
         Elec_Label_frame = [tk.LabelFrame(self.frame)]
         Elec_name_label=[]
         Elec_type_label=[] 
-        Elec_status_Label=[] 
+        Elec_status_Label=[]
+
+        poll_types = {
+            'fptp': 'First past the post',
+            'runoff': 'Runoff',
+            'referendum': 'Referendum',
+            'approval': 'Approval voting',
+        }
+        poll_status = {
+            'not_started': 'Not started',
+            'running': 'In progress',
+            'completed': 'Completed',
+        }
 
         Elec_command_button_1=[]
         for i, poll in enumerate(polls):
@@ -38,8 +50,8 @@ class ElectionNavigationFrame(ttk.Frame):
             Elec_Label_frame[i].grid(row=i+1 ,column=0,sticky='news' ,pady=10)
 
             Elec_name_label.append(tk.Label(Elec_Label_frame[i], text=poll['name']))
-            Elec_type_label.append(tk.Label(Elec_Label_frame[i], text=poll['type']))
-            Elec_status_Label.append(tk.Label(Elec_Label_frame[i],text=poll['status']))
+            Elec_type_label.append(tk.Label(Elec_Label_frame[i], text=poll_types[poll['type']]))
+            Elec_status_Label.append(tk.Label(Elec_Label_frame[i],text=poll_status[poll['status']]))
 
 
             Elec_name_label[i].grid(row=0, column=0,padx=50,sticky='news')
