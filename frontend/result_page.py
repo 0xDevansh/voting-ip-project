@@ -334,9 +334,80 @@ class ResultFrame(ttk.Frame):
                             Empty_column[i].grid(row=i + 1, column=1)
                             Eliminated_Label.append(tk.Label(Elimination_result_frame, text= Eliminated[i]))
                             Eliminated_Label[i].grid(row=i + 1, column=2)
+                    elif type  == 'referendum':
+                        btn1.grid_remove()
+                        Referendum_Reult = poll_result['referendum_result']
+                        print(Referendum_Reult)
+                        Result_Conversion_dictionary = {"app" : "Approve",
+                                                        "dis" : "Disapprove",
+                                                        "abs" : "Abstain"}
 
 
+                        for i in range(3):
 
+                            self.grid_rowconfigure(i, weight=1)
+                        self.grid_columnconfigure(0, weight=1)
+                        self.frame = tk.Frame(self)
+                        self.frame.grid()
+
+                        self.title_label = tk.Label(self.frame, text="THE RESULT ARE")
+                        self.title_label.grid(row=0, column=0)
+
+                        User_info_frame = tk.LabelFrame(self.frame)
+                        User_info_frame.grid(row=1, column=0, sticky="news")
+                        for i in range(5):
+                            User_info_frame.grid_rowconfigure(i, weight=1)
+                        for i in range(3):
+                            User_info_frame.grid_columnconfigure(i, weight=1)
+
+                        label1 = tk.Label(User_info_frame, text="By : " + name_of_institution, font=12)
+                        label1.grid(row=1, column=1, pady=10, padx=0)
+                        #
+                        label2 = tk.Label(User_info_frame, text=title, font=12)
+                        label2.grid(row=0, column=1, pady=10, padx=0)
+                        #
+                        label3 = tk.Label(User_info_frame, text=title)
+                        label3.grid(row=2, column=1, pady=10, padx=0)
+                        #
+                        label4 = tk.Label(User_info_frame, text="Type : " + type)
+                        label4.grid(row=3, column=0, pady=10, padx=0)
+                        #
+                        label5 = tk.Label(User_info_frame, text="Voter_turnout :" + str(voter_turnout))
+                        label5.grid(row=3, column=2, pady=10, padx=0)
+                        #
+                        label6 = tk.Label(User_info_frame, text="Threshold :" + str(min_threshold))
+                        label6.grid(row=4, column=0, pady=10, padx=0)
+
+                        Result_info_frame = tk.LabelFrame(self.frame)
+                        Result_info_frame.grid(row=2, column=0, sticky="news")
+
+                        text_for_header = ["S. No", "Proposal_Name", "description", "Approve %" , "Dissaprove %" , "Abstain %" , "Result"]
+                        Label_for_header = []
+                        for i in range(len((text_for_header))):
+                            Label_for_header.append(tk.Label(Result_info_frame, text=text_for_header[i]))
+                            Label_for_header[i].grid(row=0, column=i,padx=5,pady=5)
+                        Sno_Label_list=[]
+                        name_Label_List = []
+                        description_Label_List = []
+                        approval_Label_List = []
+                        disapproval_Label_List = []
+                        abstention_Label_List = []
+                        Result_Label_List = []
+                        for i in range(len(Referendum_Reult)):
+                            Sno_Label_list.append(tk.Label(Result_info_frame, text=str(i+1)))
+                            name_Label_List.append(tk.Label(Result_info_frame, text=Referendum_Reult[i]['name']))
+                            description_Label_List.append(tk.Label(Result_info_frame, text=Referendum_Reult[i]['description']))
+                            approval_Label_List.append(tk.Label(Result_info_frame, text=Referendum_Reult[i]['approve_percent']))
+                            disapproval_Label_List.append(tk.Label(Result_info_frame, text=Referendum_Reult[i]['disapprove_percent']))
+                            abstention_Label_List.append(tk.Label(Result_info_frame, text=Referendum_Reult[i]['abstain_percent']))
+                            Result_Label_List.append(tk.Label(Result_info_frame, text=Result_Conversion_dictionary[Referendum_Reult[i]['result']]))
+                            Sno_Label_list[i].grid(row= i+1 , column=0 ,padx=5,pady=5)
+                            name_Label_List[i].grid(row= i+1 , column=1,padx=5,pady=5)
+                            description_Label_List[i].grid(row= i+1 , column=2,padx=5,pady=5)
+                            approval_Label_List[i].grid(row= i+1 , column=3,padx=5,pady=5)
+                            disapproval_Label_List[i].grid(row= i+1 , column=4,padx=5,pady=5)
+                            abstention_Label_List[i].grid(row= i+1 , column=5,padx=5,pady=5)
+                            Result_Label_List[i].grid(row= i+1 , column=6,padx=5,pady=5)
 
                     print(poll_result)
             except Exception as exc:
