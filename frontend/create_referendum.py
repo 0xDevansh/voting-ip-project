@@ -83,70 +83,70 @@ class CreateReferendumFrame(ttk.Frame):
 
 
 
-        self.frame = tk.Frame(self)
+        self.frame = ttk.Frame(self)
         self.frame.pack()
 
-        User_info_frame = tk.LabelFrame(self.frame, text="User Informaton")
+        User_info_frame = ttk.LabelFrame(self.frame, text="User Informaton")
         User_info_frame.grid(row=0, column=0, sticky="news")
 
-        name_institution = tk.Label(User_info_frame, text="Name of the institution")
+        name_institution = ttk.Label(User_info_frame, text="Name of the institution")
         name_institution.grid(row=0, column=0)
-        name_institution_Entry = tk.Entry(User_info_frame)
+        name_institution_Entry = ttk.Entry(User_info_frame)
         name_institution_Entry.grid(row=0, column=1, padx=50, pady=10)
 
 
 
-        referendum_info_frame = tk.LabelFrame(self.frame, text="Referendum Information")
+        referendum_info_frame = ttk.LabelFrame(self.frame, text="Referendum Information")
         referendum_info_frame.grid(row=1, column=0, sticky="news")
 
-        title_referendum = tk.Label(referendum_info_frame, text="Title of referendum")
-        title_referendum_Entry = tk.Entry(referendum_info_frame)
+        title_referendum = ttk.Label(referendum_info_frame, text="Title of referendum")
+        title_referendum_Entry = ttk.Entry(referendum_info_frame)
         title_referendum.grid(row=0, column=0)
         title_referendum_Entry.grid(row=0, column=1, padx=50, pady=10)
 
 
-        Description = tk.Label(referendum_info_frame, text="Description of referendum")
+        Description = ttk.Label(referendum_info_frame, text="Description of referendum")
         Description.grid(row=1, column=0)
-        Description_Entry = tk.Entry(referendum_info_frame)
+        Description_Entry = ttk.Entry(referendum_info_frame)
         Description_Entry.grid(row=1, column=1, padx=50, pady=10)
 
-        No_Cand = tk.Label(referendum_info_frame, text="Number of Proposals")
+        No_Cand = ttk.Label(referendum_info_frame, text="Number of Proposals")
         No_Cand.grid(row=2, column=0)
-        No_Cand_Entry = tk.Entry(referendum_info_frame)
+        No_Cand_Entry = ttk.Entry(referendum_info_frame)
         No_Cand_Entry.grid(row=2, column=1, padx=50, pady=10)
 
-        Date = tk.Label(referendum_info_frame, text="Date")
+        Date = ttk.Label(referendum_info_frame, text="Date")
         Date.grid(row=3, column=0)
-        Date_Entry = tk.Entry(referendum_info_frame)
+        Date_Entry = ttk.Entry(referendum_info_frame)
         Date_Entry.grid(row=3, column=1, padx=50, pady=10)
 
-        No_Voter = tk.Label(referendum_info_frame, text="Number of  Voters")
+        No_Voter = ttk.Label(referendum_info_frame, text="Number of  Voters")
         No_Voter.grid(row=4, column=0)
-        No_Voter_Entry = tk.Entry(referendum_info_frame)
+        No_Voter_Entry = ttk.Entry(referendum_info_frame)
         No_Voter_Entry.grid(row=4, column=1, padx=50, pady=10)
 
-        Sec_Key = tk.Label(referendum_info_frame, text="Security Key")
+        Sec_Key = ttk.Label(referendum_info_frame, text="Security Key")
         Sec_Key.grid(row=5, column=0)
-        Sec_Key_Entry = tk.Entry(referendum_info_frame)
+        Sec_Key_Entry = ttk.Entry(referendum_info_frame)
         Sec_Key_Entry.grid(row=5, column=1, padx=50, pady=10)
 
-        Min_thr_Key = tk.Label(referendum_info_frame, text="minimum approval threshold")
+        Min_thr_Key = ttk.Label(referendum_info_frame, text="minimum approval threshold")
         Min_thr_Key.grid(row=6, column=0)
-        Min_thr_Key_Entry = tk.Spinbox(referendum_info_frame , from_= 0 , to= 100)
+        Min_thr_Key_Entry = ttk.Spinbox(referendum_info_frame , from_= 0 , to= 100)
         Min_thr_Key_Entry.grid(row=6, column=1, padx=50, pady=10)
 
 
 
-        Dec_frame = tk.LabelFrame(self.frame, text="Declaration")
+        Dec_frame = ttk.LabelFrame(self.frame, text="Declaration")
         Dec_frame.grid(row=2, column=0, sticky="news")
 
-        Dec_tnc = tk.Label(Dec_frame, text="Terms and Condition Declaration")
+        Dec_tnc = ttk.Label(Dec_frame, text="Terms and Condition Declaration")
         tnc_var = tk.StringVar(value="Uncheked")
         Dec_tnc.grid(row=1, column=0)
-        Dec_tnc_CB = tk.Checkbutton(Dec_frame, text="I accept all the T&C", variable=tnc_var,
+        Dec_tnc_CB = ttk.Checkbutton(Dec_frame, text="I accept all the T&C", variable=tnc_var,
                                     onvalue="Checked", offvalue="Uncheked")
         Dec_tnc_CB.grid(row=1, column=1, padx=50, pady=10)
 
-        button1 = tk.Button(self.frame, text="SUBMIT", command=enter_data)
+        button1 = ttk.Button(self.frame, text="SUBMIT", command=enter_data)
         button1.grid(row=3, column=0, sticky='news', padx=10
                      , pady=10)

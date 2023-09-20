@@ -126,83 +126,83 @@ class CreateElectionFrame(ttk.Frame):
                 Max_app_Key_Entry.grid_remove()
 
 
-        self.frame = tk.Frame(self)
+        self.frame = ttk.Frame(self)
         self.frame.pack()
 
 
-        User_info_frame = tk.LabelFrame(self.frame, text="User Informaton")
+        User_info_frame = ttk.LabelFrame(self.frame, text="User Informaton")
         User_info_frame.grid(row=0, column=0, sticky="news")
 
-        name_institution = tk.Label(User_info_frame, text="Name of the institution")
+        name_institution = ttk.Label(User_info_frame, text="Name of the institution")
         name_institution.grid(row=0, column=0)
-        name_institution_Entry = tk.Entry(User_info_frame)
+        name_institution_Entry = ttk.Entry(User_info_frame)
         name_institution_Entry.grid(row=0, column=1, padx=50, pady=10)
 
-        Type_of_election = tk.Label(User_info_frame, text="Type of election")
+        Type_of_election = ttk.Label(User_info_frame, text="Type of election")
         Type_of_election.grid(row=2, column=0)
         Type_of_election_Entry = ttk.Combobox(User_info_frame, values= ["first past the post", "Instant Runoff" , "Approval voting"])
         Type_of_election_Entry.grid(row=2, column=1, padx=50, pady=10)
 
-        update_button = tk.Button(User_info_frame , text="update" , command = do)
+        update_button = ttk.Button(User_info_frame , text="update" , command = do)
         update_button.grid(row=2 , column=2)
 
 
 
-        Election_info_frame = tk.LabelFrame(self.frame, text="Election Information")
+        Election_info_frame = ttk.LabelFrame(self.frame, text="Election Information")
         Election_info_frame.grid(row=1, column=0, sticky="news")
 
-        title_election = tk.Label(Election_info_frame, text="Title of Election")
-        title_election_Entry = tk.Entry(Election_info_frame)
+        title_election = ttk.Label(Election_info_frame, text="Title of Election")
+        title_election_Entry = ttk.Entry(Election_info_frame)
         title_election.grid(row=0, column=0)
         title_election_Entry.grid(row=0, column=1, padx=50, pady=10)
 
 
-        Description = tk.Label(Election_info_frame, text="Desccription of Election")
+        Description = ttk.Label(Election_info_frame, text="Desccription of Election")
         Description.grid(row=1, column=0)
-        Description_Entry = tk.Entry(Election_info_frame)
+        Description_Entry = ttk.Entry(Election_info_frame)
         Description_Entry.grid(row=1, column=1, padx=50, pady=10)
 
-        No_Cand = tk.Label(Election_info_frame, text="Number of Candidates")
+        No_Cand = ttk.Label(Election_info_frame, text="Number of Candidates")
         No_Cand.grid(row=2, column=0)
-        No_Cand_Entry = tk.Entry(Election_info_frame)
+        No_Cand_Entry = ttk.Entry(Election_info_frame)
         No_Cand_Entry.grid(row=2, column=1, padx=50, pady=10)
 
-        Date = tk.Label(Election_info_frame, text="Date")
+        Date = ttk.Label(Election_info_frame, text="Date")
         Date.grid(row=3, column=0)
-        Date_Entry = tk.Entry(Election_info_frame)
+        Date_Entry = ttk.Entry(Election_info_frame)
         Date_Entry.grid(row=3, column=1, padx=50, pady=10)
 
-        No_Voter = tk.Label(Election_info_frame, text="Number of  Voters")
+        No_Voter = ttk.Label(Election_info_frame, text="Number of  Voters")
         No_Voter.grid(row=4, column=0)
-        No_Voter_Entry = tk.Entry(Election_info_frame)
+        No_Voter_Entry = ttk.Entry(Election_info_frame)
         No_Voter_Entry.grid(row=4, column=1, padx=50, pady=10)
 
-        Sec_Key = tk.Label(Election_info_frame, text="Security Key")
+        Sec_Key = ttk.Label(Election_info_frame, text="Security Key")
         Sec_Key.grid(row=5, column=0)
-        Sec_Key_Entry = tk.Entry(Election_info_frame)
+        Sec_Key_Entry = ttk.Entry(Election_info_frame)
         Sec_Key_Entry.grid(row=5, column=1, padx=50, pady=10)
 
-        Min_thr_Key = tk.Label(Election_info_frame, text="minimum approval threshold")
+        Min_thr_Key = ttk.Label(Election_info_frame, text="minimum approval threshold")
 
-        Min_thr_Key_Entry = tk.Spinbox(Election_info_frame , from_= 0 , to= 100)
-
-
-        Max_app_Key = tk.Label(Election_info_frame, text="maximum approved")
-
-        Max_app_Key_Entry = tk.Entry(Election_info_frame)
+        Min_thr_Key_Entry = ttk.Spinbox(Election_info_frame , from_= 0 , to= 100)
 
 
-        Dec_frame = tk.LabelFrame(self.frame, text="Declaration")
+        Max_app_Key = ttk.Label(Election_info_frame, text="maximum approved")
+
+        Max_app_Key_Entry = ttk.Entry(Election_info_frame)
+
+
+        Dec_frame = ttk.LabelFrame(self.frame, text="Declaration")
         Dec_frame.grid(row=2, column=0, sticky="news")
 
-        Dec_tnc = tk.Label(Dec_frame, text="Terms and Condition Declaration")
+        Dec_tnc = ttk.Label(Dec_frame, text="Terms and Condition Declaration")
         tnc_var = tk.StringVar(value="Uncheked")
         Dec_tnc.grid(row=1, column=0)
-        Dec_tnc_CB = tk.Checkbutton(Dec_frame, text="I accept all the T&C", variable=tnc_var,
+        Dec_tnc_CB = ttk.Checkbutton(Dec_frame, text="I accept all the T&C", variable=tnc_var,
                                     onvalue="Checked", offvalue="Uncheked")
         Dec_tnc_CB.grid(row=1, column=1, padx=50, pady=10)
 
-        button1 = tk.Button(self.frame, text="SUBMIT", command=enter_data)
+        button1 = ttk.Button(self.frame, text="SUBMIT", command=enter_data)
         button1.grid(row=3, column=0, sticky='news', padx=10
                      , pady=10)
 

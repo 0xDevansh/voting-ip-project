@@ -1,3 +1,4 @@
+import platform
 import tkinter as tk
 import tkinter.ttk as ttk
 from .opening_page import OpeningPageFrame
@@ -42,7 +43,11 @@ class App(tk.Tk):
         self.current_frame_name = 'opening'
         self.current_frame = None
 
-
+        # set theme
+        style = ttk.Style()
+        if platform.system() == 'Linux':
+            print('applying clam')
+            style.theme_use('clam')
         # show main page
         self.show_frame('opening')
 
