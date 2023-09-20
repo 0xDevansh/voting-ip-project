@@ -60,7 +60,7 @@ def calculate_runoff(votes, candidates):
 
         round_data = num_votes.copy()
         for cand in eliminated:
-            round_data[cand] = 'eliminated'
+            round_data[cand] = 'Eliminated'
         order.append(round_data)
         print(order)
 

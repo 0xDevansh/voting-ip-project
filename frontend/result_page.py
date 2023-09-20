@@ -108,13 +108,13 @@ class ResultFrame(ttk.Frame):
                 for i in range(len((text_for_header))):
                     Label_for_header.append(tk.Label(Election_result_frame,text= text_for_header[i]))
                     Label_for_header[i].grid(row =0 , column= i)
-                Sno_label=[]
+                Rno_label=[]
                 Candidate_label=[]
                 faction_label=[]
                 Votes_Label=[]
                 for i in range(len(Order)):
-                    Sno_label.append(tk.Label(Election_result_frame, text= i))
-                    Sno_label[i].grid(row=i+1, column=0)
+                    Rno_label.append(tk.Label(Election_result_frame, text= i))
+                    Rno_label[i].grid(row=i+1, column=0)
                     Candidate_label.append(tk.Label(Election_result_frame, text=Order[i][0]))
                     Candidate_label[i].grid(row=i + 1, column=1)
                     '''
@@ -190,13 +190,13 @@ class ResultFrame(ttk.Frame):
                 for i in range(len((text_for_header))):
                     Label_for_header.append(tk.Label(Election_result_frame, text=text_for_header[i]))
                     Label_for_header[i].grid(row=0, column=i)
-                Sno_label = []
+                Rno_label = []
                 Candidate_label = []
                 faction_label = []
                 Votes_Label = []
                 for i in range(len(Order)):
-                    Sno_label.append(tk.Label(Election_result_frame, text=i))
-                    Sno_label[i].grid(row=i + 1, column=0)
+                    Rno_label.append(tk.Label(Election_result_frame, text=i))
+                    Rno_label[i].grid(row=i + 1, column=0)
                     Candidate_label.append(tk.Label(Election_result_frame, text=Order[i][0]))
                     Candidate_label[i].grid(row=i + 1, column=1)
                     '''
@@ -240,14 +240,16 @@ class ResultFrame(ttk.Frame):
                 User_info_frame = tk.LabelFrame(self.frame)
                 User_info_frame.grid(row=1, column=0, sticky="news")
 
+                for i in range(4):
+                    User_info_frame.grid_rowconfigure(i, weight=1)
+                for i in range(3):
+                    User_info_frame.grid_columnconfigure(0, weight=1)
+
                 label1 = tk.Label(User_info_frame, text="By : " + name_of_institution, font=12)
                 label1.grid(row=1, column=1, pady=10, padx=0)
                 #
                 label2 = tk.Label(User_info_frame, text=title, font=12)
                 label2.grid(row=0, column=1, pady=10, padx=0)
-                #
-                label3 = tk.Label(User_info_frame, text=title)
-                label3.grid(row=2, column=1, pady=10, padx=0)
                 #
                 label4 = tk.Label(User_info_frame, text="Type : " + type)
                 label4.grid(row=3, column=0, pady=10, padx=0)
@@ -266,21 +268,34 @@ class ResultFrame(ttk.Frame):
 
                 Election_result_frame = tk.LabelFrame(self.frame, text='First Preference Votes')
                 Election_result_frame.grid(row=3, column=0, sticky="news")
-                text_for_header = ["S. No", "Candidate", "faction", " Votes"]
+                text_for_header = ["Round_Number"]
+                for i in range(1):
+                    Candidate_Order = Order[i]
+                    for j in Order[i].keys():
+                        text_for_header.append(j)
+                print(text_for_header)
+
                 Label_for_header = []
                 for i in range(len((text_for_header))):
                     Label_for_header.append(tk.Label(Election_result_frame, text=text_for_header[i]))
                     Label_for_header[i].grid(row=0, column=i)
-                Sno_label = []
-                Candidate_label = []
+
+                Rno_label = []
+                Round_score_Label=[]
                 faction_label = []
                 Votes_Label = []
+
                 # TODO Implement the new order (this is the old code) ------
-                # for i in range(len(Order)):
-                #     Sno_label.append(tk.Label(Election_result_frame, text=i))
-                #     Sno_label[i].grid(row=i + 1, column=0)
-                #     Candidate_label.append(tk.Label(Election_result_frame, text=Order[i][0]))
-                #     Candidate_label[i].grid(row=i + 1, column=1)
+
+                for i in range(len(Order)):
+                    k=0
+                    Rno_label.append(tk.Label(Election_result_frame, text=str(i+1)))
+                    Rno_label[i].grid(row=i + 1, column=0)
+                    Round_score_Label.append([])
+                    for j in Order[i].keys():
+                        Round_score_Label[i].append(tk.Label(Election_result_frame, text=str(Order[i][j])))
+                        Round_score_Label[i][k].grid(row = i+1 ,column = k+1)
+                        k+=1
                 # '''
                 # for j in range(len(candidates)):
                 #     if candidates[j]['candidate_id'] == Order[j][0]:
