@@ -6,6 +6,7 @@ from .help import Helpframe
 from .create_election import CreateElectionFrame
 from .candidate_entry import CandidateEntryFrame
 from .start_election import StartElectionFrame
+from .treeview_page import TreeViewNavigationFrame
 from .voting_window import VotingWindow
 from .voting_security_check import VotingSecurityCheckFrame
 from .result_page import ResultFrame
@@ -26,7 +27,7 @@ class App(tk.Tk):
         'voting_security_check' : {'title': 'Security check', 'frame': VotingSecurityCheckFrame},
         'result_page': {'title': 'Result', 'frame': ResultFrame},
         'create_ref': {'title': 'Create Referendum', 'frame': CreateReferendumFrame},
-        'elec_navigation': {'title': 'Election Navigation Frame', 'frame': ElectionNavigationFrame},
+        'elec_navigation': {'title': 'Election Navigation Frame', 'frame': TreeViewNavigationFrame},
         'ref_entry': {'title': 'Referendum Entry Frame', 'frame': ReferendumEntryFrame}
 
     }
