@@ -1,3 +1,4 @@
+import tkinter
 import tkinter as tk
 import tkinter.ttk as ttk
 import traceback
@@ -70,7 +71,7 @@ class ResultFrame(ttk.Frame):
                 label4 = tk.Label(       User_info_frame, text="Type : "  +  type)
                 label4.grid(row=3, column=0, pady=10, padx=0)
                 #
-                label5 = tk.Label(       User_info_frame, text="Voter_turnout :" + str(voter_turnout) + '%')
+                label5 = tk.Label(       User_info_frame, text="Voter% :" + str(voter_turnout) + '%')
                 label5.grid(row=3, column=2, pady=10, padx=0)
                 #
                 label6 = tk.Label(       User_info_frame, text="max approved : " + str(max_approved))
@@ -167,13 +168,10 @@ class ResultFrame(ttk.Frame):
                 label2 = tk.Label(User_info_frame, text=title, font=12)
                 label2.grid(row=0, column=1, pady=10, padx=0)
                 #
-                label3 = tk.Label(User_info_frame, text=title)
-                label3.grid(row=2, column=1, pady=10, padx=0)
-                #
                 label4 = tk.Label(User_info_frame, text="Type : " + type)
                 label4.grid(row=3, column=0, pady=10, padx=0)
                 #
-                label5 = tk.Label(User_info_frame, text="Voter_turnout :" + str(voter_turnout))
+                label5 = tk.Label(User_info_frame, text="Voter%:" + str(voter_turnout))
                 label5.grid(row=3, column=2, pady=10, padx=0)
                 Winner_info_frame = tk.LabelFrame(self.frame, text='The Winner is')
                 Winner_info_frame.grid(row=2, column=0, sticky="news")
@@ -199,13 +197,12 @@ class ResultFrame(ttk.Frame):
                     Rno_label[i].grid(row=i + 1, column=0)
                     Candidate_label.append(tk.Label(Election_result_frame, text=Order[i][0]))
                     Candidate_label[i].grid(row=i + 1, column=1)
+                    print(candidates)
+                    print(Order)
                     '''
                     for j in range(len(candidates)):
-                        if candidates[j]['candidate_id'] == Order[j][0]:
-                           print(candidates[j]['candidate_id'])
-                           print(Order[j][0])
-                        else:
-                            pass
+                           print( "A" , candidates[j]['candidate_id'])
+                           print("B" , Order[j][0])
                     '''
 
                     try:
@@ -420,3 +417,18 @@ class ResultFrame(ttk.Frame):
         for i in range(1):
             self.grid_rowconfigure(i, weight=1)
         self.grid_columnconfigure(0, weight=1)
+
+        Button_frame = ttk.LabelFrame(self.frame)
+        Button_frame.grid(row=5, column=0, sticky="news")
+        for i in range(3):
+            Button_frame.grid_columnconfigure(i, weight=1)
+
+        def Help():
+            tkinter.messagebox.showinfo(title="Help", message="Take Data from Documentation")
+
+        button1 = ttk.Button(Button_frame, text="Help", command=Help)
+        button1.grid(row=0, column=0, sticky='news', padx=10
+                     , pady=10)
+        button1 = ttk.Button(Button_frame, text="Go Home", command=app.show_frame_factory('elec_navigation'))
+        button1.grid(row=0, column=2, sticky='news', padx=10
+                     , pady=10)

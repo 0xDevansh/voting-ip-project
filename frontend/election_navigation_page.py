@@ -66,6 +66,20 @@ class ElectionNavigationFrame(ttk.Frame):
                 Elec_command_button_1.append(tk.Button(election_nav_frame, text= 'See Result',
                                                       command=app.show_frame_factory('result_page', {'poll': poll})))
                 Elec_command_button_1[i].grid(row=i+1, column=3, padx=50, pady=10,sticky='news')
+            Button_frame = ttk.LabelFrame(self.frame)
+            Button_frame.grid(row=3, column=0, sticky="news")
+            for i in range(3):
+                Button_frame.grid_columnconfigure(i, weight=1)
+
+            def Help():
+                tkinter.messagebox.showinfo(title="Help", message="Take Data from Documentation")
+
+            button1 = ttk.Button(Button_frame, text="Help", command=Help)
+            button1.grid(row=0, column=0, sticky='news', padx=10
+                         , pady=10)
+            button1 = ttk.Button(Button_frame, text="Go Home", command=app.show_frame_factory('opening'))
+            button1.grid(row=0, column=2, sticky='news', padx=10
+                         , pady=10)
 
 
 

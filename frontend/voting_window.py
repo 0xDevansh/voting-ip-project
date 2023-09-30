@@ -242,6 +242,18 @@ class VotingWindow(ttk.Frame):
                     traceback.print_exc()
                     tk.messagebox.showerror(message=str(exc))
 
+            Button_frame = ttk.LabelFrame(self)
+            Button_frame.grid(row=3, column=0, sticky="news")
+            for i in range(3):
+                Button_frame.grid_columnconfigure(i, weight=1)
+
+            def Help():
+                tkinter.messagebox.showinfo(title="Help", message="Take Data from Documentation")
+
+            button1 = ttk.Button(Button_frame, text="Help", command=Help)
+            button1.grid(row=0, column=0, sticky='news', padx=10
+                         , pady=10)
+
 
 
             for i in range(3):

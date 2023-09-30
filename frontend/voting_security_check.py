@@ -74,3 +74,18 @@ class VotingSecurityCheckFrame(ttk.Frame):
 
         terminate_button = tk.Button(self, text="Terminate", command=terminate_election)
         terminate_button.grid(row=5, column=0, pady=10)
+
+        Button_frame = ttk.LabelFrame(self.frame)
+        Button_frame.grid(row=3, column=0, sticky="news")
+        for i in range(3):
+            Button_frame.grid_columnconfigure(i, weight=1)
+
+        def Help():
+            tkinter.messagebox.showinfo(title="Help", message="Take Data from Documentation")
+
+        button1 = ttk.Button(Button_frame, text="Help", command=Help)
+        button1.grid(row=0, column=0, sticky='news', padx=10
+                     , pady=10)
+        button1 = ttk.Button(Button_frame, text="Go Home", command=app.show_frame_factory('elec_navigation'))
+        button1.grid(row=0, column=2, sticky='news', padx=10
+                     , pady=10)

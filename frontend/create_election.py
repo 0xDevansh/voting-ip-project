@@ -56,7 +56,7 @@ class CreateElectionFrame(ttk.Frame):
                 Alpha +=1
             else:
                 l[5] = 1
-            if max_approved:
+            if type =="Approval voting"  and  max_approved :
 
                 try:
                     int(max_approved)
@@ -68,10 +68,13 @@ class CreateElectionFrame(ttk.Frame):
                 except ValueError:
                     l[7] = 1
             else:
-                max_approved = 1
-                if int(min_threshold) == 0:
-                    min_threshold = None
-                Alpha +=1
+                try:
+                    max_approved = 1
+                    if int(min_threshold) == 0:
+                        min_threshold = None
+                    Alpha +=1
+                except:
+                    pass
             Data_Entry = {"Name": name_institution, "Type_elec": type,
                           "title elec": title_election, "desc": description, "Num voter": number_voter,
                           "Num_can": num_candidates, "Date": date_election, "Sec_key": security_key,
@@ -205,5 +208,20 @@ class CreateElectionFrame(ttk.Frame):
         button1 = ttk.Button(self.frame, text="SUBMIT", command=enter_data)
         button1.grid(row=3, column=0, sticky='news', padx=10
                      , pady=10)
+
+        Button_frame = ttk.LabelFrame(self.frame)
+        Button_frame.grid(row=3, column=0, sticky="news")
+        for i in range(3):
+             Button_frame.grid_columnconfigure(i, weight=1)
+        def Help():
+            tkinter.messagebox.showinfo(title="Help" , message="Take Data from Documentation")
+        button1 = ttk.Button(Button_frame, text="Help", command= Help)
+        button1.grid(row=0, column=0, sticky='news', padx=10
+                     , pady=10)
+        button1 = ttk.Button(Button_frame, text="Go Home", command=app.show_frame_factory('opening'))
+        button1.grid(row=0, column=2, sticky='news', padx=10
+                     , pady=10)
+
+
 
 

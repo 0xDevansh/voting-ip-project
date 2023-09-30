@@ -4,6 +4,7 @@ import tkinter.ttk as ttk
 class OpeningPageFrame(ttk.Frame):
     def __init__(self, app, context):
         super().__init__(app)
+
         '''
         main_frame = tk.Frame(self)
         main_frame.pack(fill=tk.BOTH, expand=1)

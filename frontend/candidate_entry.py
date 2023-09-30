@@ -85,6 +85,8 @@ class CandidateEntryFrame(ttk.Frame):
 
 
 
+
+
 #        toe_button = tk.Button(Cand_entry_frame, text="o", )
  #       toe_button.grid(row=0, column=2)
 

@@ -71,3 +71,4 @@ class ReferendumEntryFrame(ttk.Frame):
         button.grid(row=num_proposals+1, column=1)
 
 
+

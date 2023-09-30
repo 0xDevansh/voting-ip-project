@@ -32,7 +32,17 @@ class TreeViewNavigationFrame(ttk.Frame):
         }
 
         columns = ['id', 'name', 'type', 'status']
-        treeview = ttk.Treeview(self, columns=columns, show='headings', selectmode='browse')
+        for i in range(1):
+            self.grid_columnconfigure(i, weight=1)
+            self.grid_rowconfigure(i,weight=0)
+
+        Treeview_labelframe = ttk.LabelFrame(self)
+        Treeview_labelframe.grid(row=0, column=0)
+        Treeview_labelframe2 = ttk.LabelFrame(self)
+        Treeview_labelframe2.grid(row=1, column=0)
+        Text_Box_1 = ttk.Label(Treeview_labelframe, text="Election Navigation Frame")
+        Text_Box_1.grid(row =0 , column= 0)
+        treeview = ttk.Treeview(Treeview_labelframe, columns=columns, show='headings', selectmode='browse')
         treeview.heading('id', text='Poll ID')
         treeview.heading('name', text='Name')
         treeview.heading('type', text='Type')
@@ -40,9 +50,10 @@ class TreeViewNavigationFrame(ttk.Frame):
 
         for poll in polls:
             data = (poll['id'], poll['name'], poll_types[poll['type']], poll_status[poll['status']])
+            
             treeview.insert('', tk.END, values=data)
 
-        treeview.grid(row=0, column=0, sticky='news')
+        treeview.grid(row=1, column=0)
 
         # add a scrollbar
         scrollbar = ttk.Scrollbar(self, orient=tk.VERTICAL, command=treeview.yview)
@@ -56,5 +67,45 @@ class TreeViewNavigationFrame(ttk.Frame):
                 for poll in polls:
                     if poll['id'] == poll_id:
                         self.selected_poll = poll
+                        print(self.selected_poll)
+                Elec_command_button = tk.Button(Treeview_labelframe, text="Select a Election")
+                Elec_command_button.grid(row=2, column=0, padx=50, pady=10, sticky='news')
+
+                if self.selected_poll['status'] == 'not_started':
+
+                    Elec_command_button.destroy()
+                    Elec_command_button= tk.Button(Treeview_labelframe, text="Start Election",
+                                                               command=app.show_frame_factory("start_election",
+                                                                                              {'poll': poll}))
+                    Elec_command_button.grid(row=2, column=0, padx=50, pady=10, sticky='news')
+                elif self.selected_poll['status'] == "running":
+
+                    Elec_command_button.destroy()
+
+                    Elec_command_button=tk.Button(Treeview_labelframe, text='Add vote/Terminate',
+                                                               command=app.show_frame_factory('voting_security_check',
+                                                                                              {'poll': poll}))
+                    Elec_command_button.grid(row=2, column=0, padx=50, pady=10, sticky='news')
+                elif self.selected_poll['status'] == 'completed':
+                    Elec_command_button.destroy()
+                    Elec_command_button = tk.Button(Treeview_labelframe, text='See Result',
+                                                               command=app.show_frame_factory('result_page',
+                                                                                              {'poll': poll}))
+                    Elec_command_button.grid(row=2, column=0, padx=50, pady=10, sticky='news')
 
         treeview.bind('<<TreeviewSelect>>', item_selected)
+        Button_frame = ttk.LabelFrame(self)
+        Button_frame.grid(row=3, column=0, sticky="news")
+        for i in range(3):
+            Button_frame.grid_columnconfigure(i, weight=1)
+
+        def Help():
+            tkinter.messagebox.showinfo(title="Help", message="Take Data from Documentation")
+
+        button1 = ttk.Button(Button_frame, text="Help", command=Help)
+        button1.grid(row=0, column=0, sticky='news', padx=10
+                     , pady=10)
+        button1 = ttk.Button(Button_frame, text="Go Home", command=app.show_frame_factory('opening'))
+        button1.grid(row=0, column=2, sticky='news', padx=10
+                     , pady=10)
+
