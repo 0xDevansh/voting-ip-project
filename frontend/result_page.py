@@ -419,7 +419,7 @@ class ResultFrame(ttk.Frame):
         self.grid_columnconfigure(0, weight=1)
 
         Button_frame = ttk.LabelFrame(self.frame)
-        Button_frame.grid(row=5, column=0, sticky="news")
+        Button_frame.grid(row=10, column=0, sticky="news")
         for i in range(3):
             Button_frame.grid_columnconfigure(i, weight=1)
 

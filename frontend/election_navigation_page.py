@@ -57,13 +57,13 @@ class ElectionNavigationFrame(ttk.Frame):
             Elec_status_Label[i].grid(row=i+1, column=2, padx=50,sticky='news')
 
             if poll['status'] == 'not_started':
-                 Elec_command_button_1.append(tk.Button(election_nav_frame,text="Start Election", command= app.show_frame_factory("start_election", {'poll': poll})))
+                 Elec_command_button_1.append(ttk.Button(election_nav_frame,text="Start Election", command= app.show_frame_factory("start_election", {'poll': poll})))
                  Elec_command_button_1[i].grid(row=i+1, column=3, padx=50, pady=10,sticky='news')
             elif poll['status'] == "running":
-                Elec_command_button_1.append(tk.Button(election_nav_frame,text='Add vote/Terminate' , command=app.show_frame_factory('voting_security_check', {'poll': poll})))
+                Elec_command_button_1.append(ttk.Button(election_nav_frame,text='Add vote/Terminate' , command=app.show_frame_factory('voting_security_check', {'poll': poll})))
                 Elec_command_button_1[i].grid(row=i+1, column=3, padx=50, pady=10, sticky='news')
             elif poll['status'] == 'completed':
-                Elec_command_button_1.append(tk.Button(election_nav_frame, text= 'See Result',
+                Elec_command_button_1.append(ttk.Button(election_nav_frame, text= 'See Result',
                                                       command=app.show_frame_factory('result_page', {'poll': poll})))
                 Elec_command_button_1[i].grid(row=i+1, column=3, padx=50, pady=10,sticky='news')
             Button_frame = ttk.LabelFrame(self.frame)
