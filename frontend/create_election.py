@@ -112,7 +112,7 @@ class CreateElectionFrame(ttk.Frame):
 
             return Data_Entry
 
-        def do():
+        def do(event):
             che = Type_of_election_Entry.get()
             if che in ["first past the post", "Instant Runoff" , "Approval voting"]:
                 Election_info_frame.grid(row=1, column=0, sticky="news")
@@ -145,23 +145,30 @@ class CreateElectionFrame(ttk.Frame):
 
         User_info_frame = ttk.LabelFrame(self.frame, text="User Informaton")
         User_info_frame.grid(row=0, column=0, sticky="news")
+        for i in range(2):
+            User_info_frame.grid_rowconfigure(i, weight=1)
+        for i in range(2):
+            User_info_frame.grid_columnconfigure(i,weight=1)
 
         name_institution = ttk.Label(User_info_frame, text="Name of the institution")
         name_institution.grid(row=0, column=0)
         name_institution_Entry = ttk.Entry(User_info_frame)
         name_institution_Entry.grid(row=0, column=1, padx=50, pady=10)
 
-        Type_of_election = ttk.Label(User_info_frame, text="Type of election")
+        Type_of_election = ttk.Label(User_info_frame, text="Type of election" )
         Type_of_election.grid(row=2, column=0)
         Type_of_election_Entry = ttk.Combobox(User_info_frame, values= ["first past the post", "Instant Runoff" , "Approval voting"])
-        Type_of_election_Entry.grid(row=2, column=1, padx=50, pady=10)
+        Type_of_election_Entry.grid(row=2, column=1, padx=50, pady=10,sticky='ew')
+        Type_of_election_Entry.bind("<<ComboboxSelected>>", do)
 
-        update_button = ttk.Button(User_info_frame , text="Update" , command = do)
-        update_button.grid(row=2 , column=2)
 
 
 
         Election_info_frame = ttk.LabelFrame(self.frame, text="Election Information")
+        for i in range(8):
+            Election_info_frame.grid_rowconfigure(i, weight=1)
+        for i in range(2):
+            Election_info_frame.grid_columnconfigure(i,weight=1)
 
 
         title_election = ttk.Label(Election_info_frame, text="Title of Election")
@@ -170,7 +177,7 @@ class CreateElectionFrame(ttk.Frame):
         title_election_Entry.grid(row=0, column=1, padx=50, pady=10)
 
 
-        Description = ttk.Label(Election_info_frame, text="Desccription of Election")
+        Description = ttk.Label(Election_info_frame, text="Description of Election")
         Description.grid(row=1, column=0)
         Description_Entry = ttk.Entry(Election_info_frame)
         Description_Entry.grid(row=1, column=1, padx=50, pady=10)
@@ -195,12 +202,12 @@ class CreateElectionFrame(ttk.Frame):
         Sec_Key_Entry = ttk.Entry(Election_info_frame)
         Sec_Key_Entry.grid(row=5, column=1, padx=50, pady=10)
 
-        Min_thr_Key = ttk.Label(Election_info_frame, text="minimum approval threshold")
+        Min_thr_Key = ttk.Label(Election_info_frame, text="Minimum Approval Threshold")
 
         Min_thr_Key_Entry = ttk.Spinbox(Election_info_frame , from_= 0 , to= 100)
 
 
-        Max_app_Key = ttk.Label(Election_info_frame, text="maximum approved")
+        Max_app_Key = ttk.Label(Election_info_frame, text="Maximum Approved")
 
         Max_app_Key_Entry = ttk.Entry(Election_info_frame)
 
