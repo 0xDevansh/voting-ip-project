@@ -429,6 +429,6 @@ class ResultFrame(ttk.Frame):
         button1 = ttk.Button(Button_frame, text="Help", command=Help)
         button1.grid(row=0, column=0, sticky='news', padx=10
                      , pady=10)
-        button1 = ttk.Button(Button_frame, text="Go Home", command=app.show_frame_factory('elec_navigation'))
+        button1 = ttk.Button(Button_frame, text="Go Back", command=app.show_frame_factory('elec_navigation'))
         button1.grid(row=0, column=2, sticky='news', padx=10
                      , pady=10)
