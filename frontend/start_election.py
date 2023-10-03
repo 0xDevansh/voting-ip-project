@@ -43,8 +43,7 @@ class StartElectionFrame(ttk.Frame):
             else:
                 entry1['show'] = '*'
 
-        checkBox_showPassword = tk.Checkbutton(self, text="show password", fg='red',
-                                             command=show_and_hide)
+        checkBox_showPassword = ttk.Checkbutton(self, text="Show security key", command=show_and_hide)
         checkBox_showPassword.grid(row=3,column=0)
 
         start_button = tk.Button(self, text="Start", command = start_election)
