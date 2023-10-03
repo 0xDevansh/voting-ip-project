@@ -6,11 +6,11 @@ class OpeningPageFrame(ttk.Frame):
         super().__init__(app)
 
         '''
-        main_frame = tk.Frame(self)
+        main_frame = ttk.Frame(self)
         main_frame.pack(fill=tk.BOTH, expand=1)
 
         # Create Frame for X Scrollbar
-        sec = tk.Frame(main_frame)
+        sec = ttk.Frame(main_frame)
         sec.pack(fill=tk.X, side=tk.BOTTOM)
 
         # Create A Canvas

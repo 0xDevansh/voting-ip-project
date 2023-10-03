@@ -17,6 +17,6 @@ class CreditsFrame(ttk.Frame):
         self.info3 = ttk.Label(self, text="Devansh Kandpal - Senior Developer")
         self.info3.grid(row=2, column=0)
         self.info4 = ttk.Label(self, text="Atharv's cat - Quality Assurance")
-        self.info3.grid(row=3, column=0)
+        self.info4.grid(row=3, column=0)
         self.btn4 = ttk.Button(self, text="    Back   ", command=app.show_frame_factory('opening'))
         self.btn4.grid(row=4, column=0)

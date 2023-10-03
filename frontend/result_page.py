@@ -50,16 +50,16 @@ class ResultFrame(ttk.Frame):
                 for i in range(3):
                     self.grid_rowconfigure(i, weight=1)
                 self.grid_columnconfigure(0, weight=1)
-                self.frame = tk.Frame(self)
+                self.frame = ttk.Frame(self)
                 self.frame.grid()
 
-                self.title_label = tk.Label(self.frame, text= "THE RESULT ARE")
+                self.title_label = ttk.Label(self.frame, text= "THE RESULT ARE")
                 self.title_label.grid(row=0, column=0)
 
-                User_info_frame = tk.LabelFrame(self.frame)
+                User_info_frame = ttk.LabelFrame(self.frame)
                 User_info_frame.grid(row=1, column=0, sticky="news")
 
-                label1 = tk.Label(       User_info_frame, text = "By : " + name_of_institution , font=12)
+                label1 = ttk.Label(       User_info_frame, text = "By : " + name_of_institution , font=12)
                 label1.grid(row=1,column=1 ,pady= 10 , padx=0)
                 #
                 label2 = tk.Label(       User_info_frame, text= title , font= 12)

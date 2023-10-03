@@ -25,15 +25,15 @@ class StartElectionFrame(ttk.Frame):
         for i in range(1):
             self.grid_columnconfigure(i, weight=1)
 
-        self.frame = tk.Frame(self)
+        self.frame = ttk.Frame(self)
         self.frame.grid()
 
 
 
-        label1 = tk.Label(self, text="Your election has been created" , font= 20)
+        label1 = ttk.Label(self, text="Your election has been created" , font= 20)
         label1.grid(row=0, column=0 , pady= 10)
 
-        label2 = tk.Label(self, text="Enter Security Key to Start")
+        label2 = ttk.Label(self, text="Enter Security Key to Start")
         label2.grid(row=1, column=0,  pady= 10)
         entry1 = tk.Entry(self, show='*')
         entry1.grid(row=2, column=0)
