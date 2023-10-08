@@ -45,8 +45,12 @@ class CreateReferendumFrame(ttk.Frame):
                 Alpha += 1
             else:
                 l[4] = 1
-            if int(min_threshold) == 0:
-                min_threshold = None
+            try:
+                int(min_threshold)
+                if int(min_threshold) == 0:
+                    min_threshold = None
+            except:
+                l[5] = 1
             Data_Entry = {"Name": name_institution,
                           "title_elec": title_referendum, "desc": description, "Num_voter": number_voter,
                           "Num_can": num_candidates, "Sec_key": security_key,
@@ -62,7 +66,7 @@ class CreateReferendumFrame(ttk.Frame):
                 tkinter.messagebox.showerror(title="Error104",
                                              message='Title , Description and Date of referendum Required')
             elif l[5] == 1:
-                tkinter.messagebox.showerror(title="Error105", message="You have not selected the type of referendum")
+                tkinter.messagebox.showerror(title="Error105", message="You have selected invalid minimum threshold")
             elif l[4] == 1:
                 tkinter.messagebox.showerror(title="Error106", message="You have not accepted the Terms and Condition")
             else:
