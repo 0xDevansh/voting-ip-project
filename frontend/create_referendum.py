@@ -103,13 +103,13 @@ class CreateReferendumFrame(ttk.Frame):
         referendum_info_frame = ttk.LabelFrame(self.frame, text="Referendum Information")
         referendum_info_frame.grid(row=1, column=0, sticky="news")
 
-        title_referendum = ttk.Label(referendum_info_frame, text="Title of referendum")
+        title_referendum = ttk.Label(referendum_info_frame, text="Title of Referendum")
         title_referendum_Entry = ttk.Entry(referendum_info_frame)
         title_referendum.grid(row=0, column=0)
         title_referendum_Entry.grid(row=0, column=1, padx=50, pady=10)
 
 
-        Description = ttk.Label(referendum_info_frame, text="Description of referendum")
+        Description = ttk.Label(referendum_info_frame, text="Description of Referendum")
         Description.grid(row=1, column=0)
         Description_Entry = ttk.Entry(referendum_info_frame)
         Description_Entry.grid(row=1, column=1, padx=50, pady=10)
@@ -134,7 +134,7 @@ class CreateReferendumFrame(ttk.Frame):
         Sec_Key_Entry = ttk.Entry(referendum_info_frame)
         Sec_Key_Entry.grid(row=5, column=1, padx=50, pady=10)
 
-        Min_thr_Key = ttk.Label(referendum_info_frame, text="minimum approval threshold")
+        Min_thr_Key = ttk.Label(referendum_info_frame, text="Minimum Approval Threshold(%)")
         Min_thr_Key.grid(row=6, column=0)
         Min_thr_Key_Entry = ttk.Spinbox(referendum_info_frame , from_= 0 , to= 100)
         Min_thr_Key_Entry.grid(row=6, column=1, padx=50, pady=10)
