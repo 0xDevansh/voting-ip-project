@@ -16,7 +16,7 @@ class CreateReferendumFrame(ttk.Frame):
             title_referendum = title_referendum_Entry.get()
             description = Description_Entry.get()
             num_candidates = No_Cand_Entry.get() 
-            date_referendum = Date_Entry.get()
+            #date_referendum = Date_Entry.get()
             number_voter = No_Voter_Entry.get()
             security_key = Sec_Key_Entry.get()
             tnc = tnc_var.get()
@@ -37,7 +37,7 @@ class CreateReferendumFrame(ttk.Frame):
                 Alpha += 1
             else:
                 l[2] = 1
-            if title_referendum and description and date_referendum:
+            if title_referendum and description :
                 Alpha += 1
             else:
                 l[3] = 1
@@ -49,7 +49,7 @@ class CreateReferendumFrame(ttk.Frame):
                 min_threshold = None
             Data_Entry = {"Name": name_institution,
                           "title_elec": title_referendum, "desc": description, "Num_voter": number_voter,
-                          "Num_can": num_candidates, "Date": date_referendum, "Sec_key": security_key,
+                          "Num_can": num_candidates, "Sec_key": security_key,
                           "tnc": tnc}
 
             if l[0] == 1:
@@ -115,10 +115,10 @@ class CreateReferendumFrame(ttk.Frame):
         No_Cand_Entry = ttk.Entry(referendum_info_frame)
         No_Cand_Entry.grid(row=2, column=1, padx=50, pady=10)
 
-        Date = ttk.Label(referendum_info_frame, text="Date")
-        Date.grid(row=3, column=0)
-        Date_Entry = ttk.Entry(referendum_info_frame)
-        Date_Entry.grid(row=3, column=1, padx=50, pady=10)
+        #Date = ttk.Label(referendum_info_frame, text="Date")
+        #Date.grid(row=3, column=0)
+        #Date_Entry = ttk.Entry(referendum_info_frame)
+        #Date_Entry.grid(row=3, column=1, padx=50, pady=10)
 
         No_Voter = ttk.Label(referendum_info_frame, text="Number of  Voters")
         No_Voter.grid(row=4, column=0)

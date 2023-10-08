@@ -51,12 +51,12 @@ class VotingSecurityCheckFrame(ttk.Frame):
 
 
 
-        label1 = tk.Label(self, text="Vote Has been registered" , font= 20)
+        label1 = tk.Label(self.frame, text="Vote Has been registered" , font= 20)
         label1.grid(row=0, column=0 , pady= 10)
 
-        label2 = tk.Label(self, text="Enter Security Key to Continue")
+        label2 = tk.Label(self.frame, text="Enter Security Key to Continue")
         label2.grid(row=1, column=0,  pady= 10)
-        entry1 = tk.Entry(self, show='*')
+        entry1 = tk.Entry(self.frame, show='*')
         entry1.grid(row=2, column=0)
 
         def show_and_hide():
@@ -65,14 +65,14 @@ class VotingSecurityCheckFrame(ttk.Frame):
             else:
                 entry1['show'] = '*'
 
-        checkBox_showPassword = tk.Checkbutton(self, text="show password", fg='red',
+        checkBox_showPassword = tk.Checkbutton(self.frame, text="show password", fg='red',
                                              command=show_and_hide)
         checkBox_showPassword.grid(row=3,column=0)
 
-        start_button = tk.Button(self, text="Next Vote", command = next_vote)
+        start_button = tk.Button(self.frame, text="Next Vote", command = next_vote)
         start_button.grid(row=4, column=0 ,  pady= 10)
 
-        terminate_button = tk.Button(self, text="Terminate", command=terminate_election)
+        terminate_button = tk.Button(self.frame, text="Terminate", command=terminate_election)
         terminate_button.grid(row=5, column=0, pady=10)
 
         Button_frame = ttk.LabelFrame(self.frame)

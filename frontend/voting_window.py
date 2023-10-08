@@ -69,6 +69,17 @@ class VotingWindow(ttk.Frame):
             self.title_label.grid(row= 0 , column=0)
             User_info_frame = tk.LabelFrame(self.frame)
             User_info_frame.grid(row=1, column=0, sticky="news")
+            Button_frame = ttk.LabelFrame(self.frame)
+            Button_frame.grid(row=3, column=0, sticky="news")
+            Button_frame.grid_columnconfigure(0, weight=1)
+            Button_frame.grid_rowconfigure(0, weight=1)
+
+            def Help():
+                tkinter.messagebox.showinfo(title="Help", message="Take Data from Documentation")
+
+            button1 = ttk.Button(Button_frame, text="Help", command=Help)
+            button1.grid(row=0, column=0, sticky='news', padx=10
+                         , pady=10)
 
             label1 = tk.Label(User_info_frame, text="Candidate Name")
             label1.grid(row=0, column=0, pady=10)
@@ -124,6 +135,17 @@ class VotingWindow(ttk.Frame):
             self.title_label.grid(row= 0 , column=0)
             User_info_frame = tk.LabelFrame(self.frame)
             User_info_frame.grid(row=1, column=0, sticky="news")
+            Button_frame = ttk.LabelFrame(self.frame)
+            Button_frame.grid(row=3, column=0, sticky="news")
+            Button_frame.grid_columnconfigure(0, weight=1)
+            Button_frame.grid_rowconfigure(0, weight=1)
+
+            def Help():
+                tkinter.messagebox.showinfo(title="Help", message="Take Data from Documentation")
+
+            button1 = ttk.Button(Button_frame, text="Help", command=Help)
+            button1.grid(row=0, column=0, sticky='news', padx=10
+                         , pady=10)
 
             label1 = tk.Label(User_info_frame, text="Candidate Name")
             label1.grid(row=0, column=0, pady=10)
@@ -193,6 +215,17 @@ class VotingWindow(ttk.Frame):
             self.title_label.grid(row=0, column=0)
             User_info_frame = tk.LabelFrame(self.frame)
             User_info_frame.grid(row=1, column=0, sticky="news")
+            Button_frame = ttk.LabelFrame(self.frame)
+            Button_frame.grid(row=3, column=0, sticky="news")
+            Button_frame.grid_columnconfigure(0, weight=1)
+            Button_frame.grid_rowconfigure(0, weight=1)
+
+            def Help():
+                tkinter.messagebox.showinfo(title="Help", message="Take Data from Documentation")
+
+            button1 = ttk.Button(Button_frame, text="Help", command=Help)
+            button1.grid(row=0, column=0, sticky='news', padx=10
+                         , pady=10)
 
             label1 = tk.Label(User_info_frame, text="Candidate Name")
             label1.grid(row=0, column=0, pady=10, padx = 10)
@@ -242,10 +275,12 @@ class VotingWindow(ttk.Frame):
                     traceback.print_exc()
                     tk.messagebox.showerror(message=str(exc))
 
-            Button_frame = ttk.LabelFrame(self)
+            self.frame = tk.Frame(self)
+            self.frame.grid()
+            Button_frame = ttk.LabelFrame(self.frame)
             Button_frame.grid(row=3, column=0, sticky="news")
-            for i in range(3):
-                Button_frame.grid_columnconfigure(i, weight=1)
+            Button_frame.grid_columnconfigure(0, weight=1)
+            Button_frame.grid_rowconfigure(0,weight=1)
 
             def Help():
                 tkinter.messagebox.showinfo(title="Help", message="Take Data from Documentation")
@@ -259,8 +294,7 @@ class VotingWindow(ttk.Frame):
             for i in range(3):
                 self.grid_rowconfigure(i, weight=1)
             self.grid_columnconfigure(0, weight=1)
-            self.frame = tk.Frame(self)
-            self.frame.grid()
+
 
             self.title_label =  tk.Label(self.frame , text= election_title )
             self.title_label.grid(row= 0 , column=0)

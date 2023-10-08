@@ -105,7 +105,7 @@ class TreeViewNavigationFrame(ttk.Frame):
         button1 = ttk.Button(Treeview_labelframe, text="Help", command=Help)
         button1.grid(row=3, column=0, sticky='news', padx=10
                      , pady=10)
-        button1 = ttk.Button(Treeview_labelframe, text="Go Home", command=app.show_frame_factory('opening'))
+        button1 = ttk.Button(Treeview_labelframe, text="Go to Home Page", command=app.show_frame_factory('opening'))
         button1.grid(row=3, column=2, sticky='news', padx=10
                      , pady=10)
 
