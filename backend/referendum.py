@@ -2,7 +2,7 @@
 # returns list of winners (multiple winners if tie)
 
 
-def calculate_referendum(votes, proposals, min_threshold=None):
+def calculate_referendum(votes, proposals, min_threshold=0):
     approved = {}
     disapproved = {}
     abstained = {}
@@ -33,6 +33,7 @@ def calculate_referendum(votes, proposals, min_threshold=None):
         print(prop)
         description= prop['faction']
         res = 'dis'
+        print(approve_percent, min_threshold)
         if approve_percent > min_threshold:
             res = 'app'
         result.append({'name': name, 'description': description, 'approve_percent': approve_percent, 'disapprove_percent': disapprove_percent, 'abstain_percent': abstain_percent, 'result': res})
