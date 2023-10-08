@@ -27,13 +27,15 @@ class ResultFrame(ttk.Frame):
             voter_turnout = round((actual_num_votes/(num_voters))*100,1)
 
             poll_result = db.get_result(poll['id'])
+            print('POLL RESULT!')
+            print(poll_result)
+            print('--------')
             if not poll_result:
                 raise Exception('Result not found')
             # Switch candidate ids with names
             candidate_id_name = {}
             for cand in candidates:
                 candidate_id_name[cand['candidate_id']] = cand['name']
-            print(poll_result)
             if 'winners' in poll_result and poll_result['winners'] != None:
                 poll_result['winners'] = list(map(lambda w:candidate_id_name[w], poll_result['winners']))
             if 'eliminated' in poll_result and poll_result['eliminated'] != None:
@@ -128,7 +130,11 @@ class ResultFrame(ttk.Frame):
                     '''
 
                     try:
-                        faction = candidates[i]['faction']
+                        faction = 'None'
+                        for cand in candidates:
+                            if cand['name'] == Order[i][0]:
+                                faction = cand['faction']
+                                break
                         faction_label.append(tk.Label(Election_result_frame, text=faction))
                         faction_label[i].grid(row=i + 1, column=2)
                     except:
@@ -183,7 +189,7 @@ class ResultFrame(ttk.Frame):
                     Winner_info_frame.grid_columnconfigure(i, weight=1)
                 Election_result_frame = tk.LabelFrame(self.frame, text='Total Result')
                 Election_result_frame.grid(row=3, column=0, sticky="news")
-                text_for_header = ["S. No", "Candidate", "faction", " Votes"]
+                text_for_header = ["S. No", "Candidate", "Faction", " Votes"]
                 Label_for_header = []
                 for i in range(len((text_for_header))):
                     Label_for_header.append(tk.Label(Election_result_frame, text=text_for_header[i]))
@@ -197,8 +203,6 @@ class ResultFrame(ttk.Frame):
                     Rno_label[i].grid(row=i + 1, column=0)
                     Candidate_label.append(tk.Label(Election_result_frame, text=Order[i][0]))
                     Candidate_label[i].grid(row=i + 1, column=1)
-                    print(candidates)
-                    print(Order)
                     '''
                     for j in range(len(candidates)):
                            print( "A" , candidates[j]['candidate_id'])
@@ -206,7 +210,11 @@ class ResultFrame(ttk.Frame):
                     '''
 
                     try:
-                        faction = candidates[i]['faction']
+                        faction = 'None'
+                        for cand in candidates:
+                            if cand['name'] == Order[i][0]:
+                                faction = cand['faction']
+                                break
                         faction_label.append(tk.Label(Election_result_frame, text=faction))
                         faction_label[i].grid(row=i + 1, column=2)
                     except:

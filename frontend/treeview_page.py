@@ -68,7 +68,7 @@ class TreeViewNavigationFrame(ttk.Frame):
                     if poll['id'] == poll_id:
                         self.selected_poll = poll
                         print(self.selected_poll)
-                Elec_command_button = ttk.Button(Treeview_labelframe, text="Select a Election")
+                Elec_command_button = ttk.Button(Treeview_labelframe, text="Select an Election")
                 Elec_command_button.grid(row=2, column=0, padx=50, pady=10, sticky='news')
 
                 if self.selected_poll['status'] == 'not_started':
@@ -76,7 +76,7 @@ class TreeViewNavigationFrame(ttk.Frame):
                     Elec_command_button.destroy()
                     Elec_command_button= ttk.Button(Treeview_labelframe, text="Start Election",
                                                                command=app.show_frame_factory("start_election",
-                                                                                              {'poll': poll}))
+                                                                                              {'poll': self.selected_poll}))
                     Elec_command_button.grid(row=2, column=0, padx=50, pady=10, sticky='news')
                 elif self.selected_poll['status'] == "running":
 
@@ -84,13 +84,13 @@ class TreeViewNavigationFrame(ttk.Frame):
 
                     Elec_command_button=ttk.Button(Treeview_labelframe, text='Add vote/Terminate',
                                                                command=app.show_frame_factory('voting_security_check',
-                                                                                              {'poll': poll}))
+                                                                                              {'poll': self.selected_poll}))
                     Elec_command_button.grid(row=2, column=0, padx=50, pady=10, sticky='news')
                 elif self.selected_poll['status'] == 'completed':
                     Elec_command_button.destroy()
                     Elec_command_button = ttk.Button(Treeview_labelframe, text='See Result',
                                                                command=app.show_frame_factory('result_page',
-                                                                                              {'poll': poll}))
+                                                                                              {'poll': self.selected_poll}))
                     Elec_command_button.grid(row=2, column=0, padx=50, pady=10, sticky='news')
 
         treeview.bind('<<TreeviewSelect>>', item_selected)
