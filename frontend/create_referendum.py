@@ -134,7 +134,7 @@ class CreateReferendumFrame(ttk.Frame):
         Sec_Key_Entry = ttk.Entry(referendum_info_frame)
         Sec_Key_Entry.grid(row=5, column=1, padx=50, pady=10)
 
-        Min_thr_Key = ttk.Label(referendum_info_frame, text="minimum approval threshold")
+        Min_thr_Key = ttk.Label(referendum_info_frame, text="Minimum approval threshold(%)")
         Min_thr_Key.grid(row=6, column=0)
         Min_thr_Key_Entry = ttk.Spinbox(referendum_info_frame , from_= 0 , to= 100)
         Min_thr_Key_Entry.grid(row=6, column=1, padx=50, pady=10)
