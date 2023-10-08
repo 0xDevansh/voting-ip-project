@@ -10,7 +10,7 @@ class ElectionNavigationFrame(ttk.Frame):
     def __init__(self, app, context):
         super().__init__(app)
 
-        self.frame = tk.Frame(self)
+        self.frame = ttk.Frame(self)
         self.frame.pack()
 
         try:
@@ -20,14 +20,14 @@ class ElectionNavigationFrame(ttk.Frame):
             traceback.print_exc()
             tk.messagebox.showerror(message=str(exc))
 
-        election_nav_frame = tk.LabelFrame(self.frame)
+        election_nav_frame = ttk.LabelFrame(self.frame)
         election_nav_frame.grid(row=0, column=0, sticky="news")
         text_for_labels = ["Election  name","Type" ,"Status", "Commands"]
         Labels = []
         for i in range(len((text_for_labels))):
-            Labels.append(tk.Label(election_nav_frame,text=text_for_labels[i]))
+            Labels.append(ttk.Label(election_nav_frame,text=text_for_labels[i]))
             Labels[i].grid(row = 0 , column= i, padx= 50)
-        Elec_Label_frame = [tk.LabelFrame(self.frame)]
+        Elec_Label_frame = [ttk.LabelFrame(self.frame)]
         Elec_name_label=[]
         Elec_type_label=[] 
         Elec_status_Label=[]
@@ -47,9 +47,9 @@ class ElectionNavigationFrame(ttk.Frame):
         Elec_command_button_1=[]
         for i, poll in enumerate(polls):
 
-            Elec_name_label.append(tk.Label(election_nav_frame, text=poll['name']))
-            Elec_type_label.append(tk.Label(election_nav_frame, text=poll_types[poll['type']]))
-            Elec_status_Label.append(tk.Label(election_nav_frame,text=poll_status[poll['status']]))
+            Elec_name_label.append(ttk.Label(election_nav_frame, text=poll['name']))
+            Elec_type_label.append(ttk.Label(election_nav_frame, text=poll_types[poll['type']]))
+            Elec_status_Label.append(ttk.Label(election_nav_frame,text=poll_status[poll['status']]))
 
 
             Elec_name_label[i].grid(row=i+1, column=0,padx=50,sticky='news')

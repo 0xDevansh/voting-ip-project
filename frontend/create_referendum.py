@@ -202,6 +202,6 @@ class CreateReferendumFrame(ttk.Frame):
         button_1 = ttk.Button(Button_frame, text="Help", command=Help)
         button_1.grid(row=0, column=0, sticky='news', padx=10
                      , pady=10)
-        button_2 = ttk.Button(Button_frame, text="Go Home", command=app.show_frame_factory('opening'))
+        button_2 = ttk.Button(Button_frame, text="Go Back", command=app.show_frame_factory('opening'))
         button_2.grid(row=0, column=2, sticky='news', padx=10
                      , pady=10)

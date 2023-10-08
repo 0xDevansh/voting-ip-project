@@ -14,8 +14,8 @@ class CreateElectionFrame(ttk.Frame):
             name_institution = name_institution_Entry.get()
             type = Type_of_election_Entry.get()
             type_codes = {
-                'Approval voting': 'approval',
-                'first past the post': 'fptp',
+                'Approval Voting': 'approval',
+                'First Past the Post': 'fptp',
                 'Instant Runoff': 'runoff'
             }
             type_code = type_codes[type]
@@ -56,7 +56,7 @@ class CreateElectionFrame(ttk.Frame):
                 Alpha +=1
             else:
                 l[5] = 1
-            if type =="Approval voting"  and  max_approved :
+            if type =="Approval Voting"  and  max_approved :
 
                 try:
                     int(max_approved)
@@ -81,7 +81,7 @@ class CreateElectionFrame(ttk.Frame):
                           "tnc": tnc, "min_thr": min_threshold, "max_app": max_approved}
 
             if l[0] == 1:
-                tkinter.messagebox.showerror(title="Erroe101", message='Number of Candidataes must be integer')
+                tkinter.messagebox.showerror(title="Error101", message='Number of Candidataes must be integer')
             elif l[1] == 1:
                 tkinter.messagebox.showerror(title="Error102", message='Number of Voters Must be integer')
             elif l[2] == 1:
@@ -112,9 +112,9 @@ class CreateElectionFrame(ttk.Frame):
 
             return Data_Entry
 
-        def do(event):
-            che = Type_of_election_Entry.get()
-            if che in ["first past the post", "Instant Runoff" , "Approval voting"]:
+        def change_election_type(event):
+            elec_type = Type_of_election_Entry.get()
+            if elec_type in ["First Past the Post", "Instant Runoff" , "Approval Voting"]:
                 Election_info_frame.grid(row=1, column=0, sticky="news")
                 Dec_frame.grid(row=2, column=0, sticky="news")
                 button1.grid(row=3, column=0, sticky='news', padx=10
@@ -124,7 +124,7 @@ class CreateElectionFrame(ttk.Frame):
 
 
 
-            if che == "Approval voting":
+            if elec_type == "Approval voting":
                 Min_thr_Key.grid(row=6, column=0)
                 Min_thr_Key_Entry.grid(row=6, column=1, padx=50, pady=10)
 
@@ -157,9 +157,9 @@ class CreateElectionFrame(ttk.Frame):
 
         Type_of_election = ttk.Label(User_info_frame, text="Type of election" )
         Type_of_election.grid(row=2, column=0)
-        Type_of_election_Entry = ttk.Combobox(User_info_frame, values= ["first past the post", "Instant Runoff" , "Approval voting"])
+        Type_of_election_Entry = ttk.Combobox(User_info_frame, values= ["First Past the Post", "Instant Runoff" , "Approval Voting"])
         Type_of_election_Entry.grid(row=2, column=1, padx=50, pady=10,sticky='ew')
-        Type_of_election_Entry.bind("<<ComboboxSelected>>", do)
+        Type_of_election_Entry.bind("<<ComboboxSelected>>", change_election_type)
 
 
 
@@ -202,7 +202,7 @@ class CreateElectionFrame(ttk.Frame):
         Sec_Key_Entry = ttk.Entry(Election_info_frame)
         Sec_Key_Entry.grid(row=5, column=1, padx=50, pady=10)
 
-        Min_thr_Key = ttk.Label(Election_info_frame, text="Minimum Approval Threshold")
+        Min_thr_Key = ttk.Label(Election_info_frame, text="Minimum Approval Threshold (%)")
 
         Min_thr_Key_Entry = ttk.Spinbox(Election_info_frame , from_= 0 , to= 100)
 
