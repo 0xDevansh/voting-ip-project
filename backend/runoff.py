@@ -1,5 +1,7 @@
 from backend.utils import get_keys_with_value
 
+# calculates runoff result
+# returns list of winners (multiple winners if tie)
 def calculate_runoff(votes, candidates):
     candidate_votes = {}
     # used to break ties
@@ -9,6 +11,7 @@ def calculate_runoff(votes, candidates):
         candidate_votes[cand] = []
         candidate_points[cand] = 0
 
+    # count votes
     for vote in votes:
         for (i, choice) in enumerate(vote):
             position = len(vote) - i
@@ -39,7 +42,7 @@ def calculate_runoff(votes, candidates):
         # eliminate last candidate
         min_votes = min(num_votes.values())
         if list(num_votes.values()).count(min_votes) > 1:
-            # eliminate based on initial points
+            # there is a tie, eliminate based on initial points
             elim_candidates = [c for (c, v) in num_votes.items() if v == min_votes]
             elim_points = [(c, v) for (c, v) in sorted_cand_points if c in elim_candidates]
             # sorted_cand_points is already sorted ascending by points

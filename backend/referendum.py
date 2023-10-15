@@ -3,6 +3,8 @@
 
 
 def calculate_referendum(votes, proposals, min_threshold=0):
+    if isinstance(min_threshold, str):
+        min_threshold = 0
     approved = {}
     disapproved = {}
     abstained = {}

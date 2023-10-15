@@ -9,6 +9,7 @@ def calculate_approval(votes, candidates, max_approved=None, min_threshold=None)
     for cand in candidates:
         candidate_votes[cand] = 0
 
+    # count votes
     total_votes = 0
     for vote in votes:
         if len(vote) != 0:
@@ -33,12 +34,3 @@ def calculate_approval(votes, candidates, max_approved=None, min_threshold=None)
         if len(winners) > max_approved:
             winners = winners[:max_approved]
         return {'winners': winners, 'order': sorted_votes}
-
-
-if __name__ == '__main__':
-    candidates = ['Modi', 'Laxman Singh', 'Donald Trump', 'Arvind Kejriwal']
-    candidate_ids = ['md', 'ls', 'dt', 'ak']
-    # preferences, first number is index of highest preferred candidate
-    test_votes = [( 'dt', 'ls', 'ak'), ('ls',), ('ls', 'dt'), ('md', 'ls'), ('dt', 'md'), (), ('dt', 'ls', 'md', 'ak'), ('md', 'ls', 'dt', 'ak'), ('dt', 'ak', 'md', 'ls'), ('dt', 'ak', 'ls', 'md'), ('ak', 'ls', 'md', 'dt'), ('ak', 'ls', 'dt', 'md'), ('ak', 'dt', 'md', 'ls'), ('ak', 'dt', 'ls', 'md')]
-    winner = calculate_approval(test_votes, candidate_ids, max_approved=3, min_threshold=20)
-    print(winner)

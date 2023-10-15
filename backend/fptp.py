@@ -1,5 +1,6 @@
 from backend.utils import get_keys_with_value
 
+# calculates first past the post voting result
 # returns list of winners (multiple winners if tie)
 def calculate_fptp(votes, candidates):
     candidate_votes = {}

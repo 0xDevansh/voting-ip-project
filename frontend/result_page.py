@@ -27,7 +27,7 @@ class ResultFrame(ttk.Frame):
             voter_turnout = round((actual_num_votes/(num_voters))*100,1)
 
             poll_result = db.get_result(poll['id'])
-            if poll_result['winners'] == ['nota'] or len(poll_result['winners']) == 0:
+            if poll['type'] != 'referendum' and len(poll_result['winners']) == 0:
                 poll_result['winners'] = ['nota']
                 print('ADDING NOTA')
                 candidates.append({'candidate_id': 'nota', 'name': 'No candidate cleared the minimum vote threshold.', 'faction': 'NA'})
