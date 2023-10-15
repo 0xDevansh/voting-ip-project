@@ -32,7 +32,6 @@ class VotingSecurityCheckFrame(ttk.Frame):
                 try:
                     db = Database.get_instance()
                     result = calculate_result(poll['id'])
-                    print(result)
                     db.mark_as_completed(poll['id'])
                     app.show_frame('result_page', {'poll': poll})
                 except Exception as exc:

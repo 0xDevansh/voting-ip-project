@@ -102,9 +102,7 @@ class CreateElectionFrame(ttk.Frame):
                 try:
                     db = Database.get_instance()
                     poll = db.create_poll(name=title_election, type=type_code, description=description, security_key=security_key, secure_mode=True, inst_name=name_institution, num_candidates=num_candidates, num_voters=number_voter, max_approved=max_approved, min_threshold=min_threshold)
-                    print('Poll created: ', poll)
 
-                    print('success')
                     app.show_frame('cand_entry', context={'poll': poll})
                 except Exception as exc:
                     traceback.print_exc()

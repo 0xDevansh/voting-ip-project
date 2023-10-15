@@ -32,7 +32,6 @@ class ReferendumEntryFrame(ttk.Frame):
                     tkinter.messagebox.showerror(title="Error", message='Proposal' + str(i+1) + 'data incomplete')
                     break
             try:
-                print(data)
                 db = Database.get_instance()
                 db.register_proposals(poll['id'], data)
                 app.show_frame('elec_navigation')

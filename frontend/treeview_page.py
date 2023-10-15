@@ -67,7 +67,6 @@ class TreeViewNavigationFrame(ttk.Frame):
                 for poll in polls:
                     if poll['id'] == poll_id:
                         self.selected_poll = poll
-                        print(self.selected_poll)
                 Elec_command_button = ttk.Button(Treeview_labelframe, text="Select an Election")
                 Elec_command_button.grid(row=2, column=0, padx=50, pady=10, sticky='news')
 

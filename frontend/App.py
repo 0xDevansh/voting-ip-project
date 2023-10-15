@@ -15,8 +15,6 @@ from .create_referendum import CreateReferendumFrame
 from .election_navigation_page import ElectionNavigationFrame
 from .referendum_entry_frame import ReferendumEntryFrame
 class App(tk.Tk):
-    # destruct_on_switch should be True for frames
-    # that hold data or are entry forms
     frames_data = {
         'opening': {'title': 'Main Page', 'frame': OpeningPageFrame},
         'credits': {'title': 'Credits', 'frame': CreditsFrame},
@@ -37,7 +35,6 @@ class App(tk.Tk):
         super().__init__()
         print('App created')
         self.title('Poll Pilot')
-        # self.state('zoomed')
         self.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=1)
         self.current_frame_name = 'opening'

@@ -47,7 +47,6 @@ class VotingWindow(ttk.Frame):
                         pass
                 if len(approval_list) == 0:
                     approval_list.append('abs')
-                print(approval_list)
                 try:
                     id_approval_list = list(map(lambda x: snake_case(x), approval_list))
                     db.save_vote(poll['id'], id_approval_list)
@@ -115,7 +114,6 @@ class VotingWindow(ttk.Frame):
             votes = []
             def get_vote_fptp():
                 vote = var_for_combobox.get()
-                print(vote)
                 votes.append(vote)
                 try:
                     vote_id = snake_case(vote)
@@ -268,7 +266,6 @@ class VotingWindow(ttk.Frame):
                     db_votes = {}
                     for i, cand in enumerate(candidates):
                         db_votes[cand['name']] = choices_short[votes[i]]
-                    print(db_votes)
                     db.save_vote(poll['id'], db_votes)
                     app.show_frame('voting_security_check', {'poll': poll})
                 except Exception as exc:

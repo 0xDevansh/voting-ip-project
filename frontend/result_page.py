@@ -29,11 +29,7 @@ class ResultFrame(ttk.Frame):
             poll_result = db.get_result(poll['id'])
             if poll['type'] != 'referendum' and len(poll_result['winners']) == 0:
                 poll_result['winners'] = ['nota']
-                print('ADDING NOTA')
                 candidates.append({'candidate_id': 'nota', 'name': 'No candidate cleared the minimum vote threshold.', 'faction': 'NA'})
-            print('POLL RESULT!')
-            print(poll_result)
-            print('--------')
             if not poll_result:
                 raise Exception('Result not found')
             # Switch candidate ids with names
@@ -282,7 +278,6 @@ class ResultFrame(ttk.Frame):
                     Candidate_Order = Order[i]
                     for j in Order[i].keys():
                         text_for_header.append(j)
-                print(text_for_header)
 
                 Label_for_header = []
                 for i in range(len((text_for_header))):
@@ -351,7 +346,6 @@ class ResultFrame(ttk.Frame):
 
             elif type  == 'referendum':
                 Referendum_Reult = poll_result['referendum_result']
-                print(Referendum_Reult)
                 Result_Conversion_dictionary = {"app" : "Approve",
                                                 "dis" : "Disapprove",
                                                 "abs" : "Abstain"}

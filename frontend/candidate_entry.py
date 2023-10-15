@@ -48,7 +48,6 @@ class CandidateEntryFrame(ttk.Frame):
                     cand_ids.append(candidate_id)
                     db_candidates.append({'candidate_id': candidate_id, 'name': cand['name'], 'faction': cand['faction'] })
                 db.register_candidates(poll['id'], db_candidates)
-                print('Registered candidates:', db_candidates)
                 app.show_frame('elec_navigation')
             except Exception as exc:
                 traceback.print_exc()
@@ -87,8 +86,6 @@ class CandidateEntryFrame(ttk.Frame):
 
 
 
-#        toe_button = tk.Button(Cand_entry_frame, text="o", )
- #       toe_button.grid(row=0, column=2)
 
 
 
