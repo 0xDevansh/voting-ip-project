@@ -77,7 +77,6 @@ class CreateReferendumFrame(ttk.Frame):
                                           security_key=security_key, secure_mode=True, inst_name=name_institution,
                                           num_candidates=num_candidates, num_voters=number_voter,
                                           min_threshold=min_threshold)
-                    print('Referendum created: ', poll)
                     app.show_frame('ref_entry', context={'poll': poll})
                 except Exception as exc:
                     print(exc)
