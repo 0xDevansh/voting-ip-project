@@ -124,7 +124,7 @@ class CreateElectionFrame(ttk.Frame):
 
 
 
-            if elec_type == "Approval voting":
+            if elec_type == "Approval Voting":
                 Min_thr_Key.grid(row=6, column=0)
                 Min_thr_Key_Entry.grid(row=6, column=1, padx=50, pady=10)
 
