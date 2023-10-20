@@ -259,9 +259,9 @@ class VotingWindow(ttk.Frame):
                     if Choice in ['Approve' , 'Disapprove' , 'Abstain']:
                         votes.append(Choice)
                     else:
-                        tk.messagebox.showerror(title='Error', message="Please select a valid choice in referendum :-" + str(i+1))
+                        tk.messagebox.showerror(title='Error', message="Please select a valid choice for proposal " + str(i+1))
                         votes.clear()
-                        break
+                        return
                 try:
                     db_votes = {}
                     for i, cand in enumerate(candidates):
