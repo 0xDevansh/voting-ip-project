@@ -58,13 +58,15 @@ class VotingSecurityCheckFrame(ttk.Frame):
         entry1 = ttk.Entry(self.frame, show='*')
         entry1.grid(row=2, column=0)
 
+        checked = tk.BooleanVar(value=False)
         def show_and_hide():
-            if entry1['show'] == '*':
+            print(checked.get(), entry1['show'])
+            if checked.get():
                 entry1['show'] = ''
             else:
                 entry1['show'] = '*'
 
-        checkBox_showPassword = ttk.Checkbutton(self.frame, text="show password", command=show_and_hide)
+        checkBox_showPassword = ttk.Checkbutton(self.frame, text="show password", command=show_and_hide, variable=checked, onvalue=True, offvalue=False)
         checkBox_showPassword.grid(row=3,column=0)
 
         start_button = ttk.Button(self.frame, text="Next Vote", command = next_vote)
