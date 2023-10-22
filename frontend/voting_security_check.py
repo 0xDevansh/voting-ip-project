@@ -15,6 +15,8 @@ class VotingSecurityCheckFrame(ttk.Frame):
         poll = context['poll']
         print(poll)
         sec_key = poll['security_key']
+        db = Database.get_instance()
+        num_votes = db.get_num_votes(poll['id'])
         # sec_key = 'password'
 
         def next_vote():
@@ -31,7 +33,6 @@ class VotingSecurityCheckFrame(ttk.Frame):
             if ent_password == sec_key:
                 # generate result
                 try:
-                    db = Database.get_instance()
                     result = calculate_result(poll['id'])
                     db.mark_as_completed(poll['id'])
                     app.show_frame('result_page', {'poll': poll})
@@ -51,7 +52,7 @@ class VotingSecurityCheckFrame(ttk.Frame):
 
 
 
-        label1 = ttk.Label(self.frame, text="Vote Has been registered" , font= 20)
+        label1 = ttk.Label(self.frame, text="Add next vote or terminate the poll" , font= 20)
         label1.grid(row=0, column=0 , pady= 10)
 
         label2 = ttk.Label(self.frame, text="Enter Security Key to Continue")
@@ -72,11 +73,13 @@ class VotingSecurityCheckFrame(ttk.Frame):
 
         next_vote_button = ttk.Button(self.frame, text="Next Vote", command = next_vote)
         next_vote_button.grid(row=4, column=0 ,  pady= 10)
-        if poll['num_votes'] > poll['num_voters']:
-            next_vote_button.state('disabled')
+        if num_votes >= poll['num_voters']:
+            next_vote_button.state(['disabled'])
+            max_votes_label = ttk.Label(self.frame, text=f"All {poll['num_voters']} votes have been registered")
+            max_votes_label.grid(row=5, column=0, sticky='news')
 
         terminate_button = ttk.Button(self.frame, text="Terminate", command=terminate_election)
-        terminate_button.grid(row=5, column=0, pady=10)
+        terminate_button.grid(row=6, column=0, pady=10)
 
         Button_frame = ttk.LabelFrame(self.frame)
         Button_frame.grid(row=7, column=0, sticky="news")
