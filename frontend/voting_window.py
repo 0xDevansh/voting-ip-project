@@ -97,7 +97,7 @@ class VotingWindow(ttk.Frame):
                                     onvalue="Yes", offvalue="No"))
                 checkbutton_list[i].grid(row= i+1 , column= 2)
 
-            Btn_1 = tk.Button(User_info_frame , text='submit', command= get_vote_approval)
+            Btn_1 = tk.Button(User_info_frame , text='Submit', command= get_vote_approval)
             Btn_1.grid(row = num_of_candidate + 1 , column= 1)
         elif type == 'fptp':
 
@@ -158,7 +158,7 @@ class VotingWindow(ttk.Frame):
             Votebox = ttk.Combobox(User_info_frame, textvariable= var_for_combobox)
             Votebox['values'] = self.candidate_names
             Votebox.grid(row= num_of_candidate + 1 , column = 1)
-            Btn_1 = tk.Button(User_info_frame , text='submit' , command= get_vote_fptp)
+            Btn_1 = tk.Button(User_info_frame , text='Submit' , command= get_vote_fptp)
             Btn_1.grid(row = num_of_candidate + 2 , column= 1)
         elif type == 'runoff':
             counter = ['1']
@@ -240,7 +240,7 @@ class VotingWindow(ttk.Frame):
             Votebox = ttk.Combobox(User_info_frame, textvariable=var_for_combobox)
             Votebox['values'] = self.candidate_names
             Votebox.grid(row=num_of_candidate + 2, column=1, pady=10, padx=10)
-            Btn_1 = tk.Button(User_info_frame, text='submit', command=get_vote_runoff)
+            Btn_1 = tk.Button(User_info_frame, text='Submit', command=get_vote_runoff)
             Btn_1.grid(row=num_of_candidate + 3, column=0, pady=10, padx=10)
         elif type == 'referendum':
             label_list_1 = []
@@ -311,7 +311,7 @@ class VotingWindow(ttk.Frame):
                 label_list_2[i].grid(row= i+1 , column= 1)
                 combobox_list.append(ttk.Combobox(User_info_frame, values= ['Approve' , 'Disapprove' , 'Abstain']))
                 combobox_list[i].grid(row= i+1 , column= 2)
-            Btn_1 = tk.Button(User_info_frame , text='submit' , command=get_vote_referendum)
+            Btn_1 = tk.Button(User_info_frame , text='Submit' , command=get_vote_referendum)
             Btn_1.grid(row = num_of_candidate + 1 , column= 1)
 
     def show_ref_description(self, i):

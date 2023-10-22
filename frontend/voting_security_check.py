@@ -13,6 +13,7 @@ class VotingSecurityCheckFrame(ttk.Frame):
     def __init__(self, app, context):
         super().__init__(app)
         poll = context['poll']
+        print(poll)
         sec_key = poll['security_key']
         # sec_key = 'password'
 
@@ -69,8 +70,10 @@ class VotingSecurityCheckFrame(ttk.Frame):
         checkBox_showPassword = ttk.Checkbutton(self.frame, text="show password", command=show_and_hide, variable=checked, onvalue=True, offvalue=False)
         checkBox_showPassword.grid(row=3,column=0)
 
-        start_button = ttk.Button(self.frame, text="Next Vote", command = next_vote)
-        start_button.grid(row=4, column=0 ,  pady= 10)
+        next_vote_button = ttk.Button(self.frame, text="Next Vote", command = next_vote)
+        next_vote_button.grid(row=4, column=0 ,  pady= 10)
+        if poll['num_votes'] > poll['num_voters']:
+            next_vote_button.state('disabled')
 
         terminate_button = ttk.Button(self.frame, text="Terminate", command=terminate_election)
         terminate_button.grid(row=5, column=0, pady=10)

@@ -211,37 +211,9 @@ class CreateElectionFrame(ttk.Frame):
 
 
         Dec_frame = ttk.LabelFrame(self.frame, text="Declaration")
-        terms_and_conditions = """
-        **Terms and Conditions for Poll Pilot**
-
-        **Last Updated: [01/10/2023]**
-
-        These Terms and Conditions ("Terms") govern your use of the Poll Pilot App ("App") provided by [Front Bench techologies LLC ] ("Company," "we," "us," or "our"). By downloading, installing, accessing, or using the App, you agree to comply with and be bound by these Terms. If you do not agree with these Terms, please do not use the App.
-
-        1. App Usage
-
-        1.1. Eligibility: You must be at least 13 years old to use the App. If you are under the age of 13, please do not use the App.
-
-        1.2. License: Subject to these Terms, we grant you a limited, non-exclusive, non-transferable, and revocable license to use the App.
-
-        1.3. User Content: The App allows you to create and share content ("User Content"). You are solely responsible for your User Content, and you agree not to create, upload, or share any content that violates these Terms, any applicable laws, or infringes upon any third-party rights.
-
-        2. Accuracy Disclaimer
-
-        2.1. Inaccuracy Disclaimer: The App is provided for creative and entertainment purposes only. While we strive to provide accurate and up-to-date information, we do not guarantee the accuracy, completeness, or reliability of any content or creations made using the App. You acknowledge that any content or information obtained through the App is at your own risk, and we are not responsible for any inaccuracies, errors, or omissions.
-
-        3. Data Privacy
-
-        3.1. Data Collection: We do not collect, store, or process any personal data through the App. Your use of the App does not require the provision of personal information, and we do not track or store any data that can be used to identify you personally.
-
-        3.2. Cookies: The App may use cookies or similar technologies for basic functionality, but these do not collect personal information.
-
-        4. Limitation of Liability
-
-        4.1. No Liability: To the extent permitted by law, we shall not be liable for any direct, indirect, incidental, special, or consequential damages arising out of or in connection with the use of the App. This includes, but is not limited to, any errors, inaccuracies, or omissions in the App or User Content.
-
-        By using the App, you agree to these Terms and acknowledge that you have read, understood, and accepted them. If you do not agree with any part of these Terms, please refrain from using the App.
-        """
+        terms_and_conditions = ''
+        with open('frontend/tos.txt') as file:
+            terms_and_conditions = file.read()
 
         Dec_tnc = ttk.Label(Dec_frame, text="Terms and Condition Declaration")
         tnc_var = tk.StringVar(value="Uncheked")
@@ -254,7 +226,7 @@ class CreateElectionFrame(ttk.Frame):
                                     onvalue="Checked", offvalue="Uncheked")
         Dec_tnc_CB.grid(row=1, column=1, padx=50, pady=10)
 
-        button1 = ttk.Button(self.frame, text="SUBMIT", command=enter_data)
+        button1 = ttk.Button(self.frame, text="Submit", command=enter_data)
         #button1.grid(row=3, column=0, sticky='news', padx=10
         #            , pady=10)
 

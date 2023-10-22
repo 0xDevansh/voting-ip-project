@@ -42,11 +42,12 @@ class Database():
             rows = cursor.fetchall()
             res = []
             for row in rows:
-                res.append({'id': row[0], 'name': row[1], 'type': row[2], 'description': row[3], 'status': row[4], 'inst_name': row[5], 'num_candidates': row[6], 'security_key': row[7], 'num_voters': row[8], 'max_approved': row[9], 'min_threshold': row[10], 'date_created': row[11]})
+                res.append({'id': row[0], 'name': row[1], 'type': row[2], 'description': row[3], 'status': row[4], 'inst_name': row[5], 'num_candidates': row[6], 'security_key': row[7], 'num_voters': row[8], 'max_approved': row[9], 'min_threshold': row[10], 'date_created': row[11], 'num_votes': self.get_num_votes(row[0])})
+            cursor.close()
             return res
         cursor.close()
         if values:
-            return {'id': values[0], 'name': values[1], 'type': values[2], 'description': values[3], 'status': values[4], 'inst_name': values[5], 'num_candidates': values[6], 'security_key': values[7], 'num_voters': values[8], 'max_approved': values[9], 'min_threshold': values[10], 'date_created': values[11]}
+            return {'id': values[0], 'name': values[1], 'type': values[2], 'description': values[3], 'status': values[4], 'inst_name': values[5], 'num_candidates': values[6], 'security_key': values[7], 'num_voters': values[8], 'max_approved': values[9], 'min_threshold': values[10], 'date_created': values[11], 'num_votes': self.get_num_votes(values[0])}
         else:
             return None
 
