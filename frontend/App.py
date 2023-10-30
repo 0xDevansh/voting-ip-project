@@ -1,3 +1,4 @@
+import os.path
 import platform
 import tkinter as tk
 import tkinter.ttk as ttk
@@ -12,7 +13,6 @@ from .voting_window import VotingWindow
 from .voting_security_check import VotingSecurityCheckFrame
 from .result_page import ResultFrame
 from .create_referendum import CreateReferendumFrame
-from .election_navigation_page import ElectionNavigationFrame
 from .referendum_entry_frame import ReferendumEntryFrame
 class App(tk.Tk):
     frames_data = {
@@ -45,6 +45,10 @@ class App(tk.Tk):
         if platform.system() == 'Linux':
             print('applying clam')
             style.theme_use('clam')
+
+        # set icon
+        photo = tk.PhotoImage(file='icon.png')
+        self.wm_iconphoto(False, photo)
         # show main page
         self.show_frame('opening')
 
