@@ -21,8 +21,7 @@ class CreateElectionFrame(ttk.Frame):
             type_code = type_codes[type]
             title_election = title_election_Entry.get()
             description = Description_Entry.get()
-            num_candidates = No_Cand_Entry.get() 
-            date_election = Date_Entry.get()
+            num_candidates = No_Cand_Entry.get()
             number_voter = No_Voter_Entry.get()
             security_key = Sec_Key_Entry.get()
             tnc = tnc_var.get()
@@ -44,7 +43,7 @@ class CreateElectionFrame(ttk.Frame):
                 Alpha += 1
             else:
                 l[2] = 1
-            if title_election and description and date_election:
+            if title_election and description:
                 Alpha += 1
             else:
                 l[3] = 1
@@ -77,15 +76,15 @@ class CreateElectionFrame(ttk.Frame):
                     pass
             Data_Entry = {"Name": name_institution, "Type_elec": type,
                           "title elec": title_election, "desc": description, "Num voter": number_voter,
-                          "Num_can": num_candidates, "Date": date_election, "Sec_key": security_key,
+                          "Num_can": num_candidates, "Sec_key": security_key,
                           "tnc": tnc, "min_thr": min_threshold, "max_app": max_approved}
 
             if l[0] == 1:
-                tkinter.messagebox.showerror(title="Error101", message='Number of Candidataes must be integer')
+                tkinter.messagebox.showerror(title="Error101", message='Number of Candidates must be integer')
             elif l[1] == 1:
                 tkinter.messagebox.showerror(title="Error102", message='Number of Voters Must be integer')
             elif l[2] == 1:
-                tkinter.messagebox.showerror(title="Error103", message='Security Key must be atleast 8 digit long')
+                tkinter.messagebox.showerror(title="Error103", message='Security Key must be atleast 8 characters long')
             elif l[3] == 1:
                 tkinter.messagebox.showerror(title="Error104",
                                              message='Title , Description and Date of Election Required')
@@ -96,7 +95,7 @@ class CreateElectionFrame(ttk.Frame):
             elif l[7] == 1:
                 tkinter.messagebox.showerror(title="Error107", message="max approved must be integer")
             elif l[6] == 1:
-                tkinter.messagebox.showerror(title="Error108", message="max approved cant be more than total canditates")
+                tkinter.messagebox.showerror(title="Error108", message="max approved cant be more than total candidates")
             else:
                 # save to db
                 try:
@@ -185,10 +184,6 @@ class CreateElectionFrame(ttk.Frame):
         No_Cand_Entry = ttk.Entry(Election_info_frame)
         No_Cand_Entry.grid(row=2, column=1, padx=50, pady=10)
 
-        Date = ttk.Label(Election_info_frame, text="Date")
-        Date.grid(row=3, column=0)
-        Date_Entry = ttk.Entry(Election_info_frame)
-        Date_Entry.grid(row=3, column=1, padx=50, pady=10)
 
         No_Voter = ttk.Label(Election_info_frame, text="Number of  Voters")
         No_Voter.grid(row=4, column=0)
@@ -218,7 +213,7 @@ class CreateElectionFrame(ttk.Frame):
         Dec_tnc = ttk.Label(Dec_frame, text="Terms and Condition Declaration")
         tnc_var = tk.StringVar(value="Uncheked")
         def Show_tnc():
-            tkinter.messagebox.showinfo(message=terms_and_conditions)
+            tkinter.messagebox.showinfo(title = 'Terms and Condition', message=terms_and_conditions )
         Dec_tnc_Button= ttk.Button(Dec_frame, text="Show T&C", command=Show_tnc)
         Dec_tnc_Button.grid(row=2,column=0, padx=50,)
         Dec_tnc.grid(row=1, column=0)
@@ -227,8 +222,6 @@ class CreateElectionFrame(ttk.Frame):
         Dec_tnc_CB.grid(row=1, column=1, padx=50, pady=10)
 
         button1 = ttk.Button(self.frame, text="Submit", command=enter_data)
-        #button1.grid(row=3, column=0, sticky='news', padx=10
-        #            , pady=10)
 
         Button_frame = ttk.LabelFrame(self.frame)
         Button_frame.grid(row=4, column=0, sticky="news")

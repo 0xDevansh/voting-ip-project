@@ -15,8 +15,7 @@ class CreateReferendumFrame(ttk.Frame):
             name_institution = name_institution_Entry.get()
             title_referendum = title_referendum_Entry.get()
             description = Description_Entry.get()
-            num_candidates = No_Cand_Entry.get() 
-            #date_referendum = Date_Entry.get()
+            num_candidates = No_Cand_Entry.get()
             number_voter = No_Voter_Entry.get()
             security_key = Sec_Key_Entry.get()
             tnc = tnc_var.get()
@@ -57,11 +56,11 @@ class CreateReferendumFrame(ttk.Frame):
                           "tnc": tnc}
 
             if l[0] == 1:
-                tkinter.messagebox.showerror(title="Erroe101", message='Number of Candidataes must be integer')
+                tkinter.messagebox.showerror(title="Erroe101", message='Number of Candidates must be integer')
             elif l[1] == 1:
                 tkinter.messagebox.showerror(title="Error102", message='Number of Voters Must be integer')
             elif l[2] == 1:
-                tkinter.messagebox.showerror(title="Error103", message='Security Key must be atleast 8 digit long')
+                tkinter.messagebox.showerror(title="Error103", message='Security Key must be atleast 8 characters long')
             elif l[3] == 1:
                 tkinter.messagebox.showerror(title="Error104",
                                              message='Title , Description and Date of referendum Required')
@@ -70,7 +69,6 @@ class CreateReferendumFrame(ttk.Frame):
             elif l[4] == 1:
                 tkinter.messagebox.showerror(title="Error106", message="You have not accepted the Terms and Condition")
             else:
-                # save to db
                 try:
                     db = Database.get_instance()
                     poll = db.create_poll(name=title_referendum, type='referendum', description=description,
@@ -118,11 +116,6 @@ class CreateReferendumFrame(ttk.Frame):
         No_Cand_Entry = ttk.Entry(referendum_info_frame)
         No_Cand_Entry.grid(row=2, column=1, padx=50, pady=10)
 
-        #Date = ttk.Label(referendum_info_frame, text="Date")
-        #Date.grid(row=3, column=0)
-        #Date_Entry = ttk.Entry(referendum_info_frame)
-        #Date_Entry.grid(row=3, column=1, padx=50, pady=10)
-
         No_Voter = ttk.Label(referendum_info_frame, text="Number of  Voters")
         No_Voter.grid(row=4, column=0)
         No_Voter_Entry = ttk.Entry(referendum_info_frame)
@@ -150,7 +143,7 @@ class CreateReferendumFrame(ttk.Frame):
         tnc_var = tk.StringVar(value="Uncheked")
 
         def Show_tnc():
-            tkinter.messagebox.showinfo(message=terms_and_conditions)
+            tkinter.messagebox.showinfo(title = 'Terms and Condition', message=terms_and_conditions)
 
         Dec_tnc_Button = ttk.Button(Dec_frame, text="Show T&C", command=Show_tnc)
         Dec_tnc_Button.grid(row=2, column=0, padx=50)

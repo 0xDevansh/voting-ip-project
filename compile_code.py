@@ -40,6 +40,8 @@ def add_files_to_txt(file, path):
             with open(fullpath) as codefile:
                 file.write(f'# ---- {fullpath} ----\n')
                 for line in codefile:
+                    if line == '' or line.isspace():
+                        continue
                     file.write(line)
                 file.write('\n\n')
         if os.path.isdir(fullpath):

@@ -4,7 +4,7 @@ import tkinter.ttk as ttk
 import traceback
 
 from backend.db.Database import Database
-from frontend.utils import snake_case
+from frontend.utils import snake_case, to_ordinal
 
 
 class VotingWindow(ttk.Frame):
@@ -176,9 +176,11 @@ class VotingWindow(ttk.Frame):
                     self.candidate_names.remove(rank_Vote)
                     counter.append('')
                     votes.append(rank_Vote)
-                except:
-                    tkinter.messagebox.showerror(title="ERORR" , message="Please select a valid candidate from dropdown")
-                Label20 = tk.Label(User_info_frame, text="Please enter your choice number:- " + str(len(counter)))
+                except Exception:
+                    tkinter.messagebox.showerror(title="ERROR" , message="Please select a valid candidate from dropdown")
+                index = len(counter)
+                ord = to_ordinal(index)
+                Label20 = tk.Label(User_info_frame, text=f"Please enter {ord} choice number:")
                 Label20.grid(row=num_of_candidate + 1, column=1, pady=10, padx=10)
                 Votebox = ttk.Combobox(User_info_frame, textvariable=var_for_combobox)
                 Votebox['values'] = self.candidate_names
