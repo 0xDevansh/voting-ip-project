@@ -1,38 +1,54 @@
+# Import necessary modules
 import tkinter as tk
 import tkinter.messagebox
 import tkinter.ttk as ttk
 import traceback
 
+# Import custom modules
 from backend.db.Database import Database
 from frontend.utils import snake_case, to_ordinal
 
 
+# Define the VotingWindow class
 class VotingWindow(ttk.Frame):
     def __init__(self, app, context):
         super().__init__(app)
+
+        # Extract information from the context
         poll = context['poll']
         db = Database.get_instance()
         candidates = db.get_poll_candidates(poll['id'])
+
+        # Adjust candidates for referendum type
         if poll['type'] == 'referendum':
             candidates = db.get_poll_proposals(poll['id'])
+
+        # Extract relevant information from the poll
         num_of_candidate = poll['num_candidates']
         type = poll['type']
         election_title = poll['name']
+
+        # Initialize lists to store candidate names and parties
         self.candidate_names = []
         self.candidate_party = []
+
+        # Populate candidate information
         for cand in candidates:
             self.candidate_names.append(cand['name'])
             self.candidate_party.append(cand['faction'])
 
-
+        # Check the type of the poll and configure the UI accordingly
         if type == 'approval':
+            # Lists to store labels, check buttons, and vote information
             label_list_1 = []
-            label_list_2= []
+            label_list_2 = []
             checkbutton_list = []
             checkbutton_var = []
-            checkbutton_var_value= []
+            checkbutton_var_value = []
             approval_list = []
             votes = []
+
+            # Function to handle approval voting
             def get_vote_approval():
                 Check = 0
                 for i in range(num_of_candidate):
@@ -42,12 +58,14 @@ class VotingWindow(ttk.Frame):
                     if checkbutton_var_value[j] == 'Yes':
                         approval_list.append(self.candidate_names[j])
                         Check += 1
-
                     else:
                         pass
+
                 if len(approval_list) == 0:
                     approval_list.append('abs')
+
                 try:
+                    # Convert candidate names to snake_case and save votes
                     id_approval_list = list(map(lambda x: snake_case(x), approval_list))
                     db.save_vote(poll['id'], id_approval_list)
                     checkbutton_var_value.clear()
@@ -57,15 +75,16 @@ class VotingWindow(ttk.Frame):
                     traceback.print_exc()
                     tk.messagebox.showerror(message=str(exc))
 
-
+            # GUI layout configuration
             for i in range(3):
                 self.grid_rowconfigure(i, weight=1)
             self.grid_columnconfigure(0, weight=1)
             self.frame = tk.Frame(self)
             self.frame.grid()
 
-            self.title_label =  tk.Label(self.frame , text= election_title )
-            self.title_label.grid(row= 0 , column=0)
+            # Election title label
+            self.title_label = tk.Label(self.frame, text=election_title)
+            self.title_label.grid(row=0, column=0)
             User_info_frame = tk.LabelFrame(self.frame)
             User_info_frame.grid(row=1, column=0, sticky="news")
             Button_frame = ttk.LabelFrame(self.frame)
@@ -73,49 +92,50 @@ class VotingWindow(ttk.Frame):
             Button_frame.grid_columnconfigure(0, weight=1)
             Button_frame.grid_rowconfigure(0, weight=1)
 
+            # Function to display help message
             def Help():
                 tkinter.messagebox.showinfo(title="Help", message="Take Data from Documentation")
 
             button1 = ttk.Button(Button_frame, text="Help", command=Help)
-            button1.grid(row=0, column=0, sticky='news', padx=10
-                         , pady=10)
+            button1.grid(row=0, column=0, sticky='news', padx=10, pady=10)
 
+            # Labels for candidate information
             label1 = tk.Label(User_info_frame, text="Candidate Name")
             label1.grid(row=0, column=0, pady=10)
             label2 = tk.Label(User_info_frame, text="Candidate Party")
-            label2.grid(row=0, column=1,padx =20,  pady=10)
+            label2.grid(row=0, column=1, padx=20, pady=10)
             labecheckbutton_list = tk.Label(User_info_frame, text="Select here")
-            labecheckbutton_list.grid(row=0, column=2, padx= 20 , pady=10)
+            labecheckbutton_list.grid(row=0, column=2, padx=20, pady=10)
+
+            # Display candidate information and check buttons
             for i in range(num_of_candidate):
-                label_list_1.append(tk.Label(User_info_frame , text= self.candidate_names[i]))
-                label_list_1[i].grid(row = i+1 , column= 0)
-                label_list_2.append(tk.Label(User_info_frame , text= self.candidate_party[i]))
-                label_list_2[i].grid(row= i+1 , column= 1)
-                checkbutton_var.append(tk.StringVar(value= 'No'))
+                label_list_1.append(tk.Label(User_info_frame, text=self.candidate_names[i]))
+                label_list_1[i].grid(row=i + 1, column=0)
+                label_list_2.append(tk.Label(User_info_frame, text=self.candidate_party[i]))
+                label_list_2[i].grid(row=i + 1, column=1)
+                checkbutton_var.append(tk.StringVar(value='No'))
 
                 checkbutton_list.append(tk.Checkbutton(User_info_frame, variable=checkbutton_var[i],
-                                    onvalue="Yes", offvalue="No"))
-                checkbutton_list[i].grid(row= i+1 , column= 2)
+                                                       onvalue="Yes", offvalue="No"))
+                checkbutton_list[i].grid(row=i + 1, column=2)
 
-            Btn_1 = tk.Button(User_info_frame , text='Submit', command= get_vote_approval)
-            Btn_1.grid(row = num_of_candidate + 1 , column= 1)
+            # Submission button
+            Btn_1 = tk.Button(User_info_frame, text='Submit', command=get_vote_approval)
+            Btn_1.grid(row=num_of_candidate + 1, column=1)
+
         elif type == 'fptp':
-
-            """
-            if 'None of the Above' in self.candidate_names:
-                pass
-            else:
-                self.candidate_names.append("None of the Above")
-                self.candidate_party.append('NOTA')
-                num_of_candidate+=1
-            """
+            # Lists to store labels, votes, and other information
             label_list_1 = []
             label_list_2 = []
             votes = []
+
+            # Function to handle first-past-the-post voting
             def get_vote_fptp():
                 vote = var_for_combobox.get()
                 votes.append(vote)
+
                 try:
+                    # Convert candidate name to snake_case and save vote
                     vote_id = snake_case(vote)
                     db.save_vote(poll['id'], vote_id)
                     app.show_frame('voting_security_check', {'poll': poll})
@@ -123,14 +143,16 @@ class VotingWindow(ttk.Frame):
                     traceback.print_exc()
                     tk.messagebox.showerror(message=str(exc))
 
+            # GUI layout configuration
             for i in range(3):
                 self.grid_rowconfigure(i, weight=1)
             self.grid_columnconfigure(0, weight=1)
             self.frame = tk.Frame(self)
             self.frame.grid()
 
-            self.title_label =  tk.Label(self.frame , text= election_title )
-            self.title_label.grid(row= 0 , column=0)
+            # Election title label
+            self.title_label = tk.Label(self.frame, text=election_title)
+            self.title_label.grid(row=0, column=0)
             User_info_frame = tk.LabelFrame(self.frame)
             User_info_frame.grid(row=1, column=0, sticky="news")
             Button_frame = ttk.LabelFrame(self.frame)
@@ -138,28 +160,36 @@ class VotingWindow(ttk.Frame):
             Button_frame.grid_columnconfigure(0, weight=1)
             Button_frame.grid_rowconfigure(0, weight=1)
 
+            # Function to display help message
             def Help():
                 tkinter.messagebox.showinfo(title="Help", message="Take Data from Documentation")
 
             button1 = ttk.Button(Button_frame, text="Help", command=Help)
-            button1.grid(row=0, column=0, sticky='news', padx=10
-                         , pady=10)
+            button1.grid(row=0, column=0, sticky='news', padx=10, pady=10)
 
+            # Labels for candidate information
             label1 = tk.Label(User_info_frame, text="Candidate Name")
             label1.grid(row=0, column=0, pady=10)
             label2 = tk.Label(User_info_frame, text="Candidate Party")
-            label2.grid(row=0, column=2,padx =20,  pady=10)
+            label2.grid(row=0, column=2, padx=20, pady=10)
+
+            # Display candidate information
             for i in range(num_of_candidate):
-                label_list_1.append(tk.Label(User_info_frame , text= self.candidate_names[i]))
-                label_list_1[i].grid(row = i+1 , column= 0 , pady= 10)
-                label_list_2.append(tk.Label(User_info_frame , text= self.candidate_party[i]))
-                label_list_2[i].grid(row= i+1 , column= 2 , pady = 10)
-            var_for_combobox =  tk.StringVar()
-            Votebox = ttk.Combobox(User_info_frame, textvariable= var_for_combobox)
+                label_list_1.append(tk.Label(User_info_frame, text=self.candidate_names[i]))
+                label_list_1[i].grid(row=i + 1, column=0, pady=10)
+                label_list_2.append(tk.Label(User_info_frame, text=self.candidate_party[i]))
+                label_list_2[i].grid(row=i + 1, column=2, pady=10)
+
+            # Dropdown menu for selecting a candidate
+            var_for_combobox = tk.StringVar()
+            Votebox = ttk.Combobox(User_info_frame, textvariable=var_for_combobox)
             Votebox['values'] = self.candidate_names
-            Votebox.grid(row= num_of_candidate + 1 , column = 1)
-            Btn_1 = tk.Button(User_info_frame , text='Submit' , command= get_vote_fptp)
-            Btn_1.grid(row = num_of_candidate + 2 , column= 1)
+            Votebox.grid(row=num_of_candidate + 1, column=1)
+
+            # Submission button
+            Btn_1 = tk.Button(User_info_frame, text='Submit', command=get_vote_fptp)
+            Btn_1.grid(row=num_of_candidate + 2, column=1)
+
         elif type == 'runoff':
             counter = ['1']
             label_list_1 = []
