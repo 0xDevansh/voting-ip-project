@@ -9,6 +9,7 @@ from backend.db.Database import Database
 class ResultFrame(ttk.Frame):
     def __init__(self, app, context):
         super().__init__(app)
+        #Database Data Retrival
         poll = context['poll']
         try:
             db = Database.get_instance()
@@ -44,7 +45,7 @@ class ResultFrame(ttk.Frame):
                 poll_result['order'] = list(map(lambda o:[candidate_id_name[o[0]], o[1]], poll_result['order']))
 
 
-
+            # Result page for election voting through approval voting
             if type  == 'approval':
                 Winners = poll_result['winners']
                 Order = poll_result['order']
@@ -57,6 +58,7 @@ class ResultFrame(ttk.Frame):
 
                 self.title_label = ttk.Label(self.frame, text= "THE RESULT ARE")
                 self.title_label.grid(row=0, column=0)
+                # Display frame Setup
 
                 User_info_frame = ttk.LabelFrame(self.frame)
                 User_info_frame.grid(row=1, column=0, sticky="news")
@@ -81,22 +83,7 @@ class ResultFrame(ttk.Frame):
                 #
                 label7 = tk.Label(       User_info_frame, text='min_threshold :' + str(min_threshold))
                 label7.grid(row=4, column=2, pady=10, padx=0)
-                '''
-                label9 = tk.Label(       User_info_frame, text="Winners")
-                label9.grid(row=4, column=1, pady=10, padx=0)
-                #
-                label10 = tk.Label(       User_info_frame, text=str(Winners))
-                label10.grid(row=5, column=1, pady=10, padx=0)
-                #
-                label11 = tk.Label(       User_info_frame, text= "Final Tally :")
-                label11.grid(row=6, column=0, pady=10, padx=0)
-                l1 = []
-                for i in range(len(candidate_names)):
-                    l1.append('')
-                    l1[i] = tk.Label(       User_info_frame, text= str(Order[i]) )
-                    l1[i].grid(row=7+i, column=1, pady=10, padx=0)
-                print(poll_result)
-                '''
+                # Winner Info frame Setup
                 Winner_info_frame = tk.LabelFrame(self.frame, text = 'The Winner is')
                 Winner_info_frame.grid(row=2, column=0, sticky="news")
                 Label_for_winner = []
@@ -111,6 +98,8 @@ class ResultFrame(ttk.Frame):
                 for i in range(len((text_for_header))):
                     Label_for_header.append(tk.Label(Election_result_frame,text= text_for_header[i]))
                     Label_for_header[i].grid(row =0 , column= i)
+                # Setting basic variable and placing labels
+
                 Rno_label=[]
                 Candidate_label=[]
                 faction_label=[]
@@ -120,15 +109,6 @@ class ResultFrame(ttk.Frame):
                     Rno_label[i].grid(row=i+1, column=0)
                     Candidate_label.append(tk.Label(Election_result_frame, text=Order[i][0]))
                     Candidate_label[i].grid(row=i + 1, column=1)
-                    '''
-                    for j in range(len(candidates)):
-                        if candidates[j]['candidate_id'] == Order[j][0]:
-                           print(candidates[j]['candidate_id'])
-                           print(Order[j][0])
-                        else:
-                            pass
-                    '''
-
                     try:
                         faction = 'None'
                         for cand in candidates:
@@ -152,7 +132,7 @@ class ResultFrame(ttk.Frame):
 
 
 
-
+            #electiong result for election through FTPT
             elif type  == 'fptp':
                 Winners = poll_result['winners']
                 Order = poll_result['order']
@@ -165,6 +145,7 @@ class ResultFrame(ttk.Frame):
 
                 self.title_label = tk.Label(self.frame, text= "THE RESULT ARE")
                 self.title_label.grid(row=0, column=0)
+                # Heading frame Setup
                 User_info_frame = tk.LabelFrame(self.frame)
                 User_info_frame.grid(row=1, column=0, sticky="news")
 
@@ -179,6 +160,7 @@ class ResultFrame(ttk.Frame):
                 #
                 label5 = tk.Label(User_info_frame, text="Voter turnout%:" + str(voter_turnout))
                 label5.grid(row=3, column=2, pady=10, padx=0)
+                # Winner Info frame Setup
                 Winner_info_frame = tk.LabelFrame(self.frame, text='The Winner is')
                 Winner_info_frame.grid(row=2, column=0, sticky="news")
                 Label_for_winner = []
@@ -194,6 +176,7 @@ class ResultFrame(ttk.Frame):
                 for i in range(len((text_for_header))):
                     Label_for_header.append(tk.Label(Election_result_frame, text=text_for_header[i]))
                     Label_for_header[i].grid(row=0, column=i)
+                #Setting Basic Variable and Place Label
                 Rno_label = []
                 Candidate_label = []
                 faction_label = []
@@ -203,12 +186,6 @@ class ResultFrame(ttk.Frame):
                     Rno_label[i].grid(row=i + 1, column=0)
                     Candidate_label.append(tk.Label(Election_result_frame, text=Order[i][0]))
                     Candidate_label[i].grid(row=i + 1, column=1)
-                    '''
-                    for j in range(len(candidates)):
-                           print( "A" , candidates[j]['candidate_id'])
-                           print("B" , Order[j][0])
-                    '''
-
                     try:
                         faction = 'None'
                         for cand in candidates:
@@ -227,7 +204,7 @@ class ResultFrame(ttk.Frame):
                 for i in range(len(Order) + 1):
                     Election_result_frame.grid_columnconfigure(i, weight=1)
                     Election_result_frame.grid_rowconfigure(i, weight=1)
-
+            #Election result for Runoff election
             elif type  == 'runoff':
                 Winners = poll_result['winners']
                 Order = poll_result['order']
@@ -241,6 +218,7 @@ class ResultFrame(ttk.Frame):
 
                 self.title_label = tk.Label(self.frame, text="THE RESULT ARE")
                 self.title_label.grid(row=0, column=0)
+                # Heading frame Setup
 
                 User_info_frame = tk.LabelFrame(self.frame)
                 User_info_frame.grid(row=1, column=0, sticky="news")
@@ -261,6 +239,7 @@ class ResultFrame(ttk.Frame):
                 #
                 label5 = tk.Label(User_info_frame, text="Voter_turnout :" + str(voter_turnout))
                 label5.grid(row=3, column=2, pady=10, padx=0)
+                # Winner Info frame Setup
 
                 Winner_info_frame = tk.LabelFrame(self.frame, text='The Winner is')
                 Winner_info_frame.grid(row=2, column=0, sticky="news")
@@ -270,6 +249,7 @@ class ResultFrame(ttk.Frame):
                         tk.Label(Winner_info_frame, text='Winner :- ' + Winners[0], font=12))
                     Label_for_winner[i].grid(row=i, column=0, sticky='news')
                     Winner_info_frame.grid_columnconfigure(i, weight=1)
+                # Election frame Setup
 
                 Election_result_frame = tk.LabelFrame(self.frame, text='First Preference Votes')
                 Election_result_frame.grid(row=3, column=0, sticky="news")
@@ -283,13 +263,12 @@ class ResultFrame(ttk.Frame):
                 for i in range(len((text_for_header))):
                     Label_for_header.append(tk.Label(Election_result_frame, text=text_for_header[i]))
                     Label_for_header[i].grid(row=0, column=i)
+                #Setting Basic Variable and placing label
 
                 Rno_label = []
                 Round_score_Label=[]
                 faction_label = []
                 Votes_Label = []
-
-                # TODO Implement the new order (this is the old code) ------
 
                 for i in range(len(Order)):
                     k=0
@@ -300,30 +279,11 @@ class ResultFrame(ttk.Frame):
                         Round_score_Label[i].append(tk.Label(Election_result_frame, text=str(Order[i][j])))
                         Round_score_Label[i][k].grid(row = i+1 ,column = k+1)
                         k+=1
-                # '''
-                # for j in range(len(candidates)):
-                #     if candidates[j]['candidate_id'] == Order[j][0]:
-                #        print(candidates[j]['candidate_id'])
-                #        print(Order[j][0])
-                #     else:
-                #         pass
-                # '''
-                #
-                #     try:
-                #         faction = candidates[i]['faction']
-                #         faction_label.append(tk.Label(Election_result_frame, text=faction))
-                #         faction_label[i].grid(row=i + 1, column=2)
-                #     except:
-                #         faction_label.append(tk.Label(Election_result_frame, text="NA"))
-                #         faction_label[i].grid(row=i + 1, column=2)
-                #
-                #     Votes_Label.append(tk.Label(Election_result_frame, text=Order[i][1]))
-                #     Votes_Label[i].grid(row=i + 1, column=3)
-                # TODO ---------------------
 
                 for i in range(len(Order) + 1):
                     Election_result_frame.grid_columnconfigure(i, weight=1)
                     Election_result_frame.grid_rowconfigure(i, weight=1)
+                # Roundwise Result frame Setup
 
                 Elimination_result_frame = tk.LabelFrame(self.frame, text='Elimination order')
                 Elimination_result_frame.grid(row=4, column=0, sticky="news")
@@ -343,7 +303,7 @@ class ResultFrame(ttk.Frame):
                     Eliminated_Label.append(tk.Label(Elimination_result_frame, text= Eliminated[i]))
                     Eliminated_Label[i].grid(row=i + 1, column=2)
 
-
+            #Election result page for referendum election
             elif type  == 'referendum':
                 Referendum_Reult = poll_result['referendum_result']
                 Result_Conversion_dictionary = {"app" : "Approve",
@@ -359,7 +319,7 @@ class ResultFrame(ttk.Frame):
 
                 self.title_label = tk.Label(self.frame, text="THE RESULT ARE")
                 self.title_label.grid(row=0, column=0)
-
+                # Main Heading frame Setup
                 User_info_frame = tk.LabelFrame(self.frame)
                 User_info_frame.grid(row=1, column=0, sticky="news")
                 for i in range(5):
@@ -384,6 +344,7 @@ class ResultFrame(ttk.Frame):
                 #
                 label6 = tk.Label(User_info_frame, text="Threshold :" + str(min_threshold))
                 label6.grid(row=4, column=0, pady=10, padx=0)
+                # Election result frame Setup
 
                 Result_info_frame = tk.LabelFrame(self.frame)
                 Result_info_frame.grid(row=2, column=0, sticky="news")
@@ -428,6 +389,7 @@ class ResultFrame(ttk.Frame):
         Button_frame.grid(row=10, column=0, sticky="news")
         for i in range(3):
             Button_frame.grid_columnconfigure(i, weight=1)
+        #Help Section Setup
 
         def Help():
             tkinter.messagebox.showinfo(title="Help", message="Take Data from Documentation")
