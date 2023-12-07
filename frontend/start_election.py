@@ -35,7 +35,7 @@ class StartElectionFrame(ttk.Frame):
         # Security Key entry
         label2 = ttk.Label(self, text="Enter Security Key to Start")
         label2.grid(row=1, column=0, pady=10)
-        entry1 = tk.Entry(self, show='*')
+        entry1 = ttk.Entry(self, show='*')
         entry1.grid(row=2, column=0)
 
         # Checkbox to show/hide password
@@ -53,8 +53,8 @@ class StartElectionFrame(ttk.Frame):
         checkBox_showPassword.grid(row=3, column=0)
 
         # Start and Back buttons
-        start_button = tk.Button(self, text="Start", command=start_election)
+        start_button = ttk.Button(self, text="Start", command=start_election)
         start_button.grid(row=4, column=0, pady=10)
 
-        back_button = tk.Button(self, text="Back", command=app.show_frame_factory('elec_navigation'))
+        back_button = ttk.Button(self, text="Back", command=app.show_frame_factory('elec_navigation'))
         back_button.grid(row=5, column=0, pady=10)

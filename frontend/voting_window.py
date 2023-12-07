@@ -79,13 +79,13 @@ class VotingWindow(ttk.Frame):
             for i in range(3):
                 self.grid_rowconfigure(i, weight=1)
             self.grid_columnconfigure(0, weight=1)
-            self.frame = tk.Frame(self)
+            self.frame = ttk.Frame(self)
             self.frame.grid()
 
             # Election title label
-            self.title_label = tk.Label(self.frame, text=election_title)
+            self.title_label = ttk.Label(self.frame, text=election_title)
             self.title_label.grid(row=0, column=0)
-            Display_frame = tk.LabelFrame(self.frame)
+            Display_frame = ttk.LabelFrame(self.frame)
             Display_frame.grid(row=1, column=0, sticky="news")
             Button_frame = ttk.LabelFrame(self.frame)
             Button_frame.grid(row=3, column=0, sticky="news")
@@ -100,27 +100,27 @@ class VotingWindow(ttk.Frame):
             button1.grid(row=0, column=0, sticky='news', padx=10, pady=10)
 
             # Labels for candidate information
-            label1 = tk.Label(Display_frame, text="Candidate Name")
+            label1 = ttk.Label(Display_frame, text="Candidate Name")
             label1.grid(row=0, column=0, pady=10)
-            label2 = tk.Label(Display_frame, text="Candidate Party")
+            label2 = ttk.Label(Display_frame, text="Candidate Party")
             label2.grid(row=0, column=1, padx=20, pady=10)
-            labecheckbutton_list = tk.Label(Display_frame, text="Select here")
+            labecheckbutton_list = ttk.Label(Display_frame, text="Select here")
             labecheckbutton_list.grid(row=0, column=2, padx=20, pady=10)
 
             # Display candidate information and check buttons
             for i in range(num_of_candidate):
-                label_list_1.append(tk.Label(Display_frame, text=self.candidate_names[i]))
+                label_list_1.append(ttk.Label(Display_frame, text=self.candidate_names[i]))
                 label_list_1[i].grid(row=i + 1, column=0)
-                label_list_2.append(tk.Label(Display_frame, text=self.candidate_party[i]))
+                label_list_2.append(ttk.Label(Display_frame, text=self.candidate_party[i]))
                 label_list_2[i].grid(row=i + 1, column=1)
                 checkbutton_var.append(tk.StringVar(value='No'))
 
-                checkbutton_list.append(tk.Checkbutton(Display_frame, variable=checkbutton_var[i],
+                checkbutton_list.append(ttk.Checkbutton(Display_frame, variable=checkbutton_var[i],
                                                        onvalue="Yes", offvalue="No"))
                 checkbutton_list[i].grid(row=i + 1, column=2)
 
             # Submission button
-            Btn_1 = tk.Button(Display_frame, text='Submit', command=get_vote_approval)
+            Btn_1 = ttk.Button(Display_frame, text='Submit', command=get_vote_approval)
             Btn_1.grid(row=num_of_candidate + 1, column=1)
 
         elif type == 'fptp':
@@ -316,7 +316,7 @@ class VotingWindow(ttk.Frame):
                     traceback.print_exc()
                     tk.messagebox.showerror(message=str(exc))
 
-            self.frame = tk.Frame(self)
+            self.frame = ttk.Frame(self)
             self.frame.grid()
             Button_frame = ttk.LabelFrame(self.frame)
             Button_frame.grid(row=3, column=0, sticky="news")

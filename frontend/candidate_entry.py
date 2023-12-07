@@ -51,31 +51,31 @@ class CandidateEntryFrame(ttk.Frame):
                 traceback.print_exc()
                 tk.messagebox.showerror(message=str(exc))
 
-        self.frame = tk.Frame(self)
+        self.frame = ttk.Frame(self)
         self.frame.pack()
 
-        Cand_entry_frame = tk.LabelFrame(self.frame, text="Candidate Entry")
+        Cand_entry_frame = ttk.LabelFrame(self.frame, text="Candidate Entry")
         Cand_entry_frame.grid(row=0, column=0, sticky="news")
         text_for_labels = ["Sno. ", "Name", "Faction"]
         Labels = []
 
         # Create labels for sno, name, and faction
         for i in range(len(text_for_labels)):
-            Labels.append(tk.Label(Cand_entry_frame, text=text_for_labels[i]))
+            Labels.append(ttk.Label(Cand_entry_frame, text=text_for_labels[i]))
             Labels[i].grid(row=0, column=i, padx=50)
 
         # Place Labels and Entry boxes
         for i in range(num_candidates):
-            Candidate_Number_Label.append(tk.Label(Cand_entry_frame, text="Candidate" + str(i + 1)))
-            Candidate_Name_Entry.append(tk.Entry(Cand_entry_frame))
-            Candidate_Faction_Entry.append(tk.Entry(Cand_entry_frame))
+            Candidate_Number_Label.append(ttk.Label(Cand_entry_frame, text="Candidate" + str(i + 1)))
+            Candidate_Name_Entry.append(ttk.Entry(Cand_entry_frame))
+            Candidate_Faction_Entry.append(ttk.Entry(Cand_entry_frame))
 
             Candidate_Number_Label[i].grid(row=i + 1, column=0)
             Candidate_Name_Entry[i].grid(row=i + 1, column=1, padx=50, pady=10)
             Candidate_Faction_Entry[i].grid(row=i + 1, column=2, padx=50, pady=10)
 
         # Submit button
-        button = tk.Button(Cand_entry_frame, text="Submit", command=get_data)
+        button = ttk.Button(Cand_entry_frame, text="Submit", command=get_data)
         button.grid(row=num_candidates + 1, column=1)
 
 
