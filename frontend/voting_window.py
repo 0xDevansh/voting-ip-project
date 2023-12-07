@@ -210,6 +210,7 @@ class VotingWindow(ttk.Frame):
                     votes.append(rank_Vote)
                 except Exception:
                     tkinter.messagebox.showerror(title="ERROR" , message="Please select a valid candidate from dropdown")
+                    return
                 index = len(counter)
                 ord = to_ordinal(index)
                 Label20 = tk.Label(Display_frame, text=f"Please enter {ord} choice number:")
@@ -220,6 +221,9 @@ class VotingWindow(ttk.Frame):
                 def get_vote_runoff():
                     try:
                         rank_Vote = var_for_combobox.get()
+                        if rank_Vote not in self.candidate_names:
+                            tkinter.messagebox.showerror(title="ERROR" , message="Please select a valid candidate from dropdown")
+                            return
                         self.candidate_names.remove(rank_Vote)
                         counter.append('')
                         votes.append(rank_Vote)

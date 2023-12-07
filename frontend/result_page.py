@@ -17,6 +17,10 @@ class ResultFrame(ttk.Frame):
             actual_num_votes = db.get_num_votes(poll['id'])
             if poll['type'] == 'referendum':
                 candidates = db.get_poll_proposals(poll['id'])
+            # to switch between id and name
+            candidate_id_name = {}
+            for cand in candidates:
+                candidate_id_name[cand['candidate_id']] = cand['name']
 
             num_voters = poll['num_voters']
             name_of_institution = poll['inst_name']
@@ -253,11 +257,11 @@ class ResultFrame(ttk.Frame):
 
                 Election_result_frame = tk.LabelFrame(self.frame, text='First Preference Votes')
                 Election_result_frame.grid(row=3, column=0, sticky="news")
-                text_for_header = ["Round_Number"]
+                text_for_header = ["Round Number"]
                 for i in range(1):
                     Candidate_Order = Order[i]
                     for j in Order[i].keys():
-                        text_for_header.append(j)
+                        text_for_header.append(candidate_id_name[j])
 
                 Label_for_header = []
                 for i in range(len((text_for_header))):
@@ -285,23 +289,24 @@ class ResultFrame(ttk.Frame):
                     Election_result_frame.grid_rowconfigure(i, weight=1)
                 # Roundwise Result frame Setup
 
-                Elimination_result_frame = tk.LabelFrame(self.frame, text='Elimination order')
-                Elimination_result_frame.grid(row=4, column=0, sticky="news")
-                Round_Label=[]
-                Eliminated_Label=[]
-                text_for_header_2 = ["Eliminated in ","                 " ,"Candidate Eliminated"]
-                Label_for_header_2 = []
-                Empty_column=[]
-                for i in range(len((text_for_header_2))):
-                    Label_for_header_2.append(tk.Label(Elimination_result_frame, text=text_for_header_2[i]))
-                    Label_for_header_2[i].grid(row=0, column=i)
-                for i in range(len(Eliminated)):
-                    Round_Label.append(tk.Label(Elimination_result_frame,text="Round_no." + str(i+1)))
-                    Round_Label[i].grid(row=i+1 ,column=0)
-                    Empty_column.append(tk.Label(Elimination_result_frame, text=''))
-                    Empty_column[i].grid(row=i + 1, column=1)
-                    Eliminated_Label.append(tk.Label(Elimination_result_frame, text= Eliminated[i]))
-                    Eliminated_Label[i].grid(row=i + 1, column=2)
+                if len(Eliminated) > 0:
+                    Elimination_result_frame = tk.LabelFrame(self.frame, text='Elimination order')
+                    Elimination_result_frame.grid(row=4, column=0, sticky="news")
+                    Round_Label=[]
+                    Eliminated_Label=[]
+                    text_for_header_2 = ["Eliminated in ","                 " ,"Candidate Eliminated"]
+                    Label_for_header_2 = []
+                    Empty_column=[]
+                    for i in range(len((text_for_header_2))):
+                        Label_for_header_2.append(tk.Label(Elimination_result_frame, text=text_for_header_2[i]))
+                        Label_for_header_2[i].grid(row=0, column=i)
+                    for i in range(len(Eliminated)):
+                        Round_Label.append(tk.Label(Elimination_result_frame,text="Round_no." + str(i+1)))
+                        Round_Label[i].grid(row=i+1 ,column=0)
+                        Empty_column.append(tk.Label(Elimination_result_frame, text=''))
+                        Empty_column[i].grid(row=i + 1, column=1)
+                        Eliminated_Label.append(tk.Label(Elimination_result_frame, text= Eliminated[i]))
+                        Eliminated_Label[i].grid(row=i + 1, column=2)
 
             #Election result page for referendum election
             elif type  == 'referendum':

@@ -93,9 +93,5 @@ class VotingSecurityCheckFrame(ttk.Frame):
         button1 = ttk.Button(Button_frame, text="Help", command=Help)
         button1.grid(row=0, column=0, sticky='news', padx=10, pady=10)
 
-        def go_back():
-            # Function to go back to the election navigation frame
-            app.show_frame_factory('elec_navigation')
-
-        button2 = ttk.Button(Button_frame, text="Go Back", command=go_back)
+        button2 = ttk.Button(Button_frame, text="Go Back", command=app.show_frame_factory('elec_navigation'))
         button2.grid(row=0, column=2, sticky='news', padx=10, pady=10)
