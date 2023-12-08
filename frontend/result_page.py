@@ -258,14 +258,14 @@ class ResultFrame(ttk.Frame):
                 Election_result_frame = tk.LabelFrame(self.frame, text='First Preference Votes')
                 Election_result_frame.grid(row=3, column=0, sticky="news")
                 text_for_header = ["Round Number"]
-                for i in range(1):
-                    Candidate_Order = Order[i]
-                    for j in Order[i].keys():
-                        text_for_header.append(candidate_id_name[j])
+
+                candidate_ids = Order[0].keys()
+                for j in candidate_ids:
+                    text_for_header.append(candidate_id_name[j])
 
                 Label_for_header = []
                 for i in range(len((text_for_header))):
-                    Label_for_header.append(tk.Label(Election_result_frame, text=text_for_header[i]))
+                    Label_for_header.append(ttk.Label(Election_result_frame, text=text_for_header[i]))
                     Label_for_header[i].grid(row=0, column=i)
                 #Setting Basic Variable and placing label
 
@@ -279,7 +279,7 @@ class ResultFrame(ttk.Frame):
                     Rno_label.append(tk.Label(Election_result_frame, text=str(i+1)))
                     Rno_label[i].grid(row=i + 1, column=0)
                     Round_score_Label.append([])
-                    for j in Order[i].keys():
+                    for j in candidate_ids:
                         Round_score_Label[i].append(tk.Label(Election_result_frame, text=str(Order[i][j])))
                         Round_score_Label[i][k].grid(row = i+1 ,column = k+1)
                         k+=1

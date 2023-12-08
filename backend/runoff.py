@@ -27,17 +27,19 @@ def calculate_runoff(votes, candidates):
         for (c, v) in candidate_votes.items():
             num_votes[c] = len(v)
 
-        round_data = num_votes.copy()
-        if len(order):
-            round_data = order[-1].copy()
-        for cand in eliminated:
-            round_data[cand] = 'Eliminated'
-        order.append(round_data)
-
         # instant runoff if candidate has > 50%
         max_votes = max(num_votes.values())
         if max_votes > len(votes) / 2:
             remaining = sorted(num_votes.items(), key=lambda x:x[1], reverse=True)
+
+            # update order
+            round_data = num_votes.copy()
+            # if len(order):
+            #     round_data = order[-1].copy()
+            for cand in eliminated:
+                round_data[cand] = 'Eliminated'
+            order.append(round_data)
+
             winner = get_keys_with_value(num_votes, max_votes)
             return {'winners': winner, 'order':order, 'eliminated':eliminated, 'remaining': remaining}
 
@@ -62,6 +64,15 @@ def calculate_runoff(votes, candidates):
             if next_cand in candidate_votes:
                 candidate_votes[next_cand].append(new_vote)
         del candidate_votes[elim_cand]
+        del num_votes[elim_cand]
+
+        # update order
+        round_data = num_votes.copy()
+        # if len(order):
+        #     round_data = order[-1].copy()
+        for cand in eliminated:
+            round_data[cand] = 'Eliminated'
+        order.append(round_data)
 
 if __name__ == '__main__':
     candidates = ['md', 'ls', 'dt', 'bj']
