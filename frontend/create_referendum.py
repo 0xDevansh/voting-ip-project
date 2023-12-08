@@ -183,7 +183,7 @@ class CreateReferendumFrame(ttk.Frame):
 
         # Help button function
         def Help():
-            tkinter.messagebox.showinfo(title="Help", message="Take Data from Documentation")
+            tkinter.messagebox.showinfo(title="Help", message="This is the page to create referendums, the entries are similar to the create election page.")
 
         button_1 = ttk.Button(Button_frame, text="Help", command=Help)
         button_1.grid(row=0, column=0, sticky='news', padx=10, pady=10)

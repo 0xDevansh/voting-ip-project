@@ -88,7 +88,7 @@ class VotingSecurityCheckFrame(ttk.Frame):
 
         def Help():
             # Function to show help information
-            tkinter.messagebox.showinfo(title="Help", message="Take Data from Documentation")
+            tkinter.messagebox.showinfo(title="Help", message="To register more votes click on 'Next Vote'. To terminate election and see result click on 'Terminate'.")
 
         button1 = ttk.Button(Button_frame, text="Help", command=Help)
         button1.grid(row=0, column=0, sticky='news', padx=10, pady=10)

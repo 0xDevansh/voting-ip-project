@@ -397,7 +397,7 @@ class ResultFrame(ttk.Frame):
         #Help Section Setup
 
         def Help():
-            tkinter.messagebox.showinfo(title="Help", message="Take Data from Documentation")
+            tkinter.messagebox.showinfo(title="Help", message="Here you can see the result for your election. Essential information such as voter turnout and elimination order are also displayed.")
 
         button1 = ttk.Button(Button_frame, text="Help", command=Help)
         button1.grid(row=0, column=0, sticky='news', padx=10

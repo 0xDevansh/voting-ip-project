@@ -5,42 +5,22 @@ import traceback
 
 from backend.db.Database import Database
 
-
-class ElectionNavigationFrame(ttk.Frame):
+# TreeViewNavigationFrame: Frame for navigating and managing created elections
+class TreeViewNavigationFrame(ttk.Frame):
     def __init__(self, app, context):
         super().__init__(app)
+        self.selected_poll = None
 
-        # Create a frame for the Election Navigation
-        self.frame = ttk.Frame(self)
-        self.frame.pack()
-
+        # Fetching poll data from the database
+        polls = []
         try:
-            # Fetch election information from the database
             db = Database.get_instance()
             polls = db.get_poll()
         except Exception as exc:
-            # Handle exceptions and show error message
             traceback.print_exc()
             tk.messagebox.showerror(message=str(exc))
 
-        # Create a label frame for displaying election information
-        election_nav_frame = ttk.LabelFrame(self.frame)
-        election_nav_frame.grid(row=0, column=0, sticky="news")
-
-        # Labels for Election information
-        text_for_labels = ["Election name", "Type", "Status", "Commands"]
-        Labels = []
-        for i in range(len(text_for_labels)):
-            Labels.append(ttk.Label(election_nav_frame, text=text_for_labels[i]))
-            Labels[i].grid(row=0, column=i, padx=50)
-
-        # Lists to store labels and buttons
-        Elec_name_label = []
-        Elec_type_label = []
-        Elec_status_Label = []
-        Elec_command_button_1 = []
-
-        # Dictionaries for poll types and status
+        # Poll types and status mappings
         poll_types = {
             'fptp': 'First past the post',
             'runoff': 'Runoff',
@@ -53,41 +33,77 @@ class ElectionNavigationFrame(ttk.Frame):
             'completed': 'Completed',
         }
 
-        # Create labels and buttons for each poll
-        for i, poll in enumerate(polls):
-            Elec_name_label.append(ttk.Label(election_nav_frame, text=poll['name']))
-            Elec_type_label.append(ttk.Label(election_nav_frame, text=poll_types[poll['type']]))
-            Elec_status_Label.append(ttk.Label(election_nav_frame, text=poll_status[poll['status']]))
+        # Row and column configurations
+        for i in range(1):
+            self.grid_columnconfigure(i, weight=1)
+            self.grid_rowconfigure(i, weight=0)
 
-            Elec_name_label[i].grid(row=i + 1, column=0, padx=50, sticky='news')
-            Elec_type_label[i].grid(row=i + 1, column=1, padx=50, sticky='news')
-            Elec_status_Label[i].grid(row=i + 1, column=2, padx=50, sticky='news')
+        # Create label frames
+        Treeview_labelframe = ttk.LabelFrame(self)
+        Treeview_labelframe.grid(row=0, column=0)
+        Treeview_labelframe2 = ttk.LabelFrame(self)
+        Treeview_labelframe2.grid(row=1, column=0)
 
-            # Add buttons based on poll status
-            if poll['status'] == 'not_started':
-                Elec_command_button_1.append(
-                    ttk.Button(election_nav_frame, text="Start Election", command=app.show_frame_factory("start_election", {'poll': poll})))
-            elif poll['status'] == "running":
-                Elec_command_button_1.append(
-                    ttk.Button(election_nav_frame, text='Add vote/Terminate', command=app.show_frame_factory('voting_security_check', {'poll': poll})))
-            elif poll['status'] == 'completed':
-                Elec_command_button_1.append(
-                    ttk.Button(election_nav_frame, text='See Result', command=app.show_frame_factory('result_page', {'poll': poll})))
+        # Labels and Treeview for displaying election data
+        Text_Box_1 = ttk.Label(Treeview_labelframe, text="Created Elections")
+        Text_Box_1.grid(row=0, column=0)
+        columns = ['id', 'name', 'type', 'status']
+        treeview = ttk.Treeview(Treeview_labelframe, columns=columns, show='headings', selectmode='browse')
+        treeview.heading('id', text='Poll ID')
+        treeview.heading('name', text='Name')
+        treeview.heading('type', text='Type')
+        treeview.heading('status', text='Status')
 
-            Elec_command_button_1[i].grid(row=i + 1, column=3, padx=50, pady=10, sticky='news')
+        for poll in polls:
+            data = (poll['id'], poll['name'], poll_types[poll['type']], poll_status[poll['status']])
+            treeview.insert('', tk.END, values=data)
 
-        # Create a button frame for Help and Back buttons
-        Button_frame = ttk.LabelFrame(self.frame)
-        Button_frame.grid(row=3, column=0, sticky="news")
-        for i in range(3):
-            Button_frame.grid_columnconfigure(i, weight=1)
+        treeview.grid(row=1, column=0)
 
-        # Function for Help button
+        # Add a scrollbar
+        scrollbar = ttk.Scrollbar(self, orient=tk.VERTICAL, command=treeview.yview)
+        treeview.configure(yscrollcommand=scrollbar.set)
+        scrollbar.grid(row=0, column=1, sticky='ns')
+
+        # Function to handle item selection in Treeview
+        def item_selected(event):
+            for selected in treeview.selection():
+                item = treeview.item(selected)
+                poll_id = item['values'][0]
+                for poll in polls:
+                    if poll['id'] == poll_id:
+                        self.selected_poll = poll
+                Elec_command_button = ttk.Button(Treeview_labelframe, text="Select an Election")
+                Elec_command_button.grid(row=2, column=0, padx=50, pady=10, sticky='news')
+
+                if self.selected_poll['status'] == 'not_started':
+                    Elec_command_button.destroy()
+                    Elec_command_button = ttk.Button(Treeview_labelframe, text="Start Election",
+                                                     command=app.show_frame_factory("start_election",
+                                                                                    {'poll': self.selected_poll}))
+                    Elec_command_button.grid(row=2, column=0, padx=50, pady=10, sticky='news')
+                elif self.selected_poll['status'] == "running":
+                    Elec_command_button.destroy()
+                    Elec_command_button = ttk.Button(Treeview_labelframe, text='Add vote/Terminate',
+                                                     command=app.show_frame_factory('voting_security_check',
+                                                                                    {'poll': self.selected_poll}))
+                    Elec_command_button.grid(row=2, column=0, padx=50, pady=10, sticky='news')
+                elif self.selected_poll['status'] == 'completed':
+                    Elec_command_button.destroy()
+                    Elec_command_button = ttk.Button(Treeview_labelframe, text='See Result',
+                                                     command=app.show_frame_factory('result_page',
+                                                                                    {'poll': self.selected_poll}))
+                    Elec_command_button.grid(row=2, column=0, padx=50, pady=10, sticky='news')
+
+        treeview.bind('<<TreeviewSelect>>', item_selected)
+
+        # Navigation buttons
         def Help():
-            tkinter.messagebox.showinfo(title="Help", message="Take Data from Documentation")
+            tkinter.messagebox.showinfo(title="Help", message="This page provides information on past, ongoing, and previously created elections. Users can access details about election results, voting status, and other relevant data. Just select the election you are interested in, the button below displays the possible action you can take for that election.")
 
-        # Create Help and Back buttons
-        button1 = ttk.Button(Button_frame, text="Help", command=Help)
-        button1.grid(row=0, column=0, sticky='news', padx=10, pady=10)
-        button2 = ttk.Button(Button_frame, text="Back to Home Page", command=app.show_frame_factory('opening'))
-        button2.grid(row=0, column=2, sticky='news', padx=10, pady=10)
+        navigation_frame = ttk.Frame(self)
+        button_help = ttk.Button(navigation_frame, text="Help", command= Help)
+        button_help.grid(row=3, column=0, sticky='news', padx=10, pady=10)
+        button_go_home = ttk.Button(navigation_frame, text="Go Home", command=app.show_frame_factory('opening'))
+        button_go_home.grid(row=3, column=1, sticky='news', padx=10, pady=10)
+        navigation_frame.grid(row=3, column=0)

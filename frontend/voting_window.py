@@ -94,7 +94,7 @@ class VotingWindow(ttk.Frame):
 
             # Function to display help message
             def Help():
-                tkinter.messagebox.showinfo(title="Help", message="Take Data from Documentation")
+                tkinter.messagebox.showinfo(title="Help", message="Here you approve a candidate by Selecting the checkbox in front of it. Once you have selected the candidates you approve press submit.")
 
             button1 = ttk.Button(Button_frame, text="Help", command=Help)
             button1.grid(row=0, column=0, sticky='news', padx=10, pady=10)
@@ -162,7 +162,7 @@ class VotingWindow(ttk.Frame):
 
             # Function to display help message
             def Help():
-                tkinter.messagebox.showinfo(title="Help", message="Take Data from Documentation")
+                tkinter.messagebox.showinfo(title="Help", message="This is the voting interface for FTPT Election. It displays the candidate’s name with their Faction. Just select your candidate from Drop Down and click Submit.")
 
             button1 = ttk.Button(Button_frame, text="Help", command=Help)
             button1.grid(row=0, column=0, sticky='news', padx=10, pady=10)
@@ -259,7 +259,7 @@ class VotingWindow(ttk.Frame):
             Button_frame.grid_rowconfigure(0, weight=1)
 
             def Help():
-                tkinter.messagebox.showinfo(title="Help", message="Take Data from Documentation")
+                tkinter.messagebox.showinfo(title="Help", message="Candidate is to be selected in decreasing order of preference. The most preferred candidate is the choice number one. After selecting click Submit and rank candidates till all are ranked after which the finalise button appears click it to terminate your vote.")
 
             button1 = ttk.Button(Button_frame, text="Help", command=Help)
             button1.grid(row=0, column=0, sticky='news', padx=10
@@ -324,7 +324,7 @@ class VotingWindow(ttk.Frame):
             Button_frame.grid_rowconfigure(0,weight=1)
 
             def Help():
-                tkinter.messagebox.showinfo(title="Help", message="Take Data from Documentation")
+                tkinter.messagebox.showinfo(title="Help", message="You can either approve, disapprove, or abstain from voting for each individual proposal by selecting options from the drop-down menu. Once you have voted on all press submit to register your vote.")
 
             button1 = ttk.Button(Button_frame, text="Help", command=Help)
             button1.grid(row=0, column=0, sticky='news', padx=10

@@ -8,7 +8,7 @@ from .help import Helpframe
 from .create_election import CreateElectionFrame
 from .candidate_entry import CandidateEntryFrame
 from .start_election import StartElectionFrame
-from .treeview_page import TreeViewNavigationFrame
+from .election_navigation_page import TreeViewNavigationFrame
 from .voting_window import VotingWindow
 from .voting_security_check import VotingSecurityCheckFrame
 from .result_page import ResultFrame

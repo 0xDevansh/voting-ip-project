@@ -16,10 +16,8 @@ class Helpframe(ttk.Frame):
             self.frame1.grid_rowconfigure(i, weight=1)
         self.frame1.grid_columnconfigure(0, weight=1)
         self.frame1.grid_columnconfigure(1, weight=1)
-        info2 = ttk.Label(self.frame1, text="This page will be updated soon")
+        info2 = ttk.Label(self.frame1, text="Poll Pilot is a solution for conducting polls or elections at any scale, small or large. This program allows users to create polls, let the voters vote and generate the result based on any of the four polling algorithms.")
         info2.grid(row=0, column=0)
-        info3 = ttk.Label(self.frame1, text="Very soon")
-        info3.grid(row=0, column=1)
         self.btn4 = ttk.Button(self, text="    Back   ", command=app.show_frame_factory('opening'))
         self.btn4.grid(row=2, column=0)
 

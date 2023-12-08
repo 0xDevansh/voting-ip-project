@@ -11,6 +11,8 @@ ignore = [
     './compile_code.py',
     './identifier.sqlite',
     './README.md',
+    './icon.png',
+    './frontend/tos.txt',
 ]
 
 def add_files_to_txt(file, path):

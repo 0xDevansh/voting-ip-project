@@ -244,7 +244,7 @@ class CreateElectionFrame(ttk.Frame):
 
         # Help and Homepage Buttons
         def help():
-            tkinter.messagebox.showinfo(title="Help", message="Take Data from Documentation")
+            tkinter.messagebox.showinfo(title="Help", message="The 'Create Election' window is where users can set up a new election within the voting app, specifying essential details for the upcoming vote.")
 
         button_help = ttk.Button(Button_frame, text="Help", command=help)
         button_help.grid(row=0, column=0, sticky='news', padx=10, pady=10)
